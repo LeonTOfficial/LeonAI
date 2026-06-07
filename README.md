@@ -4,7 +4,7 @@
 ![Ollama](https://img.shields.io/badge/Ollama-ready-111827?style=for-the-badge)
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
 [PLATZHALTER: Big image/GIF of the chat in action]
 
@@ -106,7 +106,7 @@ If you like this project, leave a **star** and **follow** me on GitHub. It suppo
 ![Ollama](https://img.shields.io/badge/Ollama-bereit-111827?style=for-the-badge)
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
-![Lizenz](https://img.shields.io/badge/Lizenz-MIT-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
 [PLATZHALTER: Großes Bild/GIF vom Chat in Aktion]
 

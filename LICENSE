@@ -1,4 +1,4 @@
-LEON AI – END USER LICENSE AGREEMENT (EULA)
+LEON AI – PROPRIETARY SOURCE-AVAILABLE LICENSE AND TERMS OF USE
 
 Copyright (c) 2026 Leon.
 All Rights Reserved.
@@ -9,17 +9,31 @@ ENGLISH VERSION
 
 1. OWNERSHIP
 
-LEON AI, including but not limited to all source code, software architecture, user interface designs, frontend layouts, backend systems, scripts, documentation, graphics, and related materials, is the exclusive intellectual property of Leon ("the Author").
+LEON AI, including but not limited to all source code, software architecture, user interface designs, frontend layouts, backend systems, scripts, documentation, graphics, branding, and related materials, is the exclusive intellectual property of Leon ("the Author").
 
 All rights not expressly granted in this Agreement are reserved by the Author.
 
-2. LIMITED LICENSE
+2. LIMITED SOURCE CODE LICENSE
 
-Access to this repository is granted solely for personal educational, learning, evaluation, and review purposes.
+Access to this repository and its source code is granted solely for personal educational, learning, evaluation, and review purposes.
 
 This license is non-exclusive, non-transferable, revocable, and does not grant ownership rights of any kind.
 
-3. RESTRICTIONS
+Viewing this repository, accessing the source code, or forking the repository through GitHub does not grant permission to copy, modify, redistribute, host, publish, commercialize, or use LEON AI as a separate product, service, application, platform, or commercial solution.
+
+3. OFFICIAL HOSTED APP / DEMO USE
+
+Users may interact with an official hosted version, demo version, or publicly provided instance of LEON AI made available by the Author without needing separate permission.
+
+This permission applies only to interacting with the official version provided by the Author. It does not grant any rights to the source code, software architecture, system design, user interface, branding, documentation, or underlying implementation of LEON AI.
+
+Users may use the official hosted version or demo version of LEON AI for personal, educational, testing, demonstration, or general usage purposes.
+
+Users may not copy, reproduce, modify, host, redistribute, resell, rebrand, sublicense, or offer LEON AI or substantially similar versions as their own product, service, application, platform, or commercial solution without prior written permission from the Author.
+
+The Author may limit, suspend, or terminate access to any hosted or demo version of LEON AI at any time.
+
+4. RESTRICTIONS
 
 Unless prior written permission has been obtained from the Author, you may NOT:
 
@@ -28,34 +42,41 @@ Unless prior written permission has been obtained from the Author, you may NOT:
 * Publish, host, mirror, sublicense, or distribute the software in any form.
 * Sell, rent, lease, license, or commercially exploit the software.
 * Use the software or its source code in commercial products or services.
+* Use LEON AI or substantially similar versions as your own product, service, application, platform, or commercial solution.
 * Use the source code, documentation, outputs, or related materials to train, fine-tune, or improve artificial intelligence or machine learning systems.
-* Remove or alter copyright notices, author information, or ownership statements.
+* Remove or alter copyright notices, author information, ownership statements, or branding.
 
-4. CONTRIBUTIONS AND MODIFICATIONS
+5. CONTRIBUTIONS AND MODIFICATIONS
 
-Any proposed modifications, patches, pull requests, forks, or contributions require the prior approval of the Author.
+Any proposed modifications, patches, pull requests, extensions, or contributions require the prior approval of the Author.
+
+Forking the repository on GitHub, where technically permitted by GitHub, does not grant permission to use, modify, host, redistribute, commercialize, or rebrand LEON AI beyond the limited purposes expressly allowed in this Agreement.
 
 Submission of a contribution does not grant any ownership rights or permissions beyond those explicitly approved by the Author.
 
-5. REVERSE ENGINEERING
+6. REVERSE ENGINEERING
 
 You may not reverse engineer, decompile, disassemble, or otherwise attempt to derive source code from any compiled or executable portion of the software, except where such restriction is prohibited by applicable law.
 
-6. COMMERCIAL LICENSING
+7. COMMERCIAL LICENSING
 
-Any commercial use, redistribution, integration, modification, or business-related use of LEON AI requires a separate written license agreement signed by the Author.
+Any commercial use, redistribution, integration, modification, hosting, or business-related use of LEON AI requires a separate written license agreement signed or otherwise explicitly approved by the Author.
 
 For licensing inquiries, permission requests, or partnership opportunities, please contact the Author via GitHub.
 
-7. DISCLAIMER OF WARRANTY
+8. DISCLAIMER OF WARRANTY
 
-THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, OR RELIABILITY.
+THE SOFTWARE AND ANY HOSTED OR DEMO VERSION OF LEON AI ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, RELIABILITY, OR AVAILABILITY.
 
-THE AUTHOR MAKES NO GUARANTEE THAT THE SOFTWARE WILL OPERATE WITHOUT INTERRUPTION OR ERROR.
+THE AUTHOR MAKES NO GUARANTEE THAT THE SOFTWARE OR ANY HOSTED VERSION WILL OPERATE WITHOUT INTERRUPTION OR ERROR.
 
-8. LIMITATION OF LIABILITY
+9. LIMITATION OF LIABILITY
 
-IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, LOSSES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, LOSSES, OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT, OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THE SOFTWARE, THE SOURCE CODE, ANY HOSTED VERSION, OR ITS USE.
+
+10. LANGUAGE
+
+This Agreement is provided in English and German. In case of conflict or inconsistency between the English and German version, the German version shall prevail.
 
 ===============================================================================
 DEUTSCHE VERSION
@@ -63,48 +84,71 @@ DEUTSCHE VERSION
 
 1. EIGENTUM
 
-LEON AI einschließlich des gesamten Quellcodes, der Softwarearchitektur, Benutzeroberflächen, Frontend-Layouts, Backend-Systeme, Skripte, Dokumentationen, Grafiken und aller zugehörigen Bestandteile ist das ausschließliche geistige Eigentum von Leon („Urheber“).
+LEON AI einschließlich des gesamten Quellcodes, der Softwarearchitektur, Benutzeroberflächen, Frontend-Layouts, Backend-Systeme, Skripte, Dokumentationen, Grafiken, Markenauftritte und aller zugehörigen Bestandteile ist das ausschließliche geistige Eigentum von Leon („Urheber“).
 
 Alle nicht ausdrücklich eingeräumten Rechte verbleiben beim Urheber.
 
-2. EINGESCHRÄNKTE LIZENZ
+2. EINGESCHRÄNKTE QUELLCODE-LIZENZ
 
-Der Zugriff auf dieses Repository wird ausschließlich zu persönlichen Bildungs-, Lern-, Prüfungs- und Evaluierungszwecken gestattet.
+Der Zugriff auf dieses Repository und den Quellcode wird ausschließlich zu persönlichen Bildungs-, Lern-, Prüfungs- und Evaluierungszwecken gestattet.
 
 Diese Lizenz ist nicht exklusiv, nicht übertragbar, jederzeit widerrufbar und begründet keinerlei Eigentumsrechte.
 
-3. EINSCHRÄNKUNGEN
+Das Ansehen dieses Repositorys, der Zugriff auf den Quellcode oder das Forken des Repositorys über GitHub gewährt keine Erlaubnis, LEON AI zu kopieren, zu verändern, weiterzugeben, zu hosten, zu veröffentlichen, kommerziell zu verwerten oder als eigenes Produkt, eigene Dienstleistung, eigene Anwendung, eigene Plattform oder kommerzielle Lösung zu nutzen.
+
+3. NUTZUNG DER OFFIZIELLEN APP / DEMO
+
+Nutzer dürfen mit einer offiziellen, vom Urheber bereitgestellten gehosteten Version, Demo-Version oder öffentlich zugänglichen Instanz von LEON AI ohne gesonderte Erlaubnis interagieren.
+
+Diese Erlaubnis gilt ausschließlich für die Interaktion mit der offiziellen, vom Urheber bereitgestellten Version. Sie überträgt keine Rechte am Quellcode, an der Softwarearchitektur, am Systemdesign, an der Benutzeroberfläche, am Branding, an der Dokumentation oder an der zugrunde liegenden Umsetzung von LEON AI.
+
+Nutzer dürfen die offizielle gehostete Version oder Demo-Version von LEON AI für persönliche, schulische, Test-, Demonstrations- oder allgemeine Nutzungszwecke verwenden.
+
+Nutzer dürfen LEON AI oder wesentlich ähnliche Versionen ohne vorherige schriftliche Genehmigung des Urhebers nicht kopieren, vervielfältigen, verändern, hosten, weitergeben, weiterverkaufen, umbenennen, unterlizenzieren oder als eigenes Produkt, eigene Dienstleistung, eigene Anwendung, eigene Plattform oder kommerzielle Lösung anbieten.
+
+Der Urheber kann den Zugriff auf eine gehostete Version oder Demo-Version von LEON AI jederzeit beschränken, aussetzen oder beenden.
+
+4. EINSCHRÄNKUNGEN
 
 Ohne vorherige schriftliche Genehmigung des Urhebers ist es untersagt:
 
 * Die Software oder wesentliche Teile davon zu kopieren, zu vervielfältigen, weiterzugeben oder erneut zu veröffentlichen.
 * Die Software zu verändern, anzupassen, zu erweitern oder darauf basierende Werke zu erstellen.
 * Die Software zu hosten, zu spiegeln, zu verbreiten oder unterzulizenzieren.
-* Die Software zu verkaufen, zu vermieten oder anderweitig kommerziell zu verwerten.
-* Die Software in kommerziellen Produkten oder Dienstleistungen einzusetzen.
-* Den Quellcode, die Dokumentation oder daraus erzeugte Inhalte zum Training, Fine-Tuning oder zur Verbesserung von KI- oder Machine-Learning-Systemen zu verwenden.
-* Urheberrechtsvermerke oder Eigentumshinweise zu entfernen oder zu verändern.
+* Die Software zu verkaufen, zu vermieten, zu lizenzieren oder anderweitig kommerziell zu verwerten.
+* Die Software oder den Quellcode in kommerziellen Produkten oder Dienstleistungen einzusetzen.
+* LEON AI oder wesentlich ähnliche Versionen als eigenes Produkt, eigene Dienstleistung, eigene Anwendung, eigene Plattform oder kommerzielle Lösung zu verwenden.
+* Den Quellcode, die Dokumentation, erzeugte Ausgaben oder zugehörige Materialien zum Training, Fine-Tuning oder zur Verbesserung von KI- oder Machine-Learning-Systemen zu verwenden.
+* Urheberrechtsvermerke, Autoreninformationen, Eigentumshinweise oder Branding zu entfernen oder zu verändern.
 
-4. BEITRÄGE UND ÄNDERUNGEN
+5. BEITRÄGE UND ÄNDERUNGEN
 
-Änderungsvorschläge, Pull Requests, Forks, Erweiterungen oder sonstige Beiträge bedürfen der vorherigen Zustimmung des Urhebers.
+Änderungsvorschläge, Patches, Pull Requests, Erweiterungen oder sonstige Beiträge bedürfen der vorherigen Zustimmung des Urhebers.
 
-Die Einreichung eines Beitrags begründet keinerlei Eigentums- oder Nutzungsrechte.
+Das Forken des Repositorys auf GitHub, soweit dies technisch durch GitHub ermöglicht wird, gewährt keine Erlaubnis, LEON AI über die in dieser Vereinbarung ausdrücklich erlaubten eingeschränkten Zwecke hinaus zu nutzen, zu verändern, zu hosten, weiterzugeben, kommerziell zu verwerten oder umzubenennen.
 
-5. REVERSE ENGINEERING
+Die Einreichung eines Beitrags begründet keinerlei Eigentums- oder Nutzungsrechte, sofern diese nicht ausdrücklich vom Urheber genehmigt wurden.
+
+6. REVERSE ENGINEERING
 
 Das Dekompilieren, Disassemblieren oder Zurückentwickeln ausführbarer Bestandteile der Software ist untersagt, soweit dies nicht durch zwingendes Recht ausdrücklich erlaubt wird.
 
-6. KOMMERZIELLE NUTZUNG
+7. KOMMERZIELLE NUTZUNG
 
-Jede kommerzielle Nutzung, Weitergabe, Integration, Modifikation oder geschäftliche Verwendung von LEON AI erfordert eine gesonderte schriftliche Lizenzvereinbarung mit dem Urheber.
+Jede kommerzielle Nutzung, Weitergabe, Integration, Modifikation, Hosting-Nutzung oder geschäftliche Verwendung von LEON AI erfordert eine gesonderte schriftliche Lizenzvereinbarung, die vom Urheber unterschrieben oder ausdrücklich genehmigt wurde.
 
-Für Lizenzanfragen oder Genehmigungen kontaktieren Sie den Urheber über GitHub.
+Für Lizenzanfragen, Genehmigungen oder Partnerschaftsanfragen kontaktieren Sie den Urheber über GitHub.
 
-7. GEWÄHRLEISTUNGSAUSSCHLUSS
+8. GEWÄHRLEISTUNGSAUSSCHLUSS
 
-DIE SOFTWARE WIRD „WIE BESEHEN“ BEREITGESTELLT. ES BESTEHEN KEINE AUSDRÜCKLICHEN ODER STILLSCHWEIGENDEN GEWÄHRLEISTUNGEN, EINSCHLIESSLICH DER MARKTGÄNGIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK, FEHLERFREIHEIT ODER RECHTSMÄNGELFREIHEIT.
+DIE SOFTWARE UND JEDE GEHOSTETE VERSION ODER DEMO-VERSION VON LEON AI WERDEN „WIE BESEHEN“ BEREITGESTELLT. ES BESTEHEN KEINE AUSDRÜCKLICHEN ODER STILLSCHWEIGENDEN GEWÄHRLEISTUNGEN, EINSCHLIESSLICH DER MARKTGÄNGIGKEIT, EIGNUNG FÜR EINEN BESTIMMTEN ZWECK, RECHTSMÄNGELFREIHEIT, GENAUIGKEIT, ZUVERLÄSSIGKEIT ODER VERFÜGBARKEIT.
 
-8. HAFTUNGSBESCHRÄNKUNG
+DER URHEBER ÜBERNIMMT KEINE GARANTIE DAFÜR, DASS DIE SOFTWARE ODER EINE GEHOSTETE VERSION UNUNTERBROCHEN ODER FEHLERFREI FUNKTIONIERT.
 
-DER URHEBER HAFTET NICHT FÜR DIREKTE, INDIREKTE ODER FOLGESCHÄDEN, DIE AUS DER NUTZUNG ODER NICHTNUTZUNG DER SOFTWARE ENTSTEHEN.
+9. HAFTUNGSBESCHRÄNKUNG
+
+DER URHEBER HAFTET NICHT FÜR ANSPRÜCHE, SCHÄDEN, VERLUSTE ODER SONSTIGE HAFTUNG, OB AUS VERTRAG, DELIKT ODER ANDEREN GRÜNDEN, DIE AUS ODER IM ZUSAMMENHANG MIT DER SOFTWARE, DEM QUELLCODE, EINER GEHOSTETEN VERSION ODER DER NUTZUNG ENTSTEHEN.
+
+10. SPRACHE
+
+Diese Vereinbarung wird in englischer und deutscher Sprache bereitgestellt. Im Falle von Widersprüchen oder Abweichungen zwischen der englischen und der deutschen Fassung ist die deutsche Fassung maßgeblich.
