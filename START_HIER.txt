@@ -1,0 +1,43 @@
+LEON AI - START HIER
+
+Dokumentation (zuerst lesen):
+- STRUKTUR.md   → Projektbriefing: Wie ist alles aufgebaut? Was macht welche Datei?
+- UPDATES.md    → Änderungsprotokoll: Was wurde wann hinzugefügt/geändert/entfernt?
+- data/logs/leon.log → Laufzeit-Log: Bei Problemen ZUERST hier schauen, Fehler auswerten & beheben
+                     (Anleitung dazu steht in STRUKTUR.md → Abschnitt „Log-Datei auswerten“)
+
+────────────────────────────────────────
+
+1. ZIP entpacken.
+2. Den Ordner exakt so nennen:
+   Leon-ai
+
+3. Empfohlener Speicherort auf deinem Mac:
+   ~/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai
+
+4. Starten per Terminal:
+   cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
+   chmod +x Starten.command
+   ./Starten.command
+
+5. Browser öffnen:
+   http://localhost:5001
+
+Standard-Passwort:
+   leon2026
+
+Wichtig:
+- Ollama muss laufen.
+- Wenn kein Modell da ist:
+   ollama pull llama3
+- Port 5001 wird genutzt, weil Port 5000 auf macOS oft blockiert ist.
+- data/ und backup/ nicht löschen, wenn du Chats behalten willst.
+
+Bei Fehlern oder seltsamem Verhalten:
+- data/logs/leon.log öffnen (live: tail -f data/logs/leon.log)
+- Fehler auswerten – Anleitung in STRUKTUR.md
+- Fix dokumentieren in UPDATES.md
+
+Falls Safari/Chrome altes Design zeigt:
+- Cmd + Shift + R drücken.
+- Danach nochmal http://localhost:5001 öffnen.
