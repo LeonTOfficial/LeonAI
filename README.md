@@ -1,3 +1,5 @@
+> 🇩🇪 **German version available:** Scroll down for the German description of this project.
+
 # LEON AI
 
 ![Local First](https://img.shields.io/badge/local-first-5357ff?style=for-the-badge)
