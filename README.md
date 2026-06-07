@@ -40,8 +40,8 @@ ollama pull llama3.2:1b
 2. Clone the project and enter the folder:
 
 ```bash
-git clone <your-repository-url>
-cd Leon-ai
+git clone https://github.com/LeonTOfficial/LeonAI.git
+cd LeonAI
 ```
 
 3. Create your local settings file:
@@ -142,8 +142,8 @@ ollama pull llama3.2:1b
 2. Klone das Projekt und öffne den Ordner:
 
 ```bash
-git clone <deine-repository-url>
-cd Leon-ai
+git clone https://github.com/LeonTOfficial/LeonAI.git
+cd LeonAI
 ```
 
 3. Erstelle deine lokale Konfiguration:
