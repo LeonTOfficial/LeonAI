@@ -1,21 +1,67 @@
-MIT License
+LEON AI – END-USER LICENSE AGREEMENT (EULA) / ENDNUTZER-LIZENZVEREINBARUNG
+Copyright (c) 2026 Leon. All rights reserved. / Alle Rechte vorbehalten.
 
-Copyright (c) 2026 Leon
+===============================================================================
+ENGLISH VERSION
+===============================================================================
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. INTELLECTUAL PROPERTY AND OWNERSHIP
+LEON AI (including all source code, architecture, design, frontend layouts, 
+scripts, and documentation) is the exclusive intellectual property of the 
+author (Leon). This software is protected by national and international 
+copyright laws.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. LICENSE GRANT AND RESTRICTIONS
+By accessing this GitHub repository, you are granted a limited, non-exclusive, 
+non-transferable right to view and review the source code strictly for 
+educational, learning, and review purposes. 
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+YOU ARE STRICTLY PROHIBITED FROM:
+- Copying, duplicating, or reproducing the source code or parts of it.
+- Modifying, altering, expanding, or creating derivative works based on this software.
+- Distributing, publishing, hosting, or sublicensing the software or any modifications.
+- Selling, renting, leasing, or otherwise commercially exploiting this software.
+- Using the source code to train machine learning models or artificial intelligence software without explicit permission.
+
+3. REVERSE ENGINEERING
+You may not decompile, reverse engineer, or disassemble the binary or compiled 
+components of this software except and only to the extent that such activity 
+is expressly permitted by applicable law.
+
+4. COMMERCIAL USE & INQUIRIES
+Any commercial use, distribution, or modifications for business purposes require 
+a dedicated, written commercial license signed by the author. For licensing 
+inquiries or permissions, please contact the author directly via GitHub.
+
+===============================================================================
+DEUTSCHE VERSION
+===============================================================================
+
+1. GEISTIGES EIGENTUM UND EIGENTUMSVORBEHALT
+LEON AI (einschließlich des gesamten Quellcodes, der Architektur, des Designs, 
+der Frontend-Layouts, Skripte und Dokumentationen) ist das ausschließliche 
+geistige Eigentum des Urhebers (Leon). Diese Software is durch nationale 
+und internationale Urheberrechtsgesetze geschützt.
+
+2. LIZENZERTEILUNG UND EINSCHRÄNKUNGEN
+Mit dem Zugriff auf dieses GitHub-Repository wird Ihnen ein eingeschränktes, 
+nicht exklusives und nicht übertragbares Recht gewährt, den Quellcode 
+ausschließlich zu Bildungs-, Lern- und Prüfungszwecken einzusehen.
+
+ES IST IHNEN STRENGSTENS UNTERSAGT:
+- Den Quellcode oder Teile davon zu kopieren, zu vervielfältigen oder zu reproduzieren.
+- Die Software zu verändern, anzupassen oder darauf basierende Werke zu erstellen.
+- Die Software oder deren Modifikationen zu verbreiten, zu veröffentlichen oder zu hosten.
+- Diese Software zu verkaufen, zu vermieten, zu verleasen oder anderweitig kommerziell zu verwerten.
+- Den Quellcode ohne ausdrückliche Genehmigung für das Training von KI-Modellen oder Machine-Learning-Systemen zu nutzen.
+
+3. REVERSE ENGINEERING
+Es ist nicht gestattet, die kompilierten oder ausführbaren Komponenten dieser 
+Software zu dekompilieren, zurückzuentwickeln (Reverse Engineering) oder zu 
+disassemblieren, es sei denn, dies ist durch geltendes Recht ausdrücklich erlaubt.
+
+4. KOMMERZIELLE NUTZUNG & ANFRAGEN
+Jede kommerzielle Nutzung, Weitergabe oder Änderung für geschäftliche Zwecke 
+bedarf einer gesonderten, schriftlichen kommerziellen Lizenz, die vom Urheber 
+unterzeichnet wurde. Für Lizenzanfragen oder Genehmigungen kontaktieren Sie 
+den Urheber bitte direkt über GitHub.
