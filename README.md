@@ -94,9 +94,9 @@ This project was built with **AI-Assisted Development**. That matters: it shows 
 A special highlight: I received the **Landespreis Medienbildung** for creating educational content that makes AI easier to understand: what machine learning is at a high level, what is behind systems like ChatGPT, and why it matters outside the tech bubble.
 
 ## License & Support
-**LEON AI is proprietary software**. All rights reserved by the author **(Copyright (c) 2026 Leon)**. You may view the source code strictly for educational and review purposes, but any copying, distribution, modification, or commercial use requires prior written permission.
+**LEON AI is proprietary software**. All rights reserved by the author **(Copyright ©️ 2026 Leon)**. You may view the source code strictly for educational and review purposes, but any copying, distribution, modification, or commercial use requires prior written permission.
 
-If you like this project, leave a **star** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
+If you like this project, leave a **star ⭐️** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
 
 ---
 
@@ -196,6 +196,6 @@ Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wi
 Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grob bedeutet, was hinter Systemen wie ChatGPT steckt und warum das Thema auch außerhalb der Tech-Welt wichtig ist.
 
 ## Lizenz & Support
-**LEON AI ist proprietäre Software**. Alle Rechte vorbehalten **(Copyright (c) 2026 Leon)**. Der Quellcode darf zu Lern- und Prüfungszwecken eingesehen werden. Jedes Kopieren, Verändern, Weitergeben oder die kommerzielle Nutzung erfordert jedoch eine vorherige schriftliche Genehmigung des Urhebers.
+**LEON AI ist proprietäre Software**. Alle Rechte vorbehalten **(Copyright ©️ 2026 Leon)**. Der Quellcode darf zu Lern- und Prüfungszwecken eingesehen werden. Jedes Kopieren, Verändern, Weitergeben oder die kommerzielle Nutzung erfordert jedoch eine vorherige schriftliche Genehmigung des Urhebers.
 
-Wenn dir das Projekt gefällt, lass gerne einen **Stern** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.
+Wenn dir das Projekt gefällt, lass gerne einen **Stern ⭐️** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.
