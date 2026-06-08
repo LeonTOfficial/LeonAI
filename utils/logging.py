@@ -1,4 +1,4 @@
-"""Structured logging to file and terminal activity output."""
+"""Structured logging to file with optional terminal activity output."""
 import contextvars
 import logging
 import os
@@ -43,7 +43,7 @@ class _RequestContextFilter(logging.Filter):
 
 
 def setup_logging() -> logging.Logger:
-    """Configure structured logging to file and console."""
+    """Configure structured logging to file and a minimal console fallback."""
     global _initialized
     os.makedirs(LOG_DIR, exist_ok=True)
     log_path = os.path.join(LOG_DIR, "leon.log")
@@ -70,11 +70,12 @@ def setup_logging() -> logging.Logger:
 
     console_handler = logging.StreamHandler()
     console_handler.setFormatter(fmt)
-    console_handler.setLevel(logging.WARNING)
+    level_name = os.getenv("LEON_TERMINAL_LOG_LEVEL", "CRITICAL").upper()
+    console_handler.setLevel(getattr(logging, level_name, logging.CRITICAL))
     console_handler.addFilter(_RequestContextFilter())
     root.addHandler(console_handler)
 
-    logging.getLogger("werkzeug").setLevel(logging.WARNING)
+    logging.getLogger("werkzeug").setLevel(logging.CRITICAL)
     _initialized = True
     root.info("Logging initialisiert: %s", log_path)
     return root
@@ -87,15 +88,17 @@ def get_logger(name: str = "leon") -> logging.Logger:
 
 
 def log_activity(emoji: str, label: str, detail: str = "", color: str = "cyan") -> None:
-    """Human-readable terminal activity (kept for dev UX)."""
+    """Record activity to leon.log and optionally mirror it in the terminal."""
+    logger = get_logger("leon.activity")
+    level = logging.WARNING if color == "red" else logging.INFO
+    msg = f"{label}" + (f" | {detail}" if detail else "")
+    logger.log(level, msg)
+
+    if os.getenv("LEON_TERMINAL_ACTIVITY", "0").lower() not in ("1", "true", "yes", "on"):
+        return
     now = datetime.now().strftime("%H:%M:%S")
     c = _COLORS
     t = f"{c['dim']}{now}{c['reset']}"
     lbl = f"{c.get(color, c['cyan'])}{c['bold']}{label}{c['reset']}"
     det = f" {c['dim']}{detail}{c['reset']}" if detail else ""
     print(f"  {emoji}  {t}  {lbl}{det}", flush=True)
-
-    logger = get_logger("leon.activity")
-    level = logging.WARNING if color == "red" else logging.INFO
-    msg = f"{label}" + (f" | {detail}" if detail else "")
-    logger.log(level, msg)

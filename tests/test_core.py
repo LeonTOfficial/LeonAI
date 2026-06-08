@@ -375,6 +375,7 @@ class FrontendIntegrationTests(unittest.TestCase):
 
         self.assertIn("injectTailwind", js)
         self.assertIn("https://cdn.tailwindcss.com", js)
+        self.assertIn('<script src="https://cdn.tailwindcss.com"></script>', js)
         self.assertIn("leon-neutralized-assets", js)
         self.assertIn("data-leon-", js)
         self.assertIn("waitForLoadPyodide", js)

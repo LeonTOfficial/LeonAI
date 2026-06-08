@@ -1,294 +1,244 @@
-# LEON AI – Projektbriefing & Struktur
+# LEON AI - Struktur und Architektur
 
-> Kurzüberblick für alle, die am Projekt mitarbeiten oder es erweitern wollen.
-> Stand: Juni 2026 · Version 4 (modular)
+Stand: Juni 2026
 
----
+LEON AI ist eine lokale Flask-Webapp fuer macOS. Die App verbindet einen privaten Chat-Arbeitsbereich mit Ollama, SQLite, Live-Artifacts, Diagrammen, Python-Vorschau und Dashboard/Privacy-Werkzeugen.
 
-## Was ist LEON AI?
+## Architektur in einem Satz
 
-LEON AI ist ein **lokales KI-Interface** auf dem Mac. Es verbindet sich mit **Ollama** (localhost:11434), speichert Chats in **SQLite** und läuft als **Flask-Webapp** auf Port **5001**.
+Backend und Frontend sind modular getrennt: Flask-Routen nehmen HTTP-Anfragen an, Services enthalten die Fachlogik, Models verwalten SQLite, Utils buendeln Sicherheit/Logging/Fehler, und das Frontend liegt in kleinen JavaScript-Modulen unter `static/js/`.
 
----
+## Echte Ordnerstruktur
 
-## Ordnerstruktur (Übersicht)
-
-```
+```text
 Leon-ai/
-│
-├── app.py                  ← Startpunkt: App starten, Server booten
-├── config.py               ← Alle Einstellungen (Port, Passwort, Ollama, Modelle)
-├── requirements.txt        ← Python-Abhängigkeiten
-├── Starten.command         ← Doppelklick-Start für macOS
-│
-├── STRUKTUR.md             ← Dieses Briefing (+ Log-Auswertungs-Anleitung)
-├── UPDATES.md              ← Änderungsprotokoll (was wann gemacht wurde)
-├── START_HIER.txt          ← Schnellstart-Anleitung
-│
-├── data/logs/leon.log      ← LAUFZEIT-LOG – bei Fehlern zuerst hier schauen!
-│
-├── models/                 ← DATENBANK-SCHEMATA
-├── services/               ← GESCHÄFTSLOGIK (Ollama, Chat, Memory, Export …)
-├── routes/                 ← API-ENDPUNKTE & SEITEN
-├── utils/                  ← HILFSFUNKTIONEN (Logging, Security, Fehler)
-│
-├── templates/              ← HTML-Seiten (index.html, dashboard.html)
-├── static/js/              ← Frontend-JavaScript (modular)
-│
-├── data/                   ← Laufzeitdaten (DB, Logs, Secret Key) – nicht löschen!
-└── backup/                 ← Automatische DB-Backups (max. 7 Tage)
+├── app.py
+├── config.py
+├── requirements.txt
+├── Starten.command
+├── .env.example
+├── .gitignore
+├── README.md
+├── README_SICHERHEIT.txt
+├── STRUKTUR.md
+├── TESTING.md
+├── LICENSE
+├── docs/
+│   └── screenshots/
+├── models/
+│   ├── __init__.py
+│   └── database.py
+├── routes/
+│   ├── __init__.py
+│   ├── api.py
+│   ├── auth.py
+│   ├── chat.py
+│   ├── middleware.py
+│   └── pages.py
+├── services/
+│   ├── __init__.py
+│   ├── artifact_service.py
+│   ├── backup_service.py
+│   ├── chat_service.py
+│   ├── export_service.py
+│   ├── memory_service.py
+│   ├── ollama_service.py
+│   ├── profile_service.py
+│   └── room_service.py
+├── static/
+│   └── js/
+│       ├── api.js
+│       ├── artifacts.js
+│       ├── chat.js
+│       └── ui.js
+├── templates/
+│   ├── dashboard.html
+│   └── index.html
+├── tests/
+│   ├── test_core.py
+│   └── test_ui_flows.py
+├── utils/
+│   ├── __init__.py
+│   ├── debug_logs.py
+│   ├── errors.py
+│   ├── logging.py
+│   ├── media.py
+│   ├── privacy.py
+│   ├── security.py
+│   ├── system_health.py
+│   └── text.py
+├── data/       # lokal, nicht ins Repository
+├── backup/     # lokal, nicht ins Repository
+└── venv/       # lokal, nicht ins Repository
 ```
 
----
-
-## Backend – Was macht welche Datei?
-
-### Einstieg
+## Startpunkt
 
 | Datei | Aufgabe |
-|-------|---------|
-| `app.py` | Erstellt die Flask-App, startet den Server. Hier nichts Komplexes einbauen – nur bootstrappen. |
-| `config.py` | Zentrale Konfiguration: `PORT`, `OLLAMA_BASE`, `AUTH_ENABLED`, Modell-Listen, Pfade. Alles über `.env` überschreibbar. |
+| --- | --- |
+| `Starten.command` | macOS-Startskript. Setzt Port/Host, prueft venv, installiert Abhaengigkeiten und startet `app.py`. Terminalausgabe ist bewusst minimal. |
+| `app.py` | Erstellt die Flask-App, initialisiert DB, Profile, Routes, Error Handler und Backup-Thread. |
+| `config.py` | Zentrale Konfiguration: Pfade, Modelle, Host/Port, Auth, Rate Limit, Uploads und System-Prompts. |
 
-### `/models` – Datenbank
+## Backend-Module
 
-| Datei | Aufgabe |
-|-------|---------|
-| `database.py` | SQLite-Schema (rooms, messages, memory, templates, snippets), `init_db()`, `get_db()`. Migrationen für neue Spalten laufen hier. |
-
-**Tabellen:**
-- `rooms` – Chat-Räume (Name, Modell, System-Prompt, Pin …)
-- `messages` – Nachrichten (user/ai, Tokens, Favorit, Bild …)
-- `memory` – Gespeicherte Fakten pro Raum
-- `templates` – Wiederverwendbare Prompt-Vorlagen
-- `snippets` – Code-Snippets
-
-### `/services` – Logik (kein HTTP hier)
+### `routes/`
 
 | Datei | Aufgabe |
-|-------|---------|
-| `ollama_service.py` | Ollama erreichbar? Modell-Liste, Vision-Modell auswählen |
-| `chat_service.py` | Kontext aufbauen, Token-Schätzung, Nachrichten-Historie |
-| `memory_service.py` | Automatische Erinnerungen aus User-Nachrichten |
-| `backup_service.py` | Tägliches DB-Backup nach `backup/` |
-| `export_service.py` | Chat-Export als TXT, MD, HTML, JSON |
+| --- | --- |
+| `routes/auth.py` | Login, Logout, First Setup, Passwort/Name speichern. |
+| `routes/pages.py` | Hauptseite, Dashboard, Manifest, Service-Worker-Kompatibilitaet. |
+| `routes/api.py` | REST-API fuer Raeume, Nachrichten, Memory, Templates, Stats, Privacy, Health, Artifacts. |
+| `routes/chat.py` | Streaming-Endpunkte fuer normale Chats, Vision und Modellaktionen. |
+| `routes/middleware.py` | Security Header, Request-ID, CSRF-/Origin-Gate, Aktivitaetslogging. |
 
-### `/routes` – HTTP-Endpunkte
-
-| Datei | Aufgabe |
-|-------|---------|
-| `auth.py` | `/login`, `/logout` – Passwort-Authentifizierung |
-| `pages.py` | `/`, `/dashboard`, PWA (`manifest.json`, `sw.js`) |
-| `api.py` | REST-API unter `/api/*` (Rooms, Messages, Templates, Stats, Vision …) |
-| `chat.py` | SSE-Streaming: `/chat/stream`, `/chat/vision/stream`, `/api/pull` |
-| `middleware.py` | Security-Headers, Request-Logging, Origin-Check |
-
-### `/utils` – Querschnitt
+### `services/`
 
 | Datei | Aufgabe |
-|-------|---------|
-| `logging.py` | Strukturiertes Logging → `data/logs/leon.log` (+ Terminal-Aktivität) |
-| `security.py` | Login-Decorator, Rate-Limiting, Passwort-Hash, Origin-Prüfung |
-| `text.py` | Input-Bereinigung (`clean_text`, `clean_name`, Modellname-Validierung) |
-| `errors.py` | Zentraler Fehler-Handler (HTTP + unerwartete Exceptions) |
+| --- | --- |
+| `artifact_service.py` | Persistente Artifact-Versionen in SQLite, Dedupe und Loeschen. |
+| `backup_service.py` | SQLite-Backup, Manifest und Integritaetspruefung. |
+| `chat_service.py` | Chat-Kontext, Token-Schaetzung, Branching-Pfade, Auto-Titel. |
+| `export_service.py` | Export von Chats als Text/Markdown/HTML/JSON. |
+| `memory_service.py` | Automatische und manuelle Memory-Eintraege. |
+| `ollama_service.py` | Ollama-Verbindung, Modellliste, Vision-Modell-Erkennung. |
+| `profile_service.py` | Profil/First-Setup-Daten und Migration bestehender Installationen. |
+| `room_service.py` | Raeume, leere Chats aufraeumen, aktive Chatlisten. |
 
----
-
-## Frontend – Was macht welche Datei?
-
-Die Logik steckt nicht mehr in `index.html`, sondern in **`static/js/`**:
+### `models/`
 
 | Datei | Aufgabe |
-|-------|---------|
-| `api.js` | Globaler State (`Leon.state`), Fetch-Wrapper `Leon.api()`, Status-Check |
-| `ui.js` | Theme, Modals, Sidebar, Einstellungen, Raumliste, Vorlagen, Suche |
-| `artifacts.js` | Live-Vorschau-Panel für HTML/CSS/JS aus KI-Antworten |
-| `chat.js` | Nachrichten senden, SSE-Streaming, Bild-Upload, App-Init |
+| --- | --- |
+| `models/database.py` | SQLite-Verbindung, Tabellen, Migrationen und Schema-Erweiterungen. |
 
-Alle Module hängen am Namespace **`window.Leon`**. HTML-`onclick`-Handler rufen weiter globale Funktionen auf (`sendMessage()`, `openSettings()` …).
+Wichtige Tabellen:
 
-**Lade-Reihenfolge in `index.html`:**
-```
-api.js → ui.js → artifacts.js → chat.js
-```
+- `rooms`: Chat-Raeume, Modell, System-Prompt, Pin/Favorit/Meta.
+- `messages`: Chat-Nachrichten, Parent-ID fuer Branching, Token, Favorit, Bildpfad.
+- `artifacts`: gespeicherte Vorschau-Versionen.
+- `memory`: gespeicherte Fakten.
+- `templates`: Prompt-Vorlagen.
+- `snippets`: Code-Snippets.
+- `profile`: Name und Setup-Status.
 
----
+### `utils/`
 
-## Datenfluss (vereinfacht)
+| Datei | Aufgabe |
+| --- | --- |
+| `security.py` | Login-Pflicht, Passwortpruefung, CSRF, Origin-Check, Rate-Limit-Helfer. |
+| `errors.py` | Zentraler Fehlerhandler mit Request-ID und ohne interne Details im Browser. |
+| `logging.py` | Rotierende Datei-Logs, Request-Kontext, ruhiges Terminal. |
+| `privacy.py` | Datenzaehlung und geschuetztes Loeschen privater Bereiche. |
+| `system_health.py` | Health Checks fuer DB, Logs, Backups und Ollama. |
+| `debug_logs.py` | Debug-Center-Daten fuer das Dashboard. |
+| `media.py` | Upload-/Medien-Helfer. |
+| `text.py` | Eingabebereinigung, Namen/Modelle validieren. |
 
-```
-Browser (index.html + static/js/)
-    │
-    ├── GET/POST  /api/*        → routes/api.py      → models/database.py
-    ├── POST      /chat/stream  → routes/chat.py     → services/chat_service.py
-    │                                              → services/ollama_service.py → Ollama
-    └── GET       /login        → routes/auth.py     → utils/security.py
+## Frontend-Module
+
+| Datei | Aufgabe |
+| --- | --- |
+| `static/js/api.js` | Globaler `window.Leon`-State, API-Wrapper, CSRF-Header, Status. |
+| `static/js/ui.js` | Sidebar, Settings, Theme, Room-Liste, Modals, Dashboard-Navigation. |
+| `static/js/chat.js` | Nachrichten, Streaming, Markdown, Mermaid, Chart.js, Farbtags, Uploads. |
+| `static/js/artifacts.js` | Live-Vorschau, HTML/CSS/JS, Tailwind-Injection, Pyodide, Terminal/Fehler-Panel, ZIP/HTML-Export. |
+
+Lade-Reihenfolge in `templates/index.html`:
+
+```text
+api.js -> ui.js -> artifacts.js -> chat.js
 ```
 
-**Streaming-Ablauf (Chat):**
-1. User sendet Nachricht → `chat.js` → `POST /chat/stream`
-2. Route speichert User-Nachricht in SQLite
-3. `chat_service.build_messages()` baut Kontext (Historie + Memory + System-Prompt)
-4. Ollama antwortet per SSE (Token für Token)
-5. AI-Antwort wird am Ende in SQLite gespeichert
-6. Frontend rendert live mit `updateTempMessage()`
+## Datenfluss Chat
 
----
+```text
+Browser
+  -> static/js/chat.js
+  -> POST /chat/stream
+  -> routes/chat.py
+  -> services/chat_service.py
+  -> services/ollama_service.py
+  -> Ollama localhost:11434
+  -> SSE-Stream zurueck zum Browser
+  -> Antwort in SQLite speichern
+```
 
-## Wichtige Pfade & Dateien
+## Datenfluss Artifact-Vorschau
 
-| Pfad | Inhalt |
-|------|--------|
-| `data/chats.db` | SQLite-Datenbank mit allen Chats |
-| `data/logs/leon.log` | Fehler- und Ereignis-Log (bei Problemen zuerst hier schauen) |
-| `data/.secret_key` | Session-Secret (automatisch generiert) |
-| `data/Persönliche_Akte.txt` | Manuell/automatisch gespeicherte Fakten |
-| `backup/chats_YYYY-MM-DD.db` | Tägliche DB-Backups |
+```text
+KI-Antwort mit Codeblock
+  -> static/js/chat.js rendert Nachricht
+  -> static/js/artifacts.js extrahiert HTML/CSS/JS/Python
+  -> Vorschau iframe rendert srcdoc
+  -> Terminal/Fehler werden per postMessage ins Panel gespiegelt
+  -> Version kann ueber services/artifact_service.py gespeichert werden
+```
 
----
+## Sicherheit im Aufbau
 
-## Konfiguration (.env)
+| Ebene | Schutz |
+| --- | --- |
+| Netzwerk | `HOST=127.0.0.1` als Standard. |
+| Auth | Login/First Setup in `routes/auth.py`. |
+| Browser-Requests | CSRF und Origin-Check in `utils/security.py` + `routes/middleware.py`. |
+| Fehler | Request-ID statt interner Details in `utils/errors.py`. |
+| HTML-Ausgabe | DOMPurify/Renderer-Vertraege in `static/js/chat.js`. |
+| Vorschau | iframe-Isolation und Asset-Neutralisierung in `static/js/artifacts.js`. |
+| GitHub | `.gitignore` blockiert lokale Daten, Logs, Backups, Secrets und venv. |
 
-Kopiere `.env.example` nach `.env` und passe an:
+Mehr Details: `README_SICHERHEIT.txt`
+
+## Lokale Daten
+
+| Pfad | Bedeutung |
+| --- | --- |
+| `data/chats.db` | SQLite-Datenbank mit Chats, Raeumen, Nachrichten, Memory und Artifacts. |
+| `data/logs/leon.log` | Laufzeitlog mit Request-IDs. Bei Fehlern zuerst hier nachsehen. |
+| `data/.secret_key` | Automatisch generierter Flask-Secret-Key. |
+| `backup/` | Lokale SQLite-Backups. |
+
+Diese Ordner sind lokal und gehoeren nicht ins Repository.
+
+## Konfiguration
+
+Wichtige `.env`-Variablen:
 
 | Variable | Standard | Bedeutung |
-|----------|----------|-----------|
-| `PORT` | `5001` | Webserver-Port |
-| `HOST` | `127.0.0.1` | Nur lokal (0.0.0.0 = Netzwerk) |
-| `LEON_PASSWORD` | `leon2026` | Login-Passwort |
-| `AUTH_ENABLED` | `true` | Login an/aus |
-| `OLLAMA_BASE` | `http://localhost:11434` | Ollama-URL |
-| `OLLAMA_MODEL` | `llama3` | Standard-Modell |
-| `RATE_LIMIT` | `30` | Max. Anfragen pro Minute pro IP |
+| --- | --- | --- |
+| `PORT` | `5001` | Webserver-Port. |
+| `HOST` | `127.0.0.1` | Nur lokaler Mac. |
+| `LEON_PASSWORD` | Fallback | Passwort fuer bestehende Installationen. |
+| `AUTH_ENABLED` | `true` | Login aktivieren/deaktivieren. |
+| `OLLAMA_BASE` | `http://localhost:11434` | Ollama-Endpunkt. |
+| `OLLAMA_MODEL` | `llama3` | Standardmodell. |
+| `RATE_LIMIT_REQUESTS` | `30` | Max. Requests pro Fenster. |
+| `LEON_TERMINAL_ACTIVITY` | `0` | Terminal-Aktivitaetsstream einschalten, wenn gewuenscht. |
+| `LEON_TERMINAL_LOG_LEVEL` | `CRITICAL` | Console-Log-Level; Details bleiben in `data/logs/leon.log`. |
+| `LEON_STARTUP_VERBOSE` | `0` | Ausfuehrliche Startanzeige einschalten. |
 
----
+## Debugging
 
-## Wo füge ich Neues ein?
-
-| Ich will … | Dann hier … |
-|------------|-------------|
-| Neuen API-Endpunkt | `routes/api.py` (oder neue Route-Datei + in `routes/__init__.py` registrieren) |
-| Streaming-Endpunkt | `routes/chat.py` |
-| Ollama-/KI-Logik | `services/` (neue Service-Datei) |
-| DB-Tabelle/Spalte | `models/database.py` (Migration in `migrations`-Liste) |
-| Frontend-Feature | passende Datei in `static/js/` |
-| Neue Einstellung | `config.py` + optional `.env.example` |
-| Fehler besser loggen | `utils/logging.py` / `utils/errors.py` |
-
----
-
-## Start & Debug
+Terminal bleibt absichtlich ruhig. Details stehen hier:
 
 ```bash
-cd Leon-ai
-source venv/bin/activate   # falls venv vorhanden
-python app.py
-# → http://localhost:5001
+tail -n 80 data/logs/leon.log
+grep -E "ERROR|WARNING" data/logs/leon.log
 ```
 
-**Bei Fehlern – immer zuerst hier schauen:**
-1. **`data/logs/leon.log`** öffnen und auswerten (siehe Abschnitt unten)
-2. Terminal-Ausgabe beim Start prüfen (Ollama online?)
-3. Browser: Cmd + Shift + R (Hard-Reload)
-
----
-
-## Log-Datei auswerten (`data/logs/leon.log`)
-
-> **Wichtig:** Wenn etwas nicht funktioniert, **immer zuerst `leon.log` lesen**.
-> Dort steht genau, was passiert ist – mit Zeitstempel, Modul und Fehlertext.
-> Fehler identifizieren → Ursache verstehen → im Code beheben → in `UPDATES.md` dokumentieren.
-
-### Log-Datei öffnen
+Bei einem Browserfehler mit Request-ID:
 
 ```bash
-# Im Terminal (live mitverfolgen):
-tail -f data/logs/leon.log
-
-# Letzte 50 Zeilen:
-tail -n 50 data/logs/leon.log
-
-# Nur Fehler und Warnungen:
-grep -E 'ERROR|WARNING' data/logs/leon.log
+grep "REQUEST_ID_HIER" data/logs/leon.log
 ```
 
-Oder die Datei direkt in Cursor/VS Code öffnen: `data/logs/leon.log`
+## Tests
 
-### Log-Zeilen verstehen
-
-Jede Zeile folgt diesem Format:
-
-```
-2026-06-04 15:12:26 | WARNING  | leon.errors | handle_http_exception:24 | HTTP 404 | path=/favicon.ico | ...
-│                     │          │             │                          │
-Datum + Uhrzeit       Level      Modul         Funktion:Zeile             Nachricht
+```bash
+./venv/bin/python -m unittest discover -s tests -q
+node --check static/js/api.js
+node --check static/js/ui.js
+node --check static/js/artifacts.js
+node --check static/js/chat.js
 ```
 
-| Level | Bedeutung | Was tun? |
-|-------|-----------|----------|
-| `INFO` | Normaler Betrieb (Start, Login, Chat, Export …) | Nichts – alles OK |
-| `WARNING` | Auffälligkeit (404, falsches Passwort, Ollama langsam …) | Prüfen, ggf. beheben |
-| `ERROR` | Echter Fehler (Crash, DB-Problem, Ollama-Timeout …) | **Sofort beheben** |
-
-| Modul | Wo im Code |
-|-------|------------|
-| `leon` | `app.py` – App-Start |
-| `leon.activity` | `routes/middleware.py` – Nutzer-Aktionen |
-| `leon.errors` | `utils/errors.py` – HTTP- und Server-Fehler |
-| `leon.api` | `routes/api.py` – REST-API-Fehler |
-| `leon.chat` | `routes/chat.py` – Streaming-Fehler |
-| `leon.backup` | `services/backup_service.py` – DB-Backup |
-| `leon.ollama` | `services/ollama_service.py` – Ollama-Verbindung |
-
-### Typische Log-Meldungen
-
-| Meldung | Bedeutung | Aktion |
-|---------|-----------|--------|
-| `LEON AI App initialisiert` | App startet normal | ✅ OK |
-| `Backup erstellt` | Tägliches DB-Backup erfolgreich | ✅ OK |
-| `Login erfolgreich` | Anmeldung geklappt | ✅ OK |
-| `Login fehlgeschlagen` | Falsches Passwort eingegeben | ⚠️ Normal bei Tippfehler; bei Wiederholung Passwort prüfen |
-| `Chat lädt` / `Nachricht` | Normaler Chat-Betrieb | ✅ OK |
-| `HTTP 404 \| path=/favicon.ico` | Browser sucht Icon (harmlos) | ✅ Behoben – Route existiert jetzt |
-| `HTTP 404 \| path=/leon-ai-profile.jpg` | KI-Antwort enthielt relativen Bildpfad | ✅ Behoben – Frontend blockiert solche Requests |
-| `HTTP 503 \| Ollama offline` | Ollama läuft nicht | ❌ `ollama serve` starten |
-| `Unhandled exception` | Unerwarteter Python-Crash | ❌ Stacktrace in Log lesen, Code fixen |
-| `Chat-Stream Fehler` | Verbindung zu Ollama abgebrochen | ❌ Ollama prüfen, Modell installiert? |
-
-### Fehler beheben – Workflow
-
-```
-1. leon.log öffnen
-2. Neueste ERROR/WARNING-Zeilen finden (unten in der Datei)
-3. Modul + Pfad + Nachricht lesen
-4. Betroffene Datei öffnen (siehe Modul-Tabelle oben)
-5. Fix implementieren
-6. App neu starten und testen
-7. Eintrag in UPDATES.md schreiben
-```
-
-### Beispiel-Auswertung (2026-06-04)
-
-**Ergebnis der ersten Log-Analyse:**
-
-| Status | Anzahl | Details |
-|--------|--------|---------|
-| ✅ OK | ~20 | App-Start, Login, Chat, Export, Dashboard – alles normal |
-| ⚠️ Behoben | ~40 | 404 für `/leon-ai-profile.jpg`, `/leon-ai-gif.gif` – kam aus KI-Antworten mit `<img src="...">` ohne echte Datei |
-| ⚠️ Behoben | ~10 | 404 für `/favicon.ico`, `/apple-touch-icon.png` – Browser-Anfragen ohne Route |
-| ⚠️ Harmlos | 1 | `Login fehlgeschlagen` – einmal falsches Passwort |
-
-**Durchgeführte Fixes:**
-- `routes/pages.py` – `/favicon.ico` und Apple-Touch-Icon-Routen hinzugefügt
-- `static/js/chat.js` – relative Bildpfade aus KI-Antworten werden nicht mehr geladen
-- `utils/errors.py` – harmlose 404-Meldungen werden nicht mehr als WARNING geloggt
-
----
-
-## Weitere Dokumentation
-
-- `START_HIER.txt` – Schnellstart
-- `UPDATES.md` – Änderungsprotokoll
-- `data/logs/leon.log` – **Laufzeit-Log (bei Problemen zuerst hier!)**
-- `README_SICHERHEIT.txt` – Auth, Rate-Limit, CSP
-- `README_FEINSCHLIFF.txt` – UI-Details
+Mehr Details: `TESTING.md`

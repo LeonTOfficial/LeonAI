@@ -104,6 +104,15 @@ Read:
 - [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) for the local security model, `.env` guidance, and release safety notes.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 
+## Verified Engineering Highlights
+
+LEON AI is not just a visual demo. The project includes a focused test suite and a documented security model.
+
+- **Tested backend flows:** login, setup, room creation, branching, artifact history, backups, privacy actions, and error handling.
+- **Tested frontend contracts:** CSRF headers, colored chat tags, Mermaid/Chart.js integration markers, Pyodide wiring, and artifact preview controls.
+- **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local secrets, databases, backups, logs, and virtual environments.
+- **Current QA command:** `./venv/bin/python -m unittest discover -s tests -q`
+
 Real folder overview:
 
 ```text
@@ -266,6 +275,15 @@ Lies:
 - [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
 - [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) für das lokale Sicherheitsmodell, `.env`-Hinweise und Release-Sicherheit.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
+
+## Geprüfte Technik-Highlights
+
+LEON AI ist nicht nur eine schöne Oberfläche. Das Projekt hat eine gezielte Test-Suite und ein dokumentiertes Sicherheitsmodell.
+
+- **Getestete Backend-Flows:** Login, First Setup, Chat-Erstellung, Branching, Artifact-Versionen, Backups, Privacy-Aktionen und Fehlerbehandlung.
+- **Getestete Frontend-Verträge:** CSRF-Header, Farbtags im Chat, Mermaid/Chart.js-Marker, Pyodide-Anbindung und Artifact-Vorschau-Controls.
+- **Sicherheitsbelege:** CSRF-Schutz liegt in `utils/security.py`, Security-Header in `routes/middleware.py`, Fehlerabschirmung in `utils/errors.py`, und die `.gitignore` schließt lokale Secrets, Datenbanken, Backups, Logs und virtuelle Umgebungen aus.
+- **Aktueller QA-Befehl:** `./venv/bin/python -m unittest discover -s tests -q`
 
 Echte Ordnerstruktur:
 

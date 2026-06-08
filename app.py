@@ -1,6 +1,7 @@
 """LEON AI – Application entry point."""
 import os
 import socket
+import flask.cli
 
 from flask import Flask
 
@@ -64,38 +65,49 @@ app = create_app()
 
 if __name__ == "__main__":
     logger = get_logger("leon")
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect(("8.8.8.8", 80))
-        local_ip = s.getsockname()[0]
-        s.close()
-    except OSError:
-        local_ip = "127.0.0.1"
+    verbose_startup = os.getenv("LEON_STARTUP_VERBOSE", "0").lower() in (
+        "1",
+        "true",
+        "yes",
+        "on",
+    )
+    log_path = os.path.join(DATA_DIR, "logs", "leon.log")
+    if verbose_startup:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            s.connect(("8.8.8.8", 80))
+            local_ip = s.getsockname()[0]
+            s.close()
+        except OSError:
+            local_ip = "127.0.0.1"
 
-    print("\n" + "═" * 58)
-    print("  ⚡ LEON AI v4 startet...")
-    print(f"  📁 Daten:      {DATA_DIR}")
-    print(f"  💾 Backups:    {BACKUP_DIR}")
-    print(f"  📋 Logs:       {os.path.join(DATA_DIR, 'logs', 'leon.log')}")
-    running = ollama_is_running()
-    print(f"  🦙 Ollama:     {'✅ Online' if running else '❌ Offline'}")
-    if running:
-        models = get_available_models()
-        vision = [m for m in models if any(vm in m for vm in VISION_MODELS)]
-        print(f"  📦 Modelle:    {', '.join(models[:5])}{'…' if len(models) > 5 else ''}")
-        if vision:
-            print(f"  🎥 Vision:     {', '.join(vision)}")
-    print(f"  🤖 Standard:   {DEFAULT_MODEL}")
-    print(f"  🔒 Auth:       {'✅ Aktiviert' if AUTH_ENABLED else '⚠️  Deaktiviert'}")
-    if AUTH_ENABLED:
-        print("  🔑 Passwort:   gesetzt (nicht im Terminal angezeigt)")
-    print(f"  ⚡ Rate Limit: {RATE_LIMIT_REQUESTS} Anfragen / {RATE_LIMIT_WINDOW}s")
-    print(f"  🌐 Lokal:      http://localhost:{PORT}")
-    if HOST in ("0.0.0.0", "::"):
-        print(f"  📱 Netzwerk:   http://{local_ip}:{PORT}")
+        print("\n" + "═" * 58)
+        print("  LEON AI startet...")
+        print(f"  Daten:       {DATA_DIR}")
+        print(f"  Backups:     {BACKUP_DIR}")
+        print(f"  Logs:        {log_path}")
+        running = ollama_is_running()
+        print(f"  Ollama:      {'Online' if running else 'Offline'}")
+        if running:
+            models = get_available_models()
+            vision = [m for m in models if any(vm in m for vm in VISION_MODELS)]
+            print(f"  Modelle:     {', '.join(models[:5])}{'...' if len(models) > 5 else ''}")
+            if vision:
+                print(f"  Vision:      {', '.join(vision)}")
+        print(f"  Standard:    {DEFAULT_MODEL}")
+        print(f"  Auth:        {'Aktiviert' if AUTH_ENABLED else 'Deaktiviert'}")
+        print(f"  Rate Limit:  {RATE_LIMIT_REQUESTS} Anfragen / {RATE_LIMIT_WINDOW}s")
+        print(f"  Lokal:       http://localhost:{PORT}")
+        if HOST in ("0.0.0.0", "::"):
+            print(f"  Netzwerk:    http://{local_ip}:{PORT}")
+        else:
+            print("  Netzwerk:    deaktiviert (nur dieser Mac)")
+        print("═" * 58 + "\n")
     else:
-        print("  🔒 Netzwerk:   deaktiviert (nur dieser Mac)")
-    print("═" * 58 + "\n")
+        print(f"\nLEON AI läuft: http://localhost:{PORT}")
+        print(f"Logs: {log_path}")
+        print("Beenden: Ctrl+C\n")
 
     logger.info("Server startet auf %s:%s", HOST, PORT)
-    app.run(debug=False, host=HOST, port=PORT)
+    flask.cli.show_server_banner = lambda *args, **kwargs: None
+    app.run(debug=False, host=HOST, port=PORT, use_reloader=False)

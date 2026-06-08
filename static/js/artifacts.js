@@ -36,17 +36,18 @@ pre{white-space:pre-wrap;overflow:auto;background:#111827;color:#e5e7eb;padding:
     if (!frame) return;
     revokeArtifactUrl();
     const content = String(html || '').trim() || previewFallbackHtml('Diese Vorschau enthält keinen HTML-Inhalt.', raw);
-    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(content)}`;
-    if (dataUrl.length < 1800000) {
-      frame.removeAttribute('srcdoc');
-      frame.src = dataUrl;
-      return;
-    }
+    frame.removeAttribute('src');
+    frame.srcdoc = content;
     const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     state.artifactObjectUrl = url;
-    frame.removeAttribute('srcdoc');
-    frame.src = url;
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(content)}`;
+    if (dataUrl.length < 1800000) {
+      frame.onerror = () => {
+        frame.removeAttribute('srcdoc');
+        frame.src = url || dataUrl;
+      };
+    }
   }
 
   Leon.resetArtifactPanel = function resetArtifactPanel() {
@@ -62,6 +63,7 @@ pre{white-space:pre-wrap;overflow:auto;background:#111827;color:#e5e7eb;padding:
     if (frame) {
       frame.removeAttribute('srcdoc');
       frame.removeAttribute('src');
+      frame.onerror = null;
     }
     $('artifact-panel')?.classList.remove('show', 'fullscreen');
     $('main')?.classList.remove('artifacts-open');
@@ -97,7 +99,7 @@ pre{white-space:pre-wrap;overflow:auto;background:#111827;color:#e5e7eb;padding:
   function injectTailwind(html) {
     let out = String(html || '');
     if (/cdn\.tailwindcss\.com/i.test(out)) return out;
-    const script = '<script src="https://cdn.tailwindcss.com"><\\/script>';
+    const script = '<script src="https://cdn.tailwindcss.com"></script>';
     if (/<\/head>/i.test(out)) return out.replace(/<\/head>/i, `${script}</head>`);
     if (/<html[\s>]/i.test(out)) return out.replace(/<html(\s[^>]*)?>/i, match => `${match}<head>${script}</head>`);
     return `${script}${out}`;
