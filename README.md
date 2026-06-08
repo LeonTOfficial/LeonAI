@@ -8,7 +8,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-[PLATZHALTER: Big image/GIF of the chat in action]
+![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
 ## What Is LEON AI?
 
@@ -26,9 +26,9 @@ LEON AI is a private, local AI workspace for your Mac. It brings chat, code, liv
 - **Privacy dashboard:** See activity, token usage, health checks, backups, logs, and privacy tools in one dashboard.
 - **First setup:** On a fresh install, choose your own password and first name before using the app.
 
-[PLATZHALTER: Screenshot - Split view: code on the left, rendered live preview with Mermaid/Charts in the Artifacts panel on the right]
+![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-[PLATZHALTER: Screenshot - Dashboard with token statistics and Privacy Center]
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
 
@@ -84,6 +84,8 @@ http://127.0.0.1:5001
 ```
 
 On a fresh install, LEON AI shows a first-setup screen where you choose your own password and first name. After that, the normal login is used.
+
+![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
 
 ## Storage Needed
 
@@ -180,7 +182,7 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 ![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-[PLATZHALTER: Großes Bild/GIF vom Chat in Aktion]
+![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
 ## Was Ist LEON AI?
 
@@ -198,9 +200,9 @@ LEON AI ist dein privater, lokaler KI-Arbeitsplatz für den Mac. Die App verbind
 - **Privacy Dashboard:** Aktivität, Token-Nutzung, Health Checks, Backups, Logs und Datenschutz-Werkzeuge an einem Ort.
 - **First Setup:** Bei einer frischen Installation legst du dein eigenes Passwort und deinen Vornamen fest.
 
-[PLATZHALTER: Screenshot - Geteilte Ansicht: Code links, gerenderte Live-Vorschau (Mermaid/Charts) im Artifacts-Panel rechts]
+![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-[PLATZHALTER: Screenshot - Das Dashboard mit Token-Statistiken und Privacy Center]
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
 
@@ -256,6 +258,8 @@ http://127.0.0.1:5001
 ```
 
 Bei einer frischen Installation erscheint zuerst ein Setup-Screen. Dort legst du dein eigenes Passwort und deinen Vornamen fest. Danach erscheint nur noch der normale Login.
+
+![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
 
 ## Speicherbedarf
 
