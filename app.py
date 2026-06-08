@@ -82,26 +82,30 @@ if __name__ == "__main__":
             local_ip = "127.0.0.1"
 
         print("\n" + "═" * 58)
-        print("  LEON AI startet...")
-        print(f"  Daten:       {DATA_DIR}")
-        print(f"  Backups:     {BACKUP_DIR}")
-        print(f"  Logs:        {log_path}")
+        print("  ⚡ LEON AI startet...")
+        print(f"  📁 Daten:      {DATA_DIR}")
+        print(f"  💾 Backups:    {BACKUP_DIR}")
+        print(f"  📋 Logs:       {log_path}")
         running = ollama_is_running()
-        print(f"  Ollama:      {'Online' if running else 'Offline'}")
+        print(f"  🦙 Ollama:     {'✅ Online' if running else '❌ Offline'}")
         if running:
             models = get_available_models()
             vision = [m for m in models if any(vm in m for vm in VISION_MODELS)]
-            print(f"  Modelle:     {', '.join(models[:5])}{'...' if len(models) > 5 else ''}")
+            print(f"  📦 Modelle:    {', '.join(models[:5])}{'...' if len(models) > 5 else ''}")
             if vision:
-                print(f"  Vision:      {', '.join(vision)}")
-        print(f"  Standard:    {DEFAULT_MODEL}")
-        print(f"  Auth:        {'Aktiviert' if AUTH_ENABLED else 'Deaktiviert'}")
-        print(f"  Rate Limit:  {RATE_LIMIT_REQUESTS} Anfragen / {RATE_LIMIT_WINDOW}s")
-        print(f"  Lokal:       http://localhost:{PORT}")
+                print(f"  🎥 Vision:     {', '.join(vision)}")
+        print(f"  🤖 Standard:   {DEFAULT_MODEL}")
+        print(f"  🔒 Auth:       {'✅ Aktiviert' if AUTH_ENABLED else '⚠️  Deaktiviert'}")
+        if AUTH_ENABLED:
+            print("  🔑 Passwort:   gesetzt (nicht im Terminal angezeigt)")
+        print(f"  ⚡ Rate Limit: {RATE_LIMIT_REQUESTS} Anfragen / {RATE_LIMIT_WINDOW}s")
+        print(f"  🌐 Lokal:      http://localhost:{PORT}")
         if HOST in ("0.0.0.0", "::"):
-            print(f"  Netzwerk:    http://{local_ip}:{PORT}")
+            print(f"  📱 Netzwerk:   http://{local_ip}:{PORT}")
         else:
-            print("  Netzwerk:    deaktiviert (nur dieser Mac)")
+            print("  🔒 Netzwerk:   deaktiviert (nur dieser Mac)")
+        print("  🧘 Terminal:   ruhig - Details stehen im Logfile")
+        print("  ⏹️  Stoppen:    Ctrl+C")
         print("═" * 58 + "\n")
     else:
         print(f"\nLEON AI läuft: http://localhost:{PORT}")

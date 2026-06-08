@@ -166,15 +166,32 @@
       mark: 'mark', marker: 'mark',
     };
     const tagNames = 'rot|red|gruen|grün|green|blau|blue|gelb|yellow|lila|purple|mark|marker';
-    return String(text || '').replace(
+    const toColor = (value) => names[String(value || '').toLowerCase()] || '';
+    const span = (color, content) => `<span class="leon-color-${color}">${content}</span>`;
+    let out = String(text || '').replace(
       new RegExp(`\\[(${tagNames})\\]([\\s\\S]*?)\\[\\/(${tagNames})\\]`, 'gi'),
       (match, openName, content, closeName) => {
-        const openColor = names[String(openName).toLowerCase()] || '';
-        const closeColor = names[String(closeName).toLowerCase()] || '';
-        if (!openColor || openColor !== closeColor) return esc(match);
-        return `<span class="leon-color-${openColor}">${esc(content)}</span>`;
+        const openColor = toColor(openName);
+        const closeColor = toColor(closeName);
+        if (!openColor || openColor !== closeColor) return match;
+        return span(openColor, content);
       },
     );
+    out = out.replace(
+      new RegExp(`\\[(${tagNames})\\](\\*\\*[^*\\n]+?\\*\\*|__[^_\\n]+?__|\\*[^*\\n]+?\\*|_[^_\\n]+?_|[^\\s\\[\\]<>,.;:!?]+)`, 'gi'),
+      (match, name, content) => {
+        const color = toColor(name);
+        return color ? span(color, content) : match;
+      },
+    );
+    out = out.replace(
+      new RegExp(`\\[(${tagNames})\\]\\s+([^\\n<]+)`, 'gi'),
+      (match, name, content) => {
+        const color = toColor(name);
+        return color ? span(color, content) : match;
+      },
+    );
+    return out;
   };
 
   /** Verhindert 404-Requests für relative Bildpfade aus KI-generiertem HTML. */
@@ -203,10 +220,10 @@
     return (explicit || langClass.replace(/^language-/, '').replace(/^lang-/, '') || '').toLowerCase().trim();
   }
 
-  const MERMAID_LANGS = new Set(['mermaid', 'mmd', 'diagram']);
+  const MERMAID_LANGS = new Set(['mermaid', 'mmd', 'diagram', 'diagramm', 'flussdiagramm', 'flowchart', 'graph']);
   const CHART_LANGS = new Set([
     'chart', 'chartjs', 'chart-js', 'leon-chart', 'json-chart', 'chart-codeblock',
-    'bar', 'barchart', 'bar-chart', 'line', 'linechart', 'line-chart', 'pie', 'doughnut',
+    'bar', 'barchart', 'bar-chart', 'balkendiagramm', 'line', 'linechart', 'line-chart', 'pie', 'doughnut',
   ]);
   const RICH_LIBS = {
     mermaid: 'https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js',
@@ -255,6 +272,28 @@
 
   function ensureChartLoaded() {
     return loadScriptOnce('Chart.js', RICH_LIBS.chart, () => typeof window.Chart === 'function');
+  }
+
+  function decodeHtmlEntities(text) {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = String(text || '');
+    return textarea.value;
+  }
+
+  function normalizeMermaidSource(text) {
+    let source = decodeHtmlEntities(text)
+      .replace(/\r\n?/g, '\n')
+      .replace(/\u00a0/g, ' ')
+      .trim();
+    source = source.replace(/^\s*(diagramm|diagram|flussdiagramm)\s*\n/i, '');
+    source = source.replace(/(-->|---|==>|-.->)\s*\|([^|\n]+)\|\s*>\s*/g, '$1|$2| ');
+    source = source.replace(/(\[[^\]\n]*\])([A-Za-z][\w-]*)\s*(-->|---|==>|-.->)/g, '$1\n$2 $3');
+    source = source.replace(/\n{3,}/g, '\n\n');
+    if (!/^\s*(flowchart|graph|sequenceDiagram|classDiagram|stateDiagram|erDiagram|journey|gantt|pie|mindmap|timeline|gitGraph)\b/i.test(source)
+      && /(-->|---|==>|-.->)/.test(source)) {
+      source = `flowchart TD\n${source}`;
+    }
+    return source;
   }
 
   function parseChartCandidate(text) {
@@ -313,7 +352,7 @@
   Leon.renderMermaidBlock = function renderMermaidBlock(code) {
     const pre = code.parentElement;
     if (!pre?.parentNode) return;
-    const source = code.innerText;
+    const source = normalizeMermaidSource(code.innerText);
     const wrap = richBlock('Diagramm');
     const body = document.createElement('div');
     body.className = 'rich-mermaid-body';

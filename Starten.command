@@ -6,18 +6,18 @@ export PORT="${PORT:-5001}"
 export HOST="${HOST:-127.0.0.1}"
 export LEON_TERMINAL_ACTIVITY="${LEON_TERMINAL_ACTIVITY:-0}"
 export LEON_TERMINAL_LOG_LEVEL="${LEON_TERMINAL_LOG_LEVEL:-CRITICAL}"
-export LEON_STARTUP_VERBOSE="${LEON_STARTUP_VERBOSE:-0}"
+export LEON_STARTUP_VERBOSE="${LEON_STARTUP_VERBOSE:-1}"
 
 GRN='\033[92m'; YLW='\033[93m'; RED='\033[91m'; CYN='\033[96m'; RST='\033[0m'; BLD='\033[1m'
 clear
 
-echo -e "${CYN}${BLD}LEON AI${RST}"
+echo -e "${CYN}${BLD}⚡ LEON AI wird gestartet...${RST}"
 
 if curl -fsS "http://127.0.0.1:$PORT/login" >/dev/null 2>&1 || curl -fsS "http://127.0.0.1:$PORT/" >/dev/null 2>&1; then
-  echo -e "${GRN}LEON AI läuft bereits.${RST}"
-  echo -e "Adresse: ${CYN}http://127.0.0.1:$PORT${RST}"
+  echo -e "${GRN}✅ LEON AI läuft bereits auf Port $PORT.${RST}"
+  echo -e "🌐 Öffne: ${CYN}http://127.0.0.1:$PORT${RST}"
   open "http://127.0.0.1:$PORT" >/dev/null 2>&1 || true
-  echo -e "\nDu kannst dieses Fenster schließen."
+  echo -e "\nDu kannst dieses Fenster schließen oder offen lassen."
   read -n 1 -s -r -p "Taste drücken zum Schließen..."
   exit 0
 fi
@@ -55,7 +55,7 @@ else
   PYTHON="venv/bin/python"
 fi
 
-echo -e "Prüfe Umgebung..."
+echo -e "${CYN}📦 Prüfe Umgebung...${RST}"
 "$PYTHON" -m pip install -q --upgrade pip
 "$PYTHON" -m pip install -q -r requirements.txt || {
   echo -e "${RED}❌ Konnte requirements.txt nicht installieren.${RST}"
@@ -73,7 +73,5 @@ if command -v ollama >/dev/null 2>&1; then
 else
   echo -e "${YLW}Hinweis: Ollama wurde nicht gefunden. Chat funktioniert erst, wenn Ollama installiert/laeuft.${RST}"
 fi
-
-echo -e "\n${GRN}Bereit.${RST}"
 
 "$PYTHON" app.py

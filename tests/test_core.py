@@ -369,6 +369,16 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("clean === ''", js)
         self.assertIn("[\\\\/(${tagNames})\\\\]", js)
         self.assertIn("openColor !== closeColor", js)
+        self.assertIn("normalizeMermaidSource", js)
+        self.assertIn("diagramm", js)
+        self.assertIn("flussdiagramm", js)
+        self.assertIn("balkendiagramm", js)
+        self.assertIn("source.replace(/^\\s*(diagramm|diagram|flussdiagramm)", js)
+        self.assertIn("flowchart TD", js)
+        self.assertIn("$1|$2| ", js)
+        self.assertIn("$1\\n$2 $3", js)
+        self.assertIn("[^\\\\s\\\\[\\\\]<>,.;:!?]+", js)
+        self.assertIn("[^\\\\n<]+", js)
 
     def test_artifact_preview_injects_tailwind(self):
         js = self.read("static/js/artifacts.js")
