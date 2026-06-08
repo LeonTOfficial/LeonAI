@@ -165,9 +165,15 @@
       lila: 'purple', purple: 'purple',
       mark: 'mark', marker: 'mark',
     };
+    const tagNames = 'rot|red|gruen|grün|green|blau|blue|gelb|yellow|lila|purple|mark|marker';
     return String(text || '').replace(
-      /\[(rot|red|gruen|grün|green|blau|blue|gelb|yellow|lila|purple|mark|marker)\]([\s\S]*?)\[\/\1\]/gi,
-      (_match, name, content) => `<span class="leon-color-${names[String(name).toLowerCase()] || 'mark'}">${esc(content)}</span>`,
+      new RegExp(`\\[(${tagNames})\\]([\\s\\S]*?)\\[\\/(${tagNames})\\]`, 'gi'),
+      (match, openName, content, closeName) => {
+        const openColor = names[String(openName).toLowerCase()] || '';
+        const closeColor = names[String(closeName).toLowerCase()] || '';
+        if (!openColor || openColor !== closeColor) return esc(match);
+        return `<span class="leon-color-${openColor}">${esc(content)}</span>`;
+      },
     );
   };
 
@@ -725,6 +731,7 @@
 
   async function init() {
     await clearOldBrowserCache();
+    Leon.resetArtifactPanel?.();
     Leon.applyTheme(localStorage.getItem('leon-theme') || 'light');
     Leon.setFontSize(localStorage.getItem('leon-font-size') || 'md');
     Leon.applyTopActionsCollapsed(localStorage.getItem('leon-tools-collapsed') === '1');

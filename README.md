@@ -67,6 +67,14 @@ chmod +x Starten.command
 ./Starten.command
 ```
 
+If macOS refuses to run the command file for security reasons, open Terminal and run:
+
+```bash
+cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
+chmod +x Starten.command
+./Starten.command
+```
+
 6. Open the app:
 
 ```text
@@ -74,6 +82,15 @@ http://127.0.0.1:5001
 ```
 
 On a fresh install, LEON AI shows a first-setup screen where you choose your own password and first name. After that, the normal login is used.
+
+## Storage Needed
+
+| Component | Approx. size |
+| --- | ---: |
+| LEON AI code + Python dependencies | about 0.5 - 1.5 GB |
+| Llama 3 model | about 4.7 GB |
+| Llama 3.2 1B model | about 1.3 GB |
+| Total recommended space | about 6.5 - 7.5 GB |
 
 ## For The Nerds
 
@@ -85,6 +102,50 @@ Read:
 - [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) for the local security model, `.env` guidance, and release safety notes.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 
+Real folder overview:
+
+```text
+LeonAI/
+├── app.py
+├── config.py
+├── Starten.command
+├── README.md
+├── README_SICHERHEIT.txt
+├── STRUKTUR.md
+├── TESTING.md
+├── LICENSE
+├── models/
+│   └── database.py
+├── routes/
+│   ├── api.py
+│   ├── auth.py
+│   ├── chat.py
+│   ├── middleware.py
+│   └── pages.py
+├── services/
+│   ├── artifact_service.py
+│   ├── backup_service.py
+│   ├── chat_service.py
+│   ├── memory_service.py
+│   ├── ollama_service.py
+│   ├── profile_service.py
+│   └── room_service.py
+├── static/
+│   └── js/
+│       ├── api.js
+│       ├── artifacts.js
+│       ├── chat.js
+│       └── ui.js
+├── templates/
+│   ├── dashboard.html
+│   └── index.html
+├── tests/
+│   ├── test_core.py
+│   └── test_ui_flows.py
+└── docs/
+    └── screenshots/
+```
+
 ## About The Developer
 
 I am **Leon**, 17 years old, born in 2009, from Germany, and preparing for a future in business informatics. LEON AI is my personal learning project for understanding how modern full-stack software is planned, built, tested, secured, refactored, and led from zero to release.
@@ -94,7 +155,7 @@ This project was built with **AI-Assisted Development**. That matters: it shows 
 A special highlight: I received the **Landespreis Medienbildung** for creating educational content that makes AI easier to understand: what machine learning is at a high level, what is behind systems like ChatGPT, and why it matters outside the tech bubble.
 
 ## License & Support
-**LEON AI is proprietary software**. All rights reserved by the author **(Copyright ©️ 2026 Leon)**. You may view the source code strictly for educational and review purposes, but any copying, distribution, modification, or commercial use requires prior written permission.
+**LEON AI is proprietary source-available software**. All rights are reserved by the author **(Copyright © 2026 Leon)**. You may use the official app/demo normally and view the source code for learning, review, and evaluation. Copying the source, modifying it, redistributing it, hosting your own version, or using it commercially requires prior written permission from the author.
 
 If you like this project, leave a **star ⭐️** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
 
@@ -169,6 +230,14 @@ chmod +x Starten.command
 ./Starten.command
 ```
 
+Wenn macOS die Datei aus Sicherheitsgründen nicht direkt ausführen kann, öffne das Terminal und gib ein:
+
+```bash
+cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
+chmod +x Starten.command
+./Starten.command
+```
+
 6. Öffne die App:
 
 ```text
@@ -176,6 +245,15 @@ http://127.0.0.1:5001
 ```
 
 Bei einer frischen Installation erscheint zuerst ein Setup-Screen. Dort legst du dein eigenes Passwort und deinen Vornamen fest. Danach erscheint nur noch der normale Login.
+
+## Speicherbedarf
+
+| Komponente | Ungefährer Speicherbedarf |
+| --- | ---: |
+| LEON AI Code + Python-Abhängigkeiten | ca. 0,5 - 1,5 GB |
+| Llama 3 Modell | ca. 4,7 GB |
+| Llama 3.2 1B Modell | ca. 1,3 GB |
+| Gesamtbedarf | ca. 6,5 - 7,5 GB |
 
 ## Für Die Nerds
 
@@ -187,6 +265,50 @@ Lies:
 - [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) für das lokale Sicherheitsmodell, `.env`-Hinweise und Release-Sicherheit.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
 
+Echte Ordnerstruktur:
+
+```text
+LeonAI/
+├── app.py
+├── config.py
+├── Starten.command
+├── README.md
+├── README_SICHERHEIT.txt
+├── STRUKTUR.md
+├── TESTING.md
+├── LICENSE
+├── models/
+│   └── database.py
+├── routes/
+│   ├── api.py
+│   ├── auth.py
+│   ├── chat.py
+│   ├── middleware.py
+│   └── pages.py
+├── services/
+│   ├── artifact_service.py
+│   ├── backup_service.py
+│   ├── chat_service.py
+│   ├── memory_service.py
+│   ├── ollama_service.py
+│   ├── profile_service.py
+│   └── room_service.py
+├── static/
+│   └── js/
+│       ├── api.js
+│       ├── artifacts.js
+│       ├── chat.js
+│       └── ui.js
+├── templates/
+│   ├── dashboard.html
+│   └── index.html
+├── tests/
+│   ├── test_core.py
+│   └── test_ui_flows.py
+└── docs/
+    └── screenshots/
+```
+
 ## Über Den Entwickler
 
 Ich bin **Leon**, 17 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandteinformatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software geplant, gebaut, getestet, abgesichert, refaktoriert und von null bis zum Release geführt wird.
@@ -196,6 +318,6 @@ Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wi
 Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grob bedeutet, was hinter Systemen wie ChatGPT steckt und warum das Thema auch außerhalb der Tech-Welt wichtig ist.
 
 ## Lizenz & Support
-**LEON AI ist proprietäre Software**. Alle Rechte vorbehalten **(Copyright ©️ 2026 Leon)**. Der Quellcode darf zu Lern- und Prüfungszwecken eingesehen werden. Jedes Kopieren, Verändern, Weitergeben oder die kommerzielle Nutzung erfordert jedoch eine vorherige schriftliche Genehmigung des Urhebers.
+**LEON AI ist proprietäre Source-Available-Software**. Alle Rechte vorbehalten **(Copyright © 2026 Leon)**. Die offizielle App/Demo darf normal genutzt werden, und der Quellcode darf zu Lern-, Prüfungs- und Evaluierungszwecken angesehen werden. Das Kopieren des Quellcodes, Verändern, Weitergeben, eigene Hosten oder kommerzielle Nutzen erfordert vorherige schriftliche Genehmigung des Urhebers.
 
 Wenn dir das Projekt gefällt, lass gerne einen **Stern ⭐️** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.

@@ -18,6 +18,58 @@
     return (hash >>> 0).toString(36);
   }
 
+  function revokeArtifactUrl() {
+    if (!state.artifactObjectUrl) return;
+    try { URL.revokeObjectURL(state.artifactObjectUrl); } catch {}
+    state.artifactObjectUrl = '';
+  }
+
+  function previewFallbackHtml(message, raw = '') {
+    return `<!doctype html><html><head><meta charset="utf-8"><style>
+body{font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif;margin:0;padding:24px;background:#fff;color:#20232b;line-height:1.5}
+.box{border:1px solid #e5e7eb;border-radius:14px;padding:18px;background:#f8fafc}
+pre{white-space:pre-wrap;overflow:auto;background:#111827;color:#e5e7eb;padding:14px;border-radius:12px;margin-top:14px}
+</style></head><body><div class="box"><strong>${escapeHtml(message)}</strong>${raw ? `<pre>${escapeHtml(raw).slice(0, 4000)}</pre>` : ''}</div></body></html>`;
+  }
+
+  function setFrameHtml(frame, html, raw = '') {
+    if (!frame) return;
+    revokeArtifactUrl();
+    const content = String(html || '').trim() || previewFallbackHtml('Diese Vorschau enthält keinen HTML-Inhalt.', raw);
+    const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(content)}`;
+    if (dataUrl.length < 1800000) {
+      frame.removeAttribute('srcdoc');
+      frame.src = dataUrl;
+      return;
+    }
+    const blob = new Blob([content], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    state.artifactObjectUrl = url;
+    frame.removeAttribute('srcdoc');
+    frame.src = url;
+  }
+
+  Leon.resetArtifactPanel = function resetArtifactPanel() {
+    revokeArtifactUrl();
+    state.artifactLogs = [];
+    state.artifactErrors = [];
+    state.artifactKey = '';
+    state.activeArtifact = null;
+    state.artifacts = [];
+    state.artifactIndex = -1;
+    state.artifactCount = 0;
+    const frame = $('artifact-frame');
+    if (frame) {
+      frame.removeAttribute('srcdoc');
+      frame.removeAttribute('src');
+    }
+    $('artifact-panel')?.classList.remove('show', 'fullscreen');
+    $('main')?.classList.remove('artifacts-open');
+    Leon.updateArtifactReopen?.(false);
+    Leon.updateArtifactSelect?.();
+    Leon.renderArtifactPanels?.();
+  };
+
   function safeRelativeAssets(html) {
     let out = String(html || '');
     let blocked = 0;
@@ -351,6 +403,9 @@ ${artifactBridgeBody()}
       state.artifactKey = '';
       Leon.updateArtifactSelect();
       Leon.updateArtifactReopen(false);
+      revokeArtifactUrl();
+      frame.removeAttribute('srcdoc');
+      frame.removeAttribute('src');
       return;
     }
 
@@ -376,7 +431,7 @@ ${artifactBridgeBody()}
     if (state.artifactKey !== key) {
       state.artifactLogs = [];
       state.artifactErrors = [];
-      frame.srcdoc = artifact.html;
+      setFrameHtml(frame, artifact.html, artifact.source || '');
       state.artifactKey = key;
       Leon.renderArtifactPanels();
     }
@@ -648,7 +703,7 @@ ${artifactBridgeBody()}
     state.artifactLogs = [];
     state.artifactErrors = [];
     state.artifactKey = '';
-    frame.srcdoc = state.activeArtifact.html;
+    setFrameHtml(frame, state.activeArtifact.html, state.activeArtifact.source || '');
     appendArtifactLog('system', 'Vorschau wurde neu gestartet.');
     Leon.renderArtifactPanels();
     Leon.toast('Vorschau aktualisiert.');

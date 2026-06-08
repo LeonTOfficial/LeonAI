@@ -367,6 +367,8 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("chart-codeblock", js)
         self.assertIn("parseChartCandidate", js)
         self.assertIn("clean === ''", js)
+        self.assertIn("[\\\\/(${tagNames})\\\\]", js)
+        self.assertIn("openColor !== closeColor", js)
 
     def test_artifact_preview_injects_tailwind(self):
         js = self.read("static/js/artifacts.js")
@@ -379,6 +381,12 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("ensurePyodideLoader", js)
         self.assertIn("Vorschau wurde neu gestartet", js)
         self.assertIn("Script error", js)
+        self.assertIn("setFrameHtml", js)
+        self.assertIn("URL.createObjectURL", js)
+        self.assertIn("data:text/html;charset=utf-8", js)
+        self.assertIn("dataUrl.length < 1800000", js)
+        self.assertIn("frame.removeAttribute('srcdoc')", js)
+        self.assertIn("frame-src 'self' data: blob:", self.read("routes/middleware.py"))
 
     def test_artifact_panel_has_tabs_and_console_bridge(self):
         html = self.read("templates/index.html")
@@ -461,6 +469,8 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("Chats</button>", index_html)
         self.assertIn("Dashboard</button>", index_html)
         self.assertIn("data-tip=\"Tokens", dashboard_html)
+        self.assertIn("Tokens sind Wortbausteine", dashboard_html)
+        self.assertIn("Wortbausteine der KI", dashboard_html)
         self.assertIn("toggleDebugCenter", dashboard_html)
         self.assertIn("Übersicht", dashboard_html)
         self.assertIn("setType('favorites'", dashboard_html)
@@ -478,6 +488,10 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("## Features, Die Hunger Machen", readme)
         self.assertIn("## About The Developer", readme)
         self.assertIn("## Über Den Entwickler", readme)
+        self.assertIn("cd \"$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai\"", readme)
+        self.assertIn("## Storage Needed", readme)
+        self.assertIn("## Speicherbedarf", readme)
+        self.assertIn("Echte Ordnerstruktur", readme)
 
 
 class DebugAndMediaTests(unittest.TestCase):

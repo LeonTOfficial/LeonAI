@@ -1,5 +1,5 @@
 /** LEON AI – Shared state and API layer */
-window.Leon = window.Leon || {};
+var Leon = window.Leon = window.Leon || {};
 
 Leon.state = {
   rooms: [],

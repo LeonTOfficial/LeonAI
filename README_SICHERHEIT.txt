@@ -1,24 +1,48 @@
-LEON AI - Sicherheit & Hinweise
+LEON AI - Sicherheit und GitHub-Hinweise
 
-Geprüft/gefixt:
-- App läuft lokal auf Port 5001.
-- Host ist standardmäßig 127.0.0.1, also nur auf deinem Mac erreichbar.
-- Login ist aktiv, Standardpasswort ist leon2026.
-- Passwort wird beim Start nicht im Terminal angezeigt.
-- Session-Cookies sind HttpOnly und SameSite=Lax.
-- Security-Header sind gesetzt.
-- Fremde Cross-Site-POSTs werden blockiert.
-- SQL-Abfragen sind parametrisiert.
-- Chat-Markdown wird im Frontend mit DOMPurify bereinigt.
-- Codeblöcke haben Kopieren- und Datei-Export-Buttons.
-- data/ und backup/ werden nicht gelöscht.
-- Altes Service-Worker-Caching wird entfernt, damit kein altes Design hängen bleibt.
+Kurz gesagt:
+LEON AI ist standardmaessig fuer die lokale Nutzung auf deinem Mac gebaut. Die App bindet sich an 127.0.0.1, nutzt ein Login, schuetzt schreibende Anfragen mit CSRF-Tokens und speichert private Laufzeitdaten nicht im GitHub-Repository.
 
-Empfohlen:
-Lege später eine .env Datei neben app.py an:
+Wichtige Sicherheitsfunktionen:
+- Lokaler Betrieb: HOST=127.0.0.1 bedeutet, dass die App nur auf deinem Mac erreichbar ist.
+- Login: Bei frischen Installationen wird das Passwort im First-Setup festgelegt.
+- Migration: LEON_PASSWORD in .env bleibt als Fallback fuer bestehende Installationen.
+- Session-Schutz: Cookies sind HttpOnly und SameSite=Lax.
+- CSRF-Schutz: POST/PUT/PATCH/DELETE brauchen einen gueltigen Sicherheits-Token.
+- Origin-Schutz: Fremde Cross-Site-Schreibzugriffe werden blockiert.
+- Security Header: Content-Security-Policy, X-Frame-Options, Referrer-Policy und Permissions-Policy sind gesetzt.
+- Datenbank: SQLite-Abfragen sind parametrisiert.
+- Chat-Inhalte: Markdown wird im Frontend mit DOMPurify bereinigt.
+- Vorschau: Artifact-HTML laeuft in einem Sandbox-iframe und wird ueber blob:-URLs geladen.
+- Relative KI-Bildpfade werden neutralisiert, damit keine ungewollten lokalen 404-Requests entstehen.
+- Logs und Fehler enthalten Request-IDs, damit Probleme nachvollziehbar bleiben.
 
-LEON_PASSWORD=dein-neues-passwort
-SECRET_KEY=ein-langer-zufallswert
+Was NICHT auf GitHub gehoert:
+- .env
+- data/
+- backup/
+- venv/
+- *.db
+- *.log
+- lokale HTML-Snapshots wie "LEON AI.html"
+- alte lokale Entwurfsdateien wie README_FEINSCHLIFF.txt
 
-Hinweis:
-Die App ist für lokale Nutzung auf deinem Mac gedacht.
+Die .gitignore ist genau dafuer vorbereitet.
+
+GitHub-Token / Passwoerter:
+Wenn ein Token oder Passwort versehentlich irgendwo gepostet wurde, sofort widerrufen und neu erstellen. GitHub Personal Access Tokens beginnen oft mit "ghp_". So ein Token ist wie ein Passwort.
+
+Start auf macOS:
+Normal:
+
+chmod +x Starten.command
+./Starten.command
+
+Falls macOS die Datei aus Sicherheitsgruenden nicht direkt ausfuehrt:
+
+cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
+chmod +x Starten.command
+./Starten.command
+
+Lizenzhinweis:
+LEON AI ist proprietaere Source-Available-Software. Die offizielle App/Demo darf normal genutzt werden. Der Quellcode darf zu Lern-, Pruefungs- und Evaluierungszwecken angesehen werden. Kopieren, Veraendern, Weitergeben, eigenes Hosting oder kommerzielle Nutzung des Quellcodes erfordern vorherige schriftliche Genehmigung von Leon.

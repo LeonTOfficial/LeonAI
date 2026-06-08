@@ -89,7 +89,7 @@ def register_middleware(app) -> None:
             "img-src 'self' data: blob:; "
             "connect-src 'self' https://cdn.jsdelivr.net https://cdn.tailwindcss.com; "
             "worker-src 'self' blob:; "
-            "frame-src 'self' blob:; "
+            "frame-src 'self' data: blob:; "
             "object-src 'none'; base-uri 'self'; frame-ancestors 'none'",
         )
         if response.status_code >= 400 and not (response.status_code == 404 and _is_benign_404(request.path)):
