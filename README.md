@@ -1,4 +1,4 @@
-> 🇩🇪 **German version available:** Scroll down for the German description of this project.
+> 🇩🇪 **[German version available](#german-version)** – Scroll down to read LEON AI in German.
 
 # LEON AI
 
@@ -12,7 +12,7 @@
 
 ## What Is LEON AI?
 
-LEON AI is a private, local AI workspace for your own computer. It brings chat, code, live previews, diagrams, Python experiments, memory, logs, and dashboards into one clean place. It is built for people who want AI power on macOS, Windows, or Linux without giving every thought and project file to a cloud service.
+LEON AI is a private, local AI workspace for your own computer. It brings chat, code, live previews, diagrams, Python experiments, memory, logs, and dashboards into one clean place. It is built for macOS, Windows, and Linux with a focus on privacy, security, and German-language support.
 
 ## Features That Make You Want To Try It
 
@@ -136,6 +136,7 @@ Read:
 - [`STRUKTUR.md`](STRUKTUR.md) for the architecture, modules, routes, services, and frontend structure.
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
 
 ## Verified Engineering Highlights
 
@@ -143,7 +144,7 @@ LEON AI is not just a visual demo. The project includes a focused test suite and
 
 - **Tested backend flows:** login, setup, room creation, branching, artifact history, backups, privacy actions, and error handling.
 - **Tested frontend contracts:** CSRF headers, colored chat tags, Mermaid/Chart.js integration markers, Pyodide wiring, and artifact preview controls.
-- **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local secrets, databases, backups, logs, and virtual environments.
+- **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local runtime data and secrets.
 - **Current QA command:** `./venv/bin/python -m unittest discover -s tests -q`
 
 Real folder overview:
@@ -158,6 +159,7 @@ LeonAI/
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── LICENSE
+├── CONTRIBUTING.md
 ├── models/
 │   └── database.py
 ├── routes/
@@ -192,13 +194,14 @@ LeonAI/
 
 ## About The Developer
 
-I am **Leon**, 17 years old, born in 2009, from Germany, and preparing for a future in business informatics. LEON AI is my personal learning project for understanding how modern full-stack software is planned, built, tested, secured, refactored, and led from zero to release.
+I am **Leon**, 17 years old, born in 2009, from Germany, and preparing for a future in business informatics. LEON AI is my personal learning project for understanding how modern full-stack software works: modular architecture, secure authentication, local data, testing, and real-world deployment.
 
-This project was built with **AI-Assisted Development**. That matters: it shows how a young developer can use AI as a serious engineering partner to build modular, secure, and usable software faster while still learning the important decisions behind every layer.
+This project was built with **AI-Assisted Development**. That matters: it shows how a young developer can use AI as a serious engineering partner to build modular, secure, and usable software fast. The code quality, test coverage, and documentation reflect this partnership.
 
-A special highlight: I received the **Landespreis Medienbildung** for creating educational content that makes AI easier to understand: what machine learning is at a high level, what is behind systems like ChatGPT, and why it matters outside the tech bubble.
+A special highlight: I received the **Landespreis Medienbildung** for creating educational content that makes AI easier to understand: what machine learning is at a high level, what is behind systems like ChatGPT, and how to use AI tools responsibly.
 
 ## License & Support
+
 **LEON AI is proprietary source-available software.** All rights are reserved by the author: **Copyright © 2026 Leon**.
 
 | Use case | Permission required? | Notes |
@@ -210,11 +213,13 @@ A special highlight: I received the **Landespreis Medienbildung** for creating e
 
 LEON AI is designed as a portable local AI workspace for macOS, Windows laptops/desktops, and Linux systems when Python, the required dependencies, and Ollama are available on that machine.
 
-Community feedback is very welcome: please test the app actively, try real workflows, and open a GitHub Issue whenever you find a bug, have a question, or want to suggest an improvement. For security-sensitive reports, use the private reporting process described in [`SECURITY.md`](SECURITY.md).
+Community feedback is very welcome: please test the app actively, try real workflows, and open a GitHub Issue whenever you find a bug, have a question, or want to suggest an improvement. For security findings, please see [`SECURITY.md`](SECURITY.md) for responsible disclosure.
 
 If you like this project, leave a **star ⭐️** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
 
 ---
+
+<a id="german-version"></a>
 
 # LEON AI
 
@@ -228,7 +233,7 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 
 ## Was Ist LEON AI?
 
-LEON AI ist dein privater, lokaler KI-Arbeitsplatz für deinen eigenen Computer. Die App verbindet Chat, Code, Live-Vorschau, Diagramme, Python-Tests, Speicher, Logs und Dashboard in einer Oberfläche. Sie ist für Menschen gebaut, die KI unter macOS, Windows oder Linux stark nutzen wollen, ohne jedes Projekt und jeden Gedanken an einen Cloud-Dienst zu schicken.
+LEON AI ist dein privater, lokaler KI-Arbeitsplatz für deinen eigenen Computer. Die App verbindet Chat, Code, Live-Vorschau, Diagramme, Python-Tests, Speicher, Logs und Dashboard in einer Oberfläche. Sie ist für macOS, Windows und Linux optimiert und legt großen Wert auf Datenschutz, Sicherheit und deutsche Sprachunterstützung.
 
 ## Features, Die Hunger Machen
 
@@ -352,6 +357,7 @@ Lies:
 - [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
 - [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) für Richtlinien zur Mitarbeit und wie man Bugs meldet oder Features vorschlägt.
 
 ## Geprüfte Technik-Highlights
 
@@ -359,7 +365,7 @@ LEON AI ist nicht nur eine schöne Oberfläche. Das Projekt hat eine gezielte Te
 
 - **Getestete Backend-Flows:** Login, First Setup, Chat-Erstellung, Branching, Artifact-Versionen, Backups, Privacy-Aktionen und Fehlerbehandlung.
 - **Getestete Frontend-Verträge:** CSRF-Header, Farbtags im Chat, Mermaid/Chart.js-Marker, Pyodide-Anbindung und Artifact-Vorschau-Controls.
-- **Sicherheitsbelege:** CSRF-Schutz liegt in `utils/security.py`, Security-Header in `routes/middleware.py`, Fehlerabschirmung in `utils/errors.py`, und die `.gitignore` schließt lokale Secrets, Datenbanken, Backups, Logs und virtuelle Umgebungen aus.
+- **Sicherheitsbelege:** CSRF-Schutz liegt in `utils/security.py`, Security-Header in `routes/middleware.py`, Fehlerabschirmung in `utils/errors.py`, und die `.gitignore` schließt lokale Laufzeitdaten und Secrets aus.
 - **Aktueller QA-Befehl:** `./venv/bin/python -m unittest discover -s tests -q`
 
 Echte Ordnerstruktur:
@@ -374,6 +380,7 @@ LeonAI/
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── LICENSE
+├── CONTRIBUTING.md
 ├── models/
 │   └── database.py
 ├── routes/
@@ -408,13 +415,14 @@ LeonAI/
 
 ## Über Den Entwickler
 
-Ich bin **Leon**, 17 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandteinformatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software geplant, gebaut, getestet, abgesichert, refaktoriert und von null bis zum Release geführt wird.
+Ich bin **Leon**, 17 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandte Informatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software funktioniert: modulare Architektur, sichere Authentifizierung, lokale Datenhoheit, Tests und echte Deployment-Prozesse.
 
-Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wichtiger Punkt: Es zeigt, wie effizient man heute als junger Entwickler mit KI als ernstem Engineering-Partner modulare, sichere und brauchbare Software bauen kann.
+Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wichtiger Punkt: Es zeigt, wie effizient man heute als junger Entwickler mit KI als ernstem Engineering-Partner modulare, sichere und bedienbare Software bauen kann. Die Code-Qualität, die Test-Abdeckung und die Dokumentation spiegeln diese Partnerschaft.
 
-Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grob bedeutet, was hinter Systemen wie ChatGPT steckt und warum das Thema auch außerhalb der Tech-Welt wichtig ist.
+Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grundlegend ist, was hinter Systemen wie ChatGPT steckt, und wie man KI-Tools verantwortungsvoll einsetzt.
 
 ## Lizenz & Support
+
 **LEON AI ist proprietäre Source-Available-Software.** Alle Rechte bleiben beim Urheber: **Copyright © 2026 Leon**.
 
 | Nutzung | Genehmigung nötig? | Erklärung |
@@ -426,6 +434,6 @@ Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI
 
 LEON AI ist als portabler lokaler KI-Arbeitsplatz für macOS, Windows-Laptops/-Desktops und Linux-Systeme konzipiert, wenn Python, die benötigten Abhängigkeiten und Ollama auf dem Gerät verfügbar sind.
 
-Community-Feedback ist ausdrücklich willkommen: Teste die App gerne aktiv, probiere echte Workflows aus und eröffne jederzeit ein GitHub Issue, wenn ein Fehler auftritt, eine Frage offen ist oder du eine Verbesserung vorschlagen möchtest. Für sicherheitskritische Meldungen nutze bitte den privaten Meldeweg aus [`SECURITY.md`](SECURITY.md).
+Community-Feedback ist ausdrücklich willkommen: Teste die App gerne aktiv, probiere echte Workflows aus und eröffne jederzeit ein GitHub Issue, wenn ein Fehler auftritt, eine Frage offen ist oder du eine Verbesserung vorschlagen möchtest. Für Sicherheitsfunde siehe bitte [`SECURITY.md`](SECURITY.md) für verantwortungsvolle Offenlegung.
 
 Wenn dir das Projekt gefällt, lass gerne einen **Stern ⭐️** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.
