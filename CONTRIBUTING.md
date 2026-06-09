@@ -1,4 +1,4 @@
-> 🇩🇪 **German version available:** Scroll down for the German description.
+> 🇩🇪 **[German version available](#german-contribution-version)** – Scroll down to read contribution guidelines in German.
 
 # Contributing to LEON AI
 
@@ -98,6 +98,8 @@ Open a GitHub Issue with the label `question` or start a GitHub Discussion.
 ---
 
 ---
+
+<a id="german-contribution-version"></a>
 
 # Zu LEON AI beitragen
 
