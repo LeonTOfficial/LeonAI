@@ -2,13 +2,13 @@
 
 # LEON AI
 
-![Local First](https://img.shields.io/badge/local-first-5357ff?style=for-the-badge)
+![Local-First Architecture](https://img.shields.io/badge/local--first-architecture-5357ff?style=for-the-badge)
 ![Ollama](https://img.shields.io/badge/Ollama-ready-111827?style=for-the-badge)
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-[PLATZHALTER: Big image/GIF of the chat in action]
+![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
 ## What Is LEON AI?
 
@@ -26,9 +26,9 @@ LEON AI is a private, local AI workspace for your Mac. It brings chat, code, liv
 - **Privacy dashboard:** See activity, token usage, health checks, backups, logs, and privacy tools in one dashboard.
 - **First setup:** On a fresh install, choose your own password and first name before using the app.
 
-[PLATZHALTER: Screenshot - Split view: code on the left, rendered live preview with Mermaid/Charts in the Artifacts panel on the right]
+![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-[PLATZHALTER: Screenshot - Dashboard with token statistics and Privacy Center]
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
 
@@ -85,6 +85,8 @@ http://127.0.0.1:5001
 
 On a fresh install, LEON AI shows a first-setup screen where you choose your own password and first name. After that, the normal login is used.
 
+![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
+
 ## Storage Needed
 
 | Component | Approx. size |
@@ -101,7 +103,7 @@ Want to know how the security model works, how the SQLite schema is structured, 
 Read:
 
 - [`STRUKTUR.md`](STRUKTUR.md) for the architecture, modules, routes, services, and frontend structure.
-- [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) for the local security model, `.env` guidance, and release safety notes.
+- [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 
 ## Verified Engineering Highlights
@@ -121,7 +123,7 @@ LeonAI/
 ├── config.py
 ├── Starten.command
 ├── README.md
-├── README_SICHERHEIT.txt
+├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── LICENSE
@@ -166,7 +168,18 @@ This project was built with **AI-Assisted Development**. That matters: it shows 
 A special highlight: I received the **Landespreis Medienbildung** for creating educational content that makes AI easier to understand: what machine learning is at a high level, what is behind systems like ChatGPT, and why it matters outside the tech bubble.
 
 ## License & Support
-**LEON AI is proprietary source-available software**. All rights are reserved by the author **(Copyright © 2026 Leon)**. You may use the official app/demo normally and view the source code for learning, review, and evaluation. Copying the source, modifying it, redistributing it, hosting your own version, or using it commercially requires prior written permission from the author.
+**LEON AI is proprietary source-available software.** All rights are reserved by the author: **Copyright © 2026 Leon**.
+
+| Use case | Permission required? | Notes |
+| --- | --- | --- |
+| Use the official app/demo privately | **No** | Anyone may use the official app/demo normally and free of charge for private use. |
+| Read the source code for learning or review | **No** | The repository may be viewed for educational, evaluation, and review purposes. |
+| Copy, modify, self-host, redistribute, rebrand, or publish the source code | **Yes** | Prior written permission from Leon is required. |
+| Commercial use or integration into another product/service | **Yes** | A separate written permission/license is required. |
+
+LEON AI is designed as a portable local AI workspace. The current setup is fully usable on macOS and can also be installed on Windows laptops/desktops and Linux systems when Python, the required dependencies, and Ollama are available on that machine.
+
+Community feedback is very welcome: please test the app actively, try real workflows, and open a GitHub Issue whenever you find a bug, have a question, or want to suggest an improvement. For security-sensitive reports, use the private reporting process described in [`SECURITY.md`](SECURITY.md).
 
 If you like this project, leave a **star ⭐️** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
 
@@ -174,13 +187,13 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 
 # LEON AI
 
-![Lokal Zuerst](https://img.shields.io/badge/lokal-zuerst-5357ff?style=for-the-badge)
+![Lokale Priorität](https://img.shields.io/badge/Lokale%20Priorit%C3%A4t-5357ff?style=for-the-badge)
 ![Ollama](https://img.shields.io/badge/Ollama-bereit-111827?style=for-the-badge)
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-[PLATZHALTER: Großes Bild/GIF vom Chat in Aktion]
+![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
 ## Was Ist LEON AI?
 
@@ -198,9 +211,9 @@ LEON AI ist dein privater, lokaler KI-Arbeitsplatz für den Mac. Die App verbind
 - **Privacy Dashboard:** Aktivität, Token-Nutzung, Health Checks, Backups, Logs und Datenschutz-Werkzeuge an einem Ort.
 - **First Setup:** Bei einer frischen Installation legst du dein eigenes Passwort und deinen Vornamen fest.
 
-[PLATZHALTER: Screenshot - Geteilte Ansicht: Code links, gerenderte Live-Vorschau (Mermaid/Charts) im Artifacts-Panel rechts]
+![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-[PLATZHALTER: Screenshot - Das Dashboard mit Token-Statistiken und Privacy Center]
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
 
@@ -227,8 +240,8 @@ cp .env.example .env
 4. Öffne `.env` und passe die wichtigsten Werte an:
 
 ```env
-LEON_PASSWORD=aendere-das-vor-dem-teilen
-SECRET_KEY=nutze-einen-langen-zufaelligen-wert
+LEON_PASSWORD=neues-langes-passwort
+SECRET_KEY=langer-geheimer-wert
 PORT=5001
 HOST=127.0.0.1
 OLLAMA_MODEL=llama3
@@ -257,6 +270,8 @@ http://127.0.0.1:5001
 
 Bei einer frischen Installation erscheint zuerst ein Setup-Screen. Dort legst du dein eigenes Passwort und deinen Vornamen fest. Danach erscheint nur noch der normale Login.
 
+![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
+
 ## Speicherbedarf
 
 | Komponente | Ungefährer Speicherbedarf |
@@ -273,7 +288,7 @@ Du willst wissen, wie sicher das ist oder wie die modulare Architektur aus dem v
 Lies:
 
 - [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
-- [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) für das lokale Sicherheitsmodell, `.env`-Hinweise und Release-Sicherheit.
+- [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
 
 ## Geprüfte Technik-Highlights
@@ -293,7 +308,7 @@ LeonAI/
 ├── config.py
 ├── Starten.command
 ├── README.md
-├── README_SICHERHEIT.txt
+├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── LICENSE
@@ -338,6 +353,17 @@ Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wi
 Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grob bedeutet, was hinter Systemen wie ChatGPT steckt und warum das Thema auch außerhalb der Tech-Welt wichtig ist.
 
 ## Lizenz & Support
-**LEON AI ist proprietäre Source-Available-Software**. Alle Rechte vorbehalten **(Copyright © 2026 Leon)**. Die offizielle App/Demo darf normal genutzt werden, und der Quellcode darf zu Lern-, Prüfungs- und Evaluierungszwecken angesehen werden. Das Kopieren des Quellcodes, Verändern, Weitergeben, eigene Hosten oder kommerzielle Nutzen erfordert vorherige schriftliche Genehmigung des Urhebers.
+**LEON AI ist proprietäre Source-Available-Software.** Alle Rechte bleiben beim Urheber: **Copyright © 2026 Leon**.
+
+| Nutzung | Genehmigung nötig? | Erklärung |
+| --- | --- | --- |
+| Offizielle App/Demo privat nutzen | **Nein** | Jeder darf die offizielle App/Demo völlig normal und kostenlos für den privaten Gebrauch nutzen. |
+| Quellcode zu Lern- oder Prüfzwecken ansehen | **Nein** | Das Repository darf zu Bildungs-, Evaluierungs- und Review-Zwecken gelesen werden. |
+| Quellcode kopieren, verändern, selbst hosten, weiterverbreiten, umbenennen oder veröffentlichen | **Ja** | Dafür ist vorher eine schriftliche Genehmigung von Leon erforderlich. |
+| Kommerzielle Nutzung oder Integration in ein anderes Produkt/einen Dienst | **Ja** | Dafür ist eine gesonderte schriftliche Genehmigung/Lizenz erforderlich. |
+
+LEON AI ist als portabler lokaler KI-Arbeitsplatz konzipiert. Die aktuelle Einrichtung ist vollständig auf macOS nutzbar und kann außerdem auf Windows-Laptops/-Desktops sowie Linux-Systemen installiert werden, wenn Python, die benötigten Abhängigkeiten und Ollama auf dem Gerät verfügbar sind.
+
+Community-Feedback ist ausdrücklich willkommen: Teste die App gerne aktiv, probiere echte Workflows aus und eröffne jederzeit ein GitHub Issue, wenn ein Fehler auftritt, eine Frage offen ist oder du eine Verbesserung vorschlagen möchtest. Für sicherheitskritische Meldungen nutze bitte den privaten Meldeweg aus [`SECURITY.md`](SECURITY.md).
 
 Wenn dir das Projekt gefällt, lass gerne einen **Stern ⭐️** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.
