@@ -12,7 +12,7 @@
 
 ## What Is LEON AI?
 
-LEON AI is a private, local AI workspace for your Mac. It brings chat, code, live previews, diagrams, Python experiments, memory, logs, and dashboards into one clean place. It is built for people who want AI power without giving every thought and project file to a cloud service.
+LEON AI is a private, local AI workspace for your own computer. It brings chat, code, live previews, diagrams, Python experiments, memory, logs, and dashboards into one clean place. It is built for people who want AI power on macOS, Windows, or Linux without giving every thought and project file to a cloud service.
 
 ## Features That Make You Want To Try It
 
@@ -21,7 +21,7 @@ LEON AI is a private, local AI workspace for your Mac. It brings chat, code, liv
 - **Colored text in chat:** Ask LEON AI to mark nouns red, highlight key ideas, or color-code feedback with safe color tags.
 - **Native diagrams and charts:** Mermaid diagrams and Chart.js graphs render directly inside the chat instead of staying as raw code.
 - **Super Artifacts:** Generate HTML, CSS, JavaScript, Tailwind layouts, and Python snippets with a live preview panel.
-- **Browser Python sandbox:** Python can run inside the browser through Pyodide, isolated from your Mac system.
+- **Browser Python sandbox:** Python can run inside the browser through Pyodide, isolated from your operating system.
 - **Vision image uploads:** Upload images and ask LEON AI to describe, analyze, or reason about them when a vision model is installed.
 - **Privacy dashboard:** See activity, token usage, health checks, backups, logs, and privacy tools in one dashboard.
 - **First setup:** On a fresh install, choose your own password and first name before using the app.
@@ -31,6 +31,8 @@ LEON AI is a private, local AI workspace for your Mac. It brings chat, code, liv
 ![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
+
+LEON AI is a cross-platform Flask application. macOS includes a convenience launcher, while Windows laptops/desktops and Linux systems run the same project through Python and Ollama.
 
 1. Install [Ollama](https://ollama.com/) and pull the recommended models:
 
@@ -62,7 +64,9 @@ HOST=127.0.0.1
 OLLAMA_MODEL=llama3
 ```
 
-5. Start LEON AI on macOS:
+5. Start LEON AI on your platform:
+
+### macOS
 
 ```bash
 chmod +x Starten.command
@@ -77,7 +81,34 @@ chmod +x Starten.command
 ./Starten.command
 ```
 
-6. Open the app:
+### Windows PowerShell
+
+```powershell
+py -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python app.py
+```
+
+If PowerShell blocks the virtual environment activation script, run PowerShell as your user and allow scripts for the current session:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
+```
+
+### Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python app.py
+```
+
+6. Open the app in your browser:
 
 ```text
 http://127.0.0.1:5001
@@ -177,7 +208,7 @@ A special highlight: I received the **Landespreis Medienbildung** for creating e
 | Copy, modify, self-host, redistribute, rebrand, or publish the source code | **Yes** | Prior written permission from Leon is required. |
 | Commercial use or integration into another product/service | **Yes** | A separate written permission/license is required. |
 
-LEON AI is designed as a portable local AI workspace. The current setup is fully usable on macOS and can also be installed on Windows laptops/desktops and Linux systems when Python, the required dependencies, and Ollama are available on that machine.
+LEON AI is designed as a portable local AI workspace for macOS, Windows laptops/desktops, and Linux systems when Python, the required dependencies, and Ollama are available on that machine.
 
 Community feedback is very welcome: please test the app actively, try real workflows, and open a GitHub Issue whenever you find a bug, have a question, or want to suggest an improvement. For security-sensitive reports, use the private reporting process described in [`SECURITY.md`](SECURITY.md).
 
@@ -197,7 +228,7 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 
 ## Was Ist LEON AI?
 
-LEON AI ist dein privater, lokaler KI-Arbeitsplatz für den Mac. Die App verbindet Chat, Code, Live-Vorschau, Diagramme, Python-Tests, Speicher, Logs und Dashboard in einer Oberfläche. Sie ist für Menschen gebaut, die KI stark nutzen wollen, ohne jedes Projekt und jeden Gedanken an einen Cloud-Dienst zu schicken.
+LEON AI ist dein privater, lokaler KI-Arbeitsplatz für deinen eigenen Computer. Die App verbindet Chat, Code, Live-Vorschau, Diagramme, Python-Tests, Speicher, Logs und Dashboard in einer Oberfläche. Sie ist für Menschen gebaut, die KI unter macOS, Windows oder Linux stark nutzen wollen, ohne jedes Projekt und jeden Gedanken an einen Cloud-Dienst zu schicken.
 
 ## Features, Die Hunger Machen
 
@@ -206,7 +237,7 @@ LEON AI ist dein privater, lokaler KI-Arbeitsplatz für den Mac. Die App verbind
 - **Farbe im Chat:** Lass LEON AI Nomen rot markieren, Schlüsselstellen hervorheben oder Feedback farbig strukturieren.
 - **Diagramme und Charts im Chat:** Mermaid-Diagramme und Chart.js-Grafiken werden direkt gerendert statt nur als Code angezeigt.
 - **Super-Artifacts:** HTML, CSS, JavaScript, Tailwind-Oberflächen und Python-Snippets direkt in einer Live-Vorschau ausprobieren.
-- **Python-Sandbox im Browser:** Python läuft über Pyodide im Browser und nicht direkt auf deinem Mac-System.
+- **Python-Sandbox im Browser:** Python läuft über Pyodide im Browser und nicht direkt auf deinem Betriebssystem.
 - **Vision-Bild-Uploads:** Bilder hochladen und analysieren lassen, wenn ein Vision-Modell installiert ist.
 - **Privacy Dashboard:** Aktivität, Token-Nutzung, Health Checks, Backups, Logs und Datenschutz-Werkzeuge an einem Ort.
 - **First Setup:** Bei einer frischen Installation legst du dein eigenes Passwort und deinen Vornamen fest.
@@ -216,6 +247,8 @@ LEON AI ist dein privater, lokaler KI-Arbeitsplatz für den Mac. Die App verbind
 ![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
 ## Quick Start / Installation
+
+LEON AI ist eine plattformübergreifende Flask-Anwendung. macOS enthält einen Komfort-Starter, während Windows-Laptops/-Desktops und Linux-Systeme dasselbe Projekt über Python und Ollama starten.
 
 1. Installiere [Ollama](https://ollama.com/) und lade die empfohlenen Modelle:
 
@@ -247,7 +280,9 @@ HOST=127.0.0.1
 OLLAMA_MODEL=llama3
 ```
 
-5. Starte LEON AI auf macOS:
+5. Starte LEON AI auf deiner Plattform:
+
+### macOS
 
 ```bash
 chmod +x Starten.command
@@ -262,7 +297,34 @@ chmod +x Starten.command
 ./Starten.command
 ```
 
-6. Öffne die App:
+### Windows PowerShell
+
+```powershell
+py -m venv venv
+.\venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python app.py
+```
+
+Wenn PowerShell das Aktivieren der virtuellen Umgebung blockiert, erlaube Skripte nur für die aktuelle Sitzung:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\venv\Scripts\Activate.ps1
+```
+
+### Linux
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python app.py
+```
+
+6. Öffne die App im Browser:
 
 ```text
 http://127.0.0.1:5001
@@ -362,7 +424,7 @@ Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI
 | Quellcode kopieren, verändern, selbst hosten, weiterverbreiten, umbenennen oder veröffentlichen | **Ja** | Dafür ist vorher eine schriftliche Genehmigung von Leon erforderlich. |
 | Kommerzielle Nutzung oder Integration in ein anderes Produkt/einen Dienst | **Ja** | Dafür ist eine gesonderte schriftliche Genehmigung/Lizenz erforderlich. |
 
-LEON AI ist als portabler lokaler KI-Arbeitsplatz konzipiert. Die aktuelle Einrichtung ist vollständig auf macOS nutzbar und kann außerdem auf Windows-Laptops/-Desktops sowie Linux-Systemen installiert werden, wenn Python, die benötigten Abhängigkeiten und Ollama auf dem Gerät verfügbar sind.
+LEON AI ist als portabler lokaler KI-Arbeitsplatz für macOS, Windows-Laptops/-Desktops und Linux-Systeme konzipiert, wenn Python, die benötigten Abhängigkeiten und Ollama auf dem Gerät verfügbar sind.
 
 Community-Feedback ist ausdrücklich willkommen: Teste die App gerne aktiv, probiere echte Workflows aus und eröffne jederzeit ein GitHub Issue, wenn ein Fehler auftritt, eine Frage offen ist oder du eine Verbesserung vorschlagen möchtest. Für sicherheitskritische Meldungen nutze bitte den privaten Meldeweg aus [`SECURITY.md`](SECURITY.md).
 

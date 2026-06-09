@@ -64,14 +64,14 @@ The current automated suite covers **46 tests** across backend behavior, fronten
 
 ### 3. Cross-Platform Test Matrix
 
-LEON AI is a Flask + SQLite + Vanilla JS application and is designed to be portable wherever Python and Ollama are available. The macOS start script is optimized for local Mac usage; Windows and Linux can run the app through the same Python backend with platform-specific startup steps.
+LEON AI is a Flask + SQLite + Vanilla JS application and is designed to be portable wherever Python and Ollama are available. macOS includes a convenience launcher, while Windows and Linux run the same Python backend through their normal terminal workflow.
 
 | Platform | Status | What to verify |
 | --- | --- | --- |
-| macOS Apple Silicon | Primary release target | `Starten.command`, Ollama detection, Safari/Chrome rendering, local paths, backups, logs |
-| macOS Intel | Supported macOS target | Same macOS checklist, with additional dependency install verification |
-| Windows laptops/desktops | Supported cross-platform target | Python virtual environment, `pip install -r requirements.txt`, Ollama for Windows, browser rendering, local database paths |
-| Linux | Compatible architecture / optional target | Python virtual environment, Ollama service, localhost binding, file permissions, browser rendering |
+| macOS Apple Silicon | Supported local target | `Starten.command`, Ollama detection, Safari/Chrome rendering, local paths, backups, logs |
+| macOS Intel | Supported local target | Same macOS behavior, with additional dependency install verification |
+| Windows laptops/desktops | Supported local target | Python virtual environment, `pip install -r requirements.txt`, Ollama for Windows, browser rendering, local database paths |
+| Linux | Compatible local target | Python virtual environment, Ollama service, localhost binding, file permissions, browser rendering |
 
 Recommended Windows/Linux start pattern:
 
@@ -129,26 +129,21 @@ Manual responsive checks:
 | Missing internet/CDN dependency | Rich preview libraries may fail gracefully; core local chat remains available. |
 | Wrong external API key | External provider calls should fail with a controlled error, not expose the key. |
 
-### 7. Manual QA Checklist Before A Release
+### 7. Manual QA Story
 
-1. Start LEON AI locally.
-2. Open `http://127.0.0.1:5001`.
-3. Complete first setup on a fresh data directory.
-4. Log out and log in again.
-5. Create a new chat and send a German message.
-6. Confirm the assistant remains in German when the user writes German.
-7. Generate a simple HTML page and confirm the preview panel renders visible content.
-8. Open the Artifact panel tabs: Preview, Code, Terminal, Errors.
-9. Click the preview reload button.
-10. Ask for a Mermaid diagram and confirm it renders as a diagram.
-11. Ask for a Chart.js bar chart and confirm it renders as a chart.
-12. Ask for colored text such as `[rot]Example[/rot]` and confirm the color appears.
-13. Edit an older message and confirm a new branch is created.
-14. Pin a chat and confirm it stays at the top.
-15. Open the dashboard and check metrics, token explanation, charts, privacy tools, and debug center.
-16. Run a backup and confirm the health check reports it correctly.
-17. Check `data/logs/leon.log` for unexpected `ERROR` lines.
-18. Confirm `.env`, `data/`, `backup/`, `venv/`, databases, and logs are not staged.
+Manual QA describes the real user journey that the automated tests cannot fully see. It is less about clicking through a rigid list and more about proving that LEON AI feels complete as a local AI workspace.
+
+| User journey | What this proves |
+| --- | --- |
+| First launch and first setup | A new user can create a profile, set a password, and enter the workspace without touching code. |
+| Login and new chat | The protected app shell, room list, model selector, and empty-chat behavior work together. |
+| German conversation | The assistant respects German input and keeps the language consistent. |
+| HTML/CSS/JS generation | The chat and artifact panel cooperate so generated code becomes a visible preview, not just text. |
+| Mermaid and Chart.js output | Native diagrams and charts render directly in the conversation. |
+| Colored text markers | The chat renderer can display structured color annotations such as nouns, verbs, or key ideas. |
+| Branching and pinned chats | Longer conversations can be reorganized without losing the original path. |
+| Dashboard and privacy center | Activity, tokens, logs, health, backups, and privacy tools are visible in one place. |
+| Logs and request IDs | When something fails, the browser message and `data/logs/leon.log` can be connected through clear diagnostic information. |
 
 ### 8. Known Expected Test Logs
 
@@ -160,17 +155,17 @@ Some automated tests intentionally trigger failures to prove security and error 
 | `500` | Hidden-error tests intentionally trigger backend errors. |
 | Internal test detail in local log | The local log may contain debug information, but the browser response must not expose it. |
 
-### 9. Release Rule
+### 9. Release Readiness
 
-A release is ready only when:
+LEON AI is considered release-ready when the technical tests and the product story agree with each other: the automated suite passes, the JavaScript files parse correctly, the preview panel works in a browser, and the documentation describes the current behavior honestly.
 
-- Automated tests pass.
-- JavaScript syntax checks pass.
-- Manual preview checks pass.
-- Mermaid, Chart.js, Pyodide, colored text, and artifacts are verified.
-- Security notes are current.
-- Testing notes are current.
-- `.env`, `data/`, `backup/`, `venv/`, databases, logs, and tokens are not staged for Git.
+| Release signal | Meaning |
+| --- | --- |
+| Unit tests pass | Backend behavior, security contracts, artifacts, privacy tools, backups, and UI contracts match the expected model. |
+| JavaScript checks pass | The frontend modules can load without syntax-level breakage. |
+| Manual preview works | Generated HTML/CSS/JS, Mermaid, Chart.js, Pyodide, and color tags are usable in the real interface. |
+| Documentation is current | README, architecture, security, and testing files explain the same product that users actually download. |
+| Private files stay local | `.env`, `data/`, `backup/`, `venv/`, databases, logs, and tokens stay out of the public repository. |
 
 ---
 
@@ -230,14 +225,14 @@ Die aktuelle automatisierte Suite umfasst **46 Tests** für Backend-Verhalten, F
 
 ### 3. Cross-Platform-Testmatrix
 
-LEON AI ist eine Flask-, SQLite- und Vanilla-JS-Anwendung und so aufgebaut, dass sie überall laufen kann, wo Python und Ollama verfügbar sind. Das macOS-Startskript ist für lokale Mac-Nutzung optimiert; Windows und Linux können denselben Python-Backend-Weg mit plattformspezifischem Start nutzen.
+LEON AI ist eine Flask-, SQLite- und Vanilla-JS-Anwendung und so aufgebaut, dass sie überall laufen kann, wo Python und Ollama verfügbar sind. macOS bringt einen Komfort-Starter mit, während Windows und Linux dasselbe Python-Backend über ihren normalen Terminal-Weg starten.
 
 | Plattform | Status | Was geprüft werden sollte |
 | --- | --- | --- |
-| macOS Apple Silicon | Primäres Release-Ziel | `Starten.command`, Ollama-Erkennung, Safari-/Chrome-Rendering, lokale Pfade, Backups, Logs |
-| macOS Intel | Unterstütztes macOS-Ziel | Gleiche macOS-Checkliste plus zusätzliche Prüfung der Abhängigkeitsinstallation |
-| Windows-Laptops/-Desktops | Unterstütztes Cross-Platform-Ziel | Python-Umgebung, `pip install -r requirements.txt`, Ollama für Windows, Browser-Rendering, lokale Datenbankpfade |
-| Linux | Kompatible Architektur / optionales Ziel | Python-Umgebung, Ollama-Service, localhost-Bindung, Dateirechte, Browser-Rendering |
+| macOS Apple Silicon | Unterstütztes lokales Ziel | `Starten.command`, Ollama-Erkennung, Safari-/Chrome-Rendering, lokale Pfade, Backups, Logs |
+| macOS Intel | Unterstütztes lokales Ziel | Gleiches macOS-Verhalten plus zusätzliche Prüfung der Abhängigkeitsinstallation |
+| Windows-Laptops/-Desktops | Unterstütztes lokales Ziel | Python-Umgebung, `pip install -r requirements.txt`, Ollama für Windows, Browser-Rendering, lokale Datenbankpfade |
+| Linux | Kompatibles lokales Ziel | Python-Umgebung, Ollama-Service, localhost-Bindung, Dateirechte, Browser-Rendering |
 
 Empfohlenes Startmuster für Windows/Linux:
 
@@ -295,26 +290,21 @@ Manuelle Responsive-Prüfungen:
 | Fehlende Internetverbindung/CDN-Abhängigkeit | Rich-Preview-Bibliotheken können kontrolliert ausfallen; der lokale Chat-Kern bleibt verfügbar. |
 | Falscher externer API-Key | Externe Anbieteraufrufe sollen kontrolliert fehlschlagen, ohne den Schlüssel offenzulegen. |
 
-### 7. Manuelle QA-Checkliste vor einem Release
+### 7. Manuelle QA-Geschichte
 
-1. LEON AI lokal starten.
-2. `http://127.0.0.1:5001` öffnen.
-3. First Setup mit frischem Datenordner abschließen.
-4. Ausloggen und erneut einloggen.
-5. Neuen Chat erstellen und deutsche Nachricht senden.
-6. Prüfen, dass der Assistent bei deutscher Nutzereingabe auf Deutsch bleibt.
-7. Einfache HTML-Seite erzeugen und sichtbare Vorschau bestätigen.
-8. Artifact-Panel-Tabs öffnen: Vorschau, Code, Terminal, Fehler.
-9. Aktualisieren-Button der Vorschau klicken.
-10. Mermaid-Diagramm anfordern und gerenderte Diagrammansicht prüfen.
-11. Chart.js-Balkendiagramm anfordern und gerenderten Chart prüfen.
-12. Farbigen Text wie `[rot]Beispiel[/rot]` anfordern und sichtbare Farbe prüfen.
-13. Ältere Nachricht bearbeiten und neuen Ast bestätigen.
-14. Chat anpinnen und Reihenfolge prüfen.
-15. Dashboard öffnen und Metriken, Token-Erklärung, Diagramme, Privacy Tools und Debug Center prüfen.
-16. Backup ausführen und korrekten Health-Check prüfen.
-17. `data/logs/leon.log` auf unerwartete `ERROR`-Zeilen prüfen.
-18. Prüfen, dass `.env`, `data/`, `backup/`, `venv/`, Datenbanken und Logs nicht für Git vorgemerkt sind.
+Manuelle QA beschreibt den echten Nutzerweg, den automatisierte Tests nicht vollständig sehen können. Es geht weniger um eine starre Klickliste und mehr darum, zu beweisen, dass LEON AI sich als lokaler KI-Arbeitsbereich vollständig anfühlt.
+
+| Nutzerweg | Was dadurch sichtbar wird |
+| --- | --- |
+| Erster Start und First Setup | Ein neuer Nutzer kann Profil und Passwort einrichten und ohne Code-Berührung in den Arbeitsbereich starten. |
+| Login und neuer Chat | Geschützte App-Oberfläche, Raumliste, Modellwahl und Verhalten leerer Chats greifen ineinander. |
+| Deutsche Unterhaltung | Der Assistent respektiert deutsche Eingaben und hält die Sprache konsistent. |
+| HTML/CSS/JS-Erzeugung | Chat und Artifact-Panel arbeiten zusammen, sodass generierter Code als sichtbare Vorschau erscheint. |
+| Mermaid- und Chart.js-Ausgabe | Native Diagramme und Charts werden direkt in der Unterhaltung gerendert. |
+| Farbige Textmarker | Der Chat-Renderer kann strukturierte Farbmarkierungen wie Nomen, Verben oder Schlüsselideen anzeigen. |
+| Branching und angepinnte Chats | Längere Gespräche können neu organisiert werden, ohne den ursprünglichen Pfad zu verlieren. |
+| Dashboard und Privacy Center | Aktivität, Tokens, Logs, Health, Backups und Datenschutz-Werkzeuge sind an einem Ort sichtbar. |
+| Logs und Request-IDs | Wenn etwas fehlschlägt, lassen sich Browser-Meldung und `data/logs/leon.log` über Diagnoseinformationen verbinden. |
 
 ### 8. Erwartete Test-Logs
 
@@ -326,14 +316,14 @@ Einige automatisierte Tests lösen absichtlich Fehler aus, um Sicherheit und Feh
 | `500` | Hidden-Error-Tests lösen absichtlich Backend-Fehler aus. |
 | Interne Testdetails im lokalen Log | Das lokale Log darf Debug-Informationen enthalten; die Browser-Antwort darf sie nicht zeigen. |
 
-### 9. Release-Regel
+### 9. Release-Reife
 
-Ein Release gilt erst als bereit, wenn:
+LEON AI gilt als releasefähig, wenn technische Tests und Produktgeschichte zusammenpassen: Die automatisierte Suite läuft durch, die JavaScript-Dateien sind syntaktisch sauber, das Vorschau-Panel funktioniert im Browser und die Dokumentation beschreibt ehrlich den aktuellen Stand.
 
-- automatisierte Tests erfolgreich sind,
-- JavaScript-Syntaxprüfungen erfolgreich sind,
-- manuelle Vorschau-Checks erfolgreich sind,
-- Mermaid, Chart.js, Pyodide, Farbtags und Artifacts geprüft wurden,
-- Sicherheitshinweise aktuell sind,
-- Testing-Hinweise aktuell sind,
-- `.env`, `data/`, `backup/`, `venv/`, Datenbanken, Logs und Tokens nicht für Git vorgemerkt sind.
+| Release-Signal | Bedeutung |
+| --- | --- |
+| Unit Tests laufen durch | Backend-Verhalten, Sicherheitsverträge, Artifacts, Datenschutz-Werkzeuge, Backups und UI-Verträge passen zum erwarteten Modell. |
+| JavaScript-Prüfungen laufen durch | Die Frontend-Module können ohne Syntaxbruch geladen werden. |
+| Manuelle Vorschau funktioniert | Generiertes HTML/CSS/JS, Mermaid, Chart.js, Pyodide und Farbtags sind in der echten Oberfläche nutzbar. |
+| Dokumentation ist aktuell | README, Architektur, Sicherheit und Testing erklären dasselbe Produkt, das Nutzer herunterladen. |
+| Private Dateien bleiben lokal | `.env`, `data/`, `backup/`, `venv/`, Datenbanken, Logs und Tokens bleiben außerhalb des öffentlichen Repositorys. |

@@ -124,17 +124,17 @@ If the issue is urgent and no private channel is available, open a minimal publi
 | Automatic protection for custom network exposure | If `HOST=0.0.0.0` is enabled, the user is responsible for network safety. |
 | Secret recovery after leaks | Leaked credentials must be rotated at the provider immediately. |
 
-### 8. Release Security Checklist
+### 8. Release Security Model
 
-Before publishing a release:
+The public repository is meant to contain source code, documentation, tests, and screenshots, but not private runtime data. A safe release therefore keeps a clear boundary between project files and local user data.
 
-- Run the full test suite from [`TESTING.md`](TESTING.md).
-- Confirm `.env` is not staged.
-- Confirm `data/`, `backup/`, `venv/`, `*.db`, and `*.log` are not staged.
-- Review `routes/middleware.py` for security-header changes.
-- Review `utils/security.py` for auth/CSRF/origin changes.
-- Review `static/js/artifacts.js` for preview/iframe behavior.
-- Search the repository for accidental tokens or passwords.
+| Release area | Security meaning |
+| --- | --- |
+| Automated tests | The test suite described in [`TESTING.md`](TESTING.md) documents the expected behavior for auth, CSRF, errors, privacy tools, backups, and rich frontend contracts. |
+| Secrets | `.env`, passwords, API keys, tokens, local databases, logs, and backups are runtime data and stay outside Git. |
+| Request protection | Changes in `routes/middleware.py` and `utils/security.py` are security-sensitive because they affect headers, CSRF, origin checks, sessions, and login behavior. |
+| Preview isolation | Changes in `static/js/artifacts.js` are security-sensitive because they affect how generated HTML, JavaScript, Python, and iframe previews behave. |
+| Public communication | Security-sensitive findings should use private reporting first, while normal bugs and questions can be discussed through GitHub Issues. |
 
 ---
 
@@ -254,14 +254,14 @@ Falls das Problem dringend ist und kein privater Kanal verfügbar ist, eröffne 
 | Automatischer Schutz bei eigener Netzwerkfreigabe | Wenn `HOST=0.0.0.0` aktiviert wird, ist der Nutzer für Netzwerksicherheit verantwortlich. |
 | Wiederherstellung nach Secret-Leaks | Veröffentlichte Zugangsdaten müssen sofort beim jeweiligen Anbieter widerrufen werden. |
 
-### 8. Sicherheits-Checkliste vor Releases
+### 8. Sicherheitsmodell bei Veröffentlichungen
 
-Vor einer Veröffentlichung:
+Das öffentliche Repository soll Quellcode, Dokumentation, Tests und Screenshots enthalten, aber keine privaten Laufzeitdaten. Eine sichere Veröffentlichung trennt deshalb klar zwischen Projektdateien und lokalen Nutzerdaten.
 
-- Die vollständige Test-Suite aus [`TESTING.md`](TESTING.md) ausführen.
-- Prüfen, dass `.env` nicht für Git vorgemerkt ist.
-- Prüfen, dass `data/`, `backup/`, `venv/`, `*.db` und `*.log` nicht vorgemerkt sind.
-- Änderungen in `routes/middleware.py` auf Security-Header prüfen.
-- Änderungen in `utils/security.py` auf Authentifizierung, CSRF und Origin-Checks prüfen.
-- Änderungen in `static/js/artifacts.js` auf Vorschau-/iframe-Verhalten prüfen.
-- Das Repository nach versehentlichen Tokens oder Passwörtern durchsuchen.
+| Release-Bereich | Sicherheitsbedeutung |
+| --- | --- |
+| Automatisierte Tests | Die in [`TESTING.md`](TESTING.md) beschriebene Test-Suite dokumentiert erwartetes Verhalten für Authentifizierung, CSRF, Fehler, Datenschutz-Werkzeuge, Backups und Rich-Frontend-Verträge. |
+| Secrets | `.env`, Passwörter, API-Schlüssel, Tokens, lokale Datenbanken, Logs und Backups sind Laufzeitdaten und bleiben außerhalb von Git. |
+| Request-Schutz | Änderungen in `routes/middleware.py` und `utils/security.py` sind sicherheitsrelevant, weil sie Header, CSRF, Origin-Prüfungen, Sessions und Login-Verhalten betreffen. |
+| Vorschau-Isolation | Änderungen in `static/js/artifacts.js` sind sicherheitsrelevant, weil sie beeinflussen, wie generiertes HTML, JavaScript, Python und iframe-Vorschauen ausgeführt werden. |
+| Öffentliche Kommunikation | Sicherheitskritische Funde sollten zuerst privat gemeldet werden, während normale Fehler und Fragen über GitHub Issues besprochen werden können. |
