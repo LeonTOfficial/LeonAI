@@ -1,4 +1,5 @@
 """Structured logging to file with optional terminal activity output."""
+from typing import Optional
 import contextvars
 import logging
 import os
@@ -28,7 +29,7 @@ def new_request_id() -> str:
     return uuid.uuid4().hex[:12]
 
 
-def set_request_id(request_id: str | None) -> None:
+def set_request_id(request_id: Optional[str]) -> None:
     _request_id.set(request_id or "-")
 
 
