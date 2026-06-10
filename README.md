@@ -7,7 +7,6 @@
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
-[![CI/CD Tests](https://github.com/LeonTOfficial/LeonAI/actions/workflows/test.yml/badge.svg)](https://github.com/LeonTOfficial/LeonAI/actions)
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
@@ -236,7 +235,6 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
-[![CI/CD Tests](https://github.com/LeonTOfficial/LeonAI/actions/workflows/test.yml/badge.svg)](https://github.com/LeonTOfficial/LeonAI/actions)
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
