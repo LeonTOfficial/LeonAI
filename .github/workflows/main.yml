@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-# Zwingt GitHub Actions dazu, die neueren Node 24 Laufzeitumgebungen zu nutzen
-# Behebt die Deprecation-Warnung endgültig.
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -15,11 +13,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      # fail-fast: false sorgt dafür, dass bei einem Fehler in einer Version 
-      # die anderen Tests trotzdem zu Ende laufen.
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11"]
+        python-version: ["3.10", "3.11", "3.12"]
 
     steps:
     - name: Checkout Repository
@@ -34,7 +30,7 @@ jobs:
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         pip install flake8
 
     - name: Check Python Syntax (Flake8)
@@ -42,10 +38,8 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
 
     - name: Set up Environment for Testing
-      # Fallback hinzugefügt, falls die Datei mal umbenannt oder gelöscht wird, 
-      # damit der Workflow hier nicht direkt crasht.
       run: |
-        cp .env.example .env || echo "Keine .env.example gefunden, überspringe Schritt."
+        if [ -f .env.example ]; then cp .env.example .env; else touch .env; fi
 
     - name: Run Python Unit Tests
       run: |
@@ -54,7 +48,7 @@ jobs:
     - name: Set up Node.js for JS Check
       uses: actions/setup-node@v4
       with:
-        node-version: '24' # Geupdatet von 20 auf 24
+        node-version: '24'
 
     - name: Install JSHint for JS Syntax Check
       run: npm install -g jshint
