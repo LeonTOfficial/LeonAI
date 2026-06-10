@@ -201,7 +201,7 @@ LeonAI/
 
 ## About The Developer
 
-I am **Leon**, 17 years old, born in 2009, from Germany, and preparing for a future in business informatics. LEON AI is my personal learning project for understanding how modern full-stack software works: modular architecture, secure authentication, local data, testing, and real-world deployment.
+I am **Leon**, 16 years old, born in 2009, from Germany, and preparing for a future in business informatics. LEON AI is my personal learning project for understanding how modern full-stack software works: modular architecture, secure authentication, local data, testing, and real-world deployment.
 
 This project was built with **AI-Assisted Development**. That matters: it shows how a young developer can use AI as a serious engineering partner to build modular, secure, and usable software fast. The code quality, test coverage, and documentation reflect this partnership.
 
@@ -429,7 +429,7 @@ LeonAI/
 
 ## Über Den Entwickler
 
-Ich bin **Leon**, 17 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandte Informatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software funktioniert: modulare Architektur, sichere Authentifizierung, lokale Datenhoheit, Tests und echte Deployment-Prozesse.
+Ich bin **Leon**, 16 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandte Informatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software funktioniert: modulare Architektur, sichere Authentifizierung, lokale Datenhoheit, Tests und echte Deployment-Prozesse.
 
 Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wichtiger Punkt: Es zeigt, wie effizient man heute als junger Entwickler mit KI als ernstem Engineering-Partner modulare, sichere und bedienbare Software bauen kann. Die Code-Qualität, die Test-Abdeckung und die Dokumentation spiegeln diese Partnerschaft.
 
