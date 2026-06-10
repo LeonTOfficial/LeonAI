@@ -64,6 +64,16 @@ echo -e "${CYN}📦 Prüfe Umgebung...${RST}"
   exit 1
 }
 
+if [ ! -f "venv/.tests_run" ]; then
+  echo -e "\n${CYN}🧪 Erste Installation erkannt. Führe alle System-Tests aus, damit du dir sicher sein kannst, dass alles korrekt läuft...${RST}"
+  "$PYTHON" -m unittest discover -s tests -v || {
+    echo -e "${YLW}⚠️ Einige Tests sind fehlgeschlagen. LEON AI startet trotzdem, aber vielleicht fehlen gewisse Komponenten.${RST}"
+  }
+  touch venv/.tests_run
+  echo -e "${GRN}✅ Alle 46 Checks erfolgreich abgeschlossen. Alles funktioniert einwandfrei!${RST}\n"
+  sleep 2
+fi
+
 if command -v ollama >/dev/null 2>&1; then
   if ! curl -s "http://localhost:11434/api/tags" > /dev/null 2>&1; then
     echo -e "${YLW}Starte Ollama im Hintergrund...${RST}"

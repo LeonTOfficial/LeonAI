@@ -1,4 +1,4 @@
-> 🇩🇪 **[German version available](#german-version)** – Scroll down to read LEON AI in German.
+> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
 
 # LEON AI
 
@@ -7,6 +7,7 @@
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
+[![CI/CD Tests](https://github.com/LeonTOfficial/LeonAI/actions/workflows/test.yml/badge.svg)](https://github.com/LeonTOfficial/LeonAI/actions)
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
@@ -28,7 +29,9 @@ LEON AI is a private, local AI workspace for your own computer. It brings chat, 
 
 ![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
+> **Note:** The Artifacts feature allows you to test HTML, CSS, JavaScript, and Tailwind setups in a live environment directly within your chat.
+
+
 
 ## Quick Start / Installation
 
@@ -137,6 +140,11 @@ Read:
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
+- [`UPDATES.md`](UPDATES.md) for changelogs, log file structure, and handling issues with older Python versions.
+
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
+
+> **Note:** Monitor your privacy, token usage, logs, and system health from the built-in dashboard.
 
 ## Verified Engineering Highlights
 
@@ -228,6 +236,7 @@ If you like this project, leave a **star ⭐️** and **follow** me on GitHub. I
 ![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
 ![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
+[![CI/CD Tests](https://github.com/LeonTOfficial/LeonAI/actions/workflows/test.yml/badge.svg)](https://github.com/LeonTOfficial/LeonAI/actions)
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
@@ -249,7 +258,9 @@ LEON AI ist dein privater, lokaler KI-Arbeitsplatz für deinen eigenen Computer.
 
 ![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
+> **Hinweis:** Mit dem Artifacts-Feature lassen sich HTML, CSS, JavaScript und Tailwind in einer Live-Umgebung direkt im Chat testen.
+
+
 
 ## Quick Start / Installation
 
@@ -358,6 +369,11 @@ Lies:
 - [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) für Richtlinien zur Mitarbeit und wie man Bugs meldet oder Features vorschlägt.
+- [`UPDATES.md`](UPDATES.md) für Changelogs, den Aufbau der Log-Dateien und Problemlösungen bei älteren Python-Versionen.
+
+![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
+
+> **Hinweis:** Überwache deine Privatsphäre, Token-Nutzung, Logs und Systemressourcen direkt über das Dashboard.
 
 ## Geprüfte Technik-Highlights
 

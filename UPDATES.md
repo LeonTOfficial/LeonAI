@@ -27,6 +27,38 @@
 
 ---
 
+## Umgang mit Logs und Fehlerstruktur
+
+Die Logs von LEON AI befinden sich in `data/logs/leon.log`. Ein Log-Eintrag (Fehler oder Info) ist immer in dieser Struktur aufgebaut:
+
+1. **Zeitstempel:** Wann ist das Ereignis passiert? (z.B. `2026-06-10 12:34:56,789`)
+2. **Loglevel:** Wie schwerwiegend ist das Ereignis? (`INFO`, `WARNING`, `ERROR`, `CRITICAL`)
+3. **Modul:** In welcher Datei/Komponente ist es passiert? (z.B. `[utils.errors]`)
+4. **Nachricht:** Was genau ist passiert? (z.B. `Ein unerwarteter Fehler ist aufgetreten`)
+
+**Beispiel für einen Log-Eintrag:**
+```text
+2026-06-10 14:20:15,123 - ERROR - [utils.errors] - Ein unerwarteter Fehler ist aufgetreten: Database is locked.
+```
+
+**Bedeutung der Level:**
+- `INFO`: Normale Vorgänge (App gestartet, Login erfolgreich).
+- `WARNING`: Etwas ist nicht ideal, aber die App läuft weiter (z.B. Datei nicht gefunden).
+- `ERROR`: Eine bestimmte Funktion ist fehlgeschlagen (z.B. Chatnachricht konnte nicht gespeichert werden).
+- `CRITICAL`: Ein schweres Problem, das die App oft zum Absturz bringt.
+
+## Fehler bei alten Python-Versionen
+
+LEON AI ist auf aktuelle Python-Versionen optimiert (empfohlen: **Python 3.10 oder höher**). 
+Wenn du versuchst, die App mit einer alten Python-Version (z.B. Python 3.8 oder 3.9) zu starten, können folgende Fehler auftreten:
+- **Syntaxfehler durch neue Type-Hints**: Schreibweisen wie `str | None` anstelle von `Optional[str]` führen in alten Versionen zu Fehlern.
+- **Inkompatible Abhängigkeiten**: Neuere Versionen in der `requirements.txt` setzen oft Python 3.10+ voraus.
+- **Asyncio/Threading Probleme**: Bestimmte asynchrone Abläufe laufen auf veralteten Versionen nicht stabil.
+
+**Lösung:** Wenn du direkt beim Starten in der Konsole Fehler siehst, überprüfe deine Python-Version mit `python --version` (oder `python3 --version`) und aktualisiere auf mindestens Python 3.10.
+
+---
+
 ## [2026-06-04] – Log-Auswertung & 404-Fixes
 
 **Typ:** Fix / Dokumentation
