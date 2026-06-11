@@ -5,8 +5,7 @@
 ![Network](https://img.shields.io/badge/default%20host-127.0.0.1-111827?style=for-the-badge)
 ![Reporting](https://img.shields.io/badge/reporting-private%20first-d99b18?style=for-the-badge)
 
-> German version below.
-> Deutsche Version weiter unten.
+> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
 
 ## English Version
 
@@ -137,6 +136,8 @@ The public repository is meant to contain source code, documentation, tests, and
 | Public communication | Security-sensitive findings should use private reporting first, while normal bugs and questions can be discussed through GitHub Issues. |
 
 ---
+
+<a id="german-version"></a>
 
 ## Deutsche Version
 

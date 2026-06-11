@@ -4,8 +4,7 @@
 ![Logs](https://img.shields.io/badge/logs-structured-111827?style=for-the-badge)
 ![CI](https://img.shields.io/badge/GitHub%20Actions-ready-17a673?style=for-the-badge)
 
-> German version below.
-> Deutsche Version weiter unten.
+> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
 
 ## English Version
 
@@ -22,7 +21,6 @@ Related documents:
 | [`README.md`](README.md) | Public project overview and installation. |
 | [`STRUKTUR.md`](STRUKTUR.md) | Architecture, folders, data flow, and module ownership. |
 | [`SECURITY.md`](SECURITY.md) | Security model, local data, secrets, and responsible disclosure. |
-| [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) | German-friendly legacy bridge to the current security documentation. |
 | [`TESTING.md`](TESTING.md) | Automated tests, manual QA, and release readiness. |
 
 ### How A Log Entry Is Built
@@ -222,6 +220,8 @@ New entries should be added at the top of the changelog section.
 
 ---
 
+<a id="german-version"></a>
+
 ## Deutsche Version
 
 ### Wofür diese Datei da ist
@@ -237,7 +237,6 @@ Verwandte Dokumente:
 | [`README.md`](README.md) | Öffentliche Projektübersicht und Installation. |
 | [`STRUKTUR.md`](STRUKTUR.md) | Architektur, Ordner, Datenfluss und Modulverantwortung. |
 | [`SECURITY.md`](SECURITY.md) | Sicherheitsmodell, lokale Daten, Secrets und verantwortliches Melden von Sicherheitslücken. |
-| [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) | Deutschsprachige Brücke zur aktuellen Sicherheitsdokumentation. |
 | [`TESTING.md`](TESTING.md) | Automatisierte Tests, manuelle QA und Release-Reife. |
 
 ### Wie ein Log-Eintrag aufgebaut ist

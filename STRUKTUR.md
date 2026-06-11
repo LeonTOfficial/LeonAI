@@ -5,8 +5,7 @@
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-17a673?style=for-the-badge)
 ![Database](https://img.shields.io/badge/database-SQLite-d99b18?style=for-the-badge)
 
-> German version below.
-> Deutsche Version weiter unten.
+> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
 
 ## English Version
 
@@ -32,7 +31,6 @@ Leon-ai/
 ├── .gitignore                 # keeps secrets, databases, logs, backups out of Git
 ├── README.md                  # public project overview and installation
 ├── SECURITY.md                # security model and vulnerability reporting
-├── README_SICHERHEIT.txt      # German-friendly security companion notes
 ├── STRUKTUR.md                # this architecture overview
 ├── TESTING.md                 # automated tests, manual QA, release checks
 ├── UPDATES.md                 # changelog, log anatomy, CI/version notes
@@ -215,6 +213,8 @@ These paths are local runtime data and should not be committed.
 | Windows | Uses PowerShell or Command Prompt with a Python virtual environment and `python app.py`. |
 | Linux | Uses a Python virtual environment and `python app.py`; Ollama should run as a local service or process. |
 
+<a id="german-version"></a>
+
 ## Deutsche Version
 
 ### Was dieses Dokument erklärt
@@ -239,7 +239,6 @@ Leon-ai/
 ├── .gitignore                 # hält Secrets, Datenbanken, Logs, Backups aus Git heraus
 ├── README.md                  # öffentliche Projektübersicht und Installation
 ├── SECURITY.md                # Sicherheitsmodell und Meldung von Sicherheitslücken
-├── README_SICHERHEIT.txt      # deutschsprachige Sicherheits-Zusatzinfos
 ├── STRUKTUR.md                # diese Architekturübersicht
 ├── TESTING.md                 # automatisierte Tests, manuelle QA, Release-Checks
 ├── UPDATES.md                 # Changelog, Log-Aufbau, CI-/Versionshinweise

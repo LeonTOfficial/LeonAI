@@ -137,7 +137,6 @@ Read:
 
 - [`STRUKTUR.md`](STRUKTUR.md) for the architecture, modules, routes, services, and frontend structure.
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
-- [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) as a German-friendly legacy bridge to the current security documentation.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
 - [`UPDATES.md`](UPDATES.md) for changelogs, log file structure, and handling issues with older Python versions.
@@ -165,7 +164,6 @@ LeonAI/
 ├── Starten.command
 ├── README.md
 ├── SECURITY.md
-├── README_SICHERHEIT.txt
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── UPDATES.md
@@ -372,7 +370,6 @@ Lies:
 
 - [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
 - [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
-- [`README_SICHERHEIT.txt`](README_SICHERHEIT.txt) als deutschsprachige Brücke zur aktuellen Sicherheitsdokumentation.
 - [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) für Richtlinien zur Mitarbeit und wie man Bugs meldet oder Features vorschlägt.
 - [`UPDATES.md`](UPDATES.md) für Changelogs, den Aufbau der Log-Dateien und Problemlösungen bei älteren Python-Versionen.
@@ -400,7 +397,6 @@ LeonAI/
 ├── Starten.command
 ├── README.md
 ├── SECURITY.md
-├── README_SICHERHEIT.txt
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── UPDATES.md

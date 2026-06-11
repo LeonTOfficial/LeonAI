@@ -5,8 +5,7 @@
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
 
-> German version below.
-> Deutsche Version weiter unten.
+> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
 
 ## English Version
 
@@ -182,6 +181,8 @@ LEON AI is considered release-ready when the technical tests and the product sto
 | Private files stay local | `.env`, `data/`, `backup/`, `venv/`, databases, logs, and tokens stay out of the public repository. |
 
 ---
+
+<a id="german-version"></a>
 
 ## Deutsche Version
 
