@@ -39,7 +39,21 @@ Check for whitespace/patch problems before committing:
 git diff --check
 ```
 
-### 2. Current Automated Coverage
+### 2. GitHub Actions / CI
+
+LEON AI uses a small ready-made GitHub Actions workflow instead of a custom runner. The workflow lives in [`.github/workflows/test.yml`](.github/workflows/test.yml) and runs on every push or pull request to `main`.
+
+| Check | Tool | Why it exists |
+| --- | --- | --- |
+| Repository checkout | `actions/checkout@v4` | Uses the official GitHub checkout action. |
+| Python setup | `actions/setup-python@v5` | Installs the supported Python versions consistently. |
+| Node setup | `actions/setup-node@v4` | Provides Node.js for frontend syntax checks. |
+| Backend tests | `python -m unittest discover -s tests -q` | Verifies Flask routes, services, security, database, artifacts, and UI contracts. |
+| Frontend syntax | `node --check static/js/*.js` | Catches JavaScript syntax breakage before release. |
+
+The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not included because the project uses modern Python syntax such as `str | None`, which requires Python 3.10 or newer.
+
+### 3. Current Automated Coverage
 
 The current automated suite covers **46 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
 
@@ -62,7 +76,7 @@ The current automated suite covers **46 tests** across backend behavior, fronten
 | Privacy tools | Local data summary, protected purge flow, backup cleanup | `tests/test_core.py`, `utils/privacy.py` |
 | Release documentation | README/security/testing contracts and private-file rules | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
 
-### 3. Cross-Platform Test Matrix
+### 4. Cross-Platform Test Matrix
 
 LEON AI is a Flask + SQLite + Vanilla JS application and is designed to be portable wherever Python and Ollama are available. macOS includes a convenience launcher, while Windows and Linux run the same Python backend through their normal terminal workflow.
 
@@ -83,7 +97,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### 4. Functional Tests
+### 5. Functional Tests
 
 | Function | Expected behavior | Failure mode checked |
 | --- | --- | --- |
@@ -94,7 +108,7 @@ python app.py
 | Chat branching | Editing from older messages can create a new path without corrupting existing history | Active branch path is built from selected leaf |
 | Backup system | Backups include integrity metadata and can detect modified files | Modified backup verification fails safely |
 
-### 5. UI/UX Tests
+### 6. UI/UX Tests
 
 | UI area | What is checked |
 | --- | --- |
@@ -115,7 +129,7 @@ Manual responsive checks:
 - Long generated code blocks.
 - Artifact panel opened and closed.
 
-### 6. Error Handling Tests
+### 7. Error Handling Tests
 
 | Scenario | Expected behavior |
 | --- | --- |
@@ -129,7 +143,7 @@ Manual responsive checks:
 | Missing internet/CDN dependency | Rich preview libraries may fail gracefully; core local chat remains available. |
 | Wrong external API key | External provider calls should fail with a controlled error, not expose the key. |
 
-### 7. Manual QA Story
+### 8. Manual QA Story
 
 Manual QA describes the real user journey that the automated tests cannot fully see. It is less about clicking through a rigid list and more about proving that LEON AI feels complete as a local AI workspace.
 
@@ -145,7 +159,7 @@ Manual QA describes the real user journey that the automated tests cannot fully 
 | Dashboard and privacy center | Activity, tokens, logs, health, backups, and privacy tools are visible in one place. |
 | Logs and request IDs | When something fails, the browser message and `data/logs/leon.log` can be connected through clear diagnostic information. |
 
-### 8. Known Expected Test Logs
+### 9. Known Expected Test Logs
 
 Some automated tests intentionally trigger failures to prove security and error shielding work. These log lines can appear during testing and are expected if the final unittest result is `OK`.
 
@@ -155,7 +169,7 @@ Some automated tests intentionally trigger failures to prove security and error 
 | `500` | Hidden-error tests intentionally trigger backend errors. |
 | Internal test detail in local log | The local log may contain debug information, but the browser response must not expose it. |
 
-### 9. Release Readiness
+### 10. Release Readiness
 
 LEON AI is considered release-ready when the technical tests and the product story agree with each other: the automated suite passes, the JavaScript files parse correctly, the preview panel works in a browser, and the documentation describes the current behavior honestly.
 
@@ -200,7 +214,21 @@ Patch-/Leerzeichenprobleme vor dem Commit prüfen:
 git diff --check
 ```
 
-### 2. Aktuelle automatisierte Abdeckung
+### 2. GitHub Actions / CI
+
+LEON AI nutzt einen kleinen fertigen GitHub-Actions-Workflow statt eines selbstgebauten CI-Runners. Der Workflow liegt in [`.github/workflows/test.yml`](.github/workflows/test.yml) und läuft bei jedem Push oder Pull Request auf `main`.
+
+| Prüfung | Werkzeug | Warum es das gibt |
+| --- | --- | --- |
+| Repository auschecken | `actions/checkout@v4` | Nutzt die offizielle Checkout-Action von GitHub. |
+| Python einrichten | `actions/setup-python@v5` | Installiert die unterstützten Python-Versionen einheitlich. |
+| Node einrichten | `actions/setup-node@v4` | Stellt Node.js für Frontend-Syntaxprüfungen bereit. |
+| Backend-Tests | `python -m unittest discover -s tests -q` | Prüft Flask-Routen, Services, Sicherheit, Datenbank, Artifacts und UI-Verträge. |
+| Frontend-Syntax | `node --check static/js/*.js` | Findet JavaScript-Syntaxfehler vor dem Release. |
+
+Die CI-Matrix nutzt bewusst **Python 3.11 und 3.12**. Python 3.9 ist nicht enthalten, weil das Projekt moderne Python-Syntax wie `str | None` verwendet. Diese Schreibweise braucht Python 3.10 oder neuer.
+
+### 3. Aktuelle automatisierte Abdeckung
 
 Die aktuelle automatisierte Suite umfasst **46 Tests** für Backend-Verhalten, Frontend-Verträge, Sicherheitskontrollen, Artifacts, Datenschutz-Werkzeuge, Backups und UI-Flow-Erwartungen.
 
@@ -223,7 +251,7 @@ Die aktuelle automatisierte Suite umfasst **46 Tests** für Backend-Verhalten, F
 | Datenschutz-Werkzeuge | Lokale Datenübersicht, geschütztes Löschen, Backup-Bereinigung | `tests/test_core.py`, `utils/privacy.py` |
 | Release-Dokumentation | README-/Security-/Testing-Verträge und Regeln für private Dateien | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
 
-### 3. Cross-Platform-Testmatrix
+### 4. Cross-Platform-Testmatrix
 
 LEON AI ist eine Flask-, SQLite- und Vanilla-JS-Anwendung und so aufgebaut, dass sie überall laufen kann, wo Python und Ollama verfügbar sind. macOS bringt einen Komfort-Starter mit, während Windows und Linux dasselbe Python-Backend über ihren normalen Terminal-Weg starten.
 
@@ -244,7 +272,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### 4. Funktionale Tests
+### 5. Funktionale Tests
 
 | Funktion | Erwartetes Verhalten | Geprüfter Fehlerfall |
 | --- | --- | --- |
@@ -255,7 +283,7 @@ python app.py
 | Chat-Branching | Bearbeiten älterer Nachrichten erzeugt neue Pfade, ohne bestehenden Verlauf zu beschädigen | Aktiver Ast wird aus ausgewähltem Leaf aufgebaut |
 | Backup-System | Backups enthalten Integritätsmetadaten und erkennen geänderte Dateien | Geänderte Backup-Prüfung schlägt kontrolliert fehl |
 
-### 5. UI-/UX-Tests
+### 6. UI-/UX-Tests
 
 | UI-Bereich | Was geprüft wird |
 | --- | --- |
@@ -276,7 +304,7 @@ Manuelle Responsive-Prüfungen:
 - Lange generierte Code-Blöcke.
 - Artifact-Panel geöffnet und geschlossen.
 
-### 6. Fehlerbehandlung
+### 7. Fehlerbehandlung
 
 | Szenario | Erwartetes Verhalten |
 | --- | --- |
@@ -290,7 +318,7 @@ Manuelle Responsive-Prüfungen:
 | Fehlende Internetverbindung/CDN-Abhängigkeit | Rich-Preview-Bibliotheken können kontrolliert ausfallen; der lokale Chat-Kern bleibt verfügbar. |
 | Falscher externer API-Key | Externe Anbieteraufrufe sollen kontrolliert fehlschlagen, ohne den Schlüssel offenzulegen. |
 
-### 7. Manuelle QA-Geschichte
+### 8. Manuelle QA-Geschichte
 
 Manuelle QA beschreibt den echten Nutzerweg, den automatisierte Tests nicht vollständig sehen können. Es geht weniger um eine starre Klickliste und mehr darum, zu beweisen, dass LEON AI sich als lokaler KI-Arbeitsbereich vollständig anfühlt.
 
@@ -306,7 +334,7 @@ Manuelle QA beschreibt den echten Nutzerweg, den automatisierte Tests nicht voll
 | Dashboard und Privacy Center | Aktivität, Tokens, Logs, Health, Backups und Datenschutz-Werkzeuge sind an einem Ort sichtbar. |
 | Logs und Request-IDs | Wenn etwas fehlschlägt, lassen sich Browser-Meldung und `data/logs/leon.log` über Diagnoseinformationen verbinden. |
 
-### 8. Erwartete Test-Logs
+### 9. Erwartete Test-Logs
 
 Einige automatisierte Tests lösen absichtlich Fehler aus, um Sicherheit und Fehlerabschirmung zu prüfen. Diese Log-Zeilen können während der Tests erscheinen und sind erwartbar, wenn das endgültige unittest-Ergebnis `OK` ist.
 
@@ -316,7 +344,7 @@ Einige automatisierte Tests lösen absichtlich Fehler aus, um Sicherheit und Feh
 | `500` | Hidden-Error-Tests lösen absichtlich Backend-Fehler aus. |
 | Interne Testdetails im lokalen Log | Das lokale Log darf Debug-Informationen enthalten; die Browser-Antwort darf sie nicht zeigen. |
 
-### 9. Release-Reife
+### 10. Release-Reife
 
 LEON AI gilt als releasefähig, wenn technische Tests und Produktgeschichte zusammenpassen: Die automatisierte Suite läuft durch, die JavaScript-Dateien sind syntaktisch sauber, das Vorschau-Panel funktioniert im Browser und die Dokumentation beschreibt ehrlich den aktuellen Stand.
 

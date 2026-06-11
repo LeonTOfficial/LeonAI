@@ -24,65 +24,69 @@ The backend is split into routes, services, models, and utilities; the frontend 
 
 ```text
 Leon-ai/
-├── app.py
-├── config.py
-├── requirements.txt
-├── Starten.command
-├── .env.example
-├── .gitignore
-├── README.md
-├── SECURITY.md
-├── README_SICHERHEIT.txt
-├── STRUKTUR.md
-├── TESTING.md
-├── LICENSE
+├── app.py                     # Flask entry point and local server bootstrap
+├── config.py                  # central paths, models, prompts, auth, limits
+├── requirements.txt           # Python dependencies for the backend
+├── Starten.command            # macOS launcher with local status output
+├── .env.example               # safe template for local environment values
+├── .gitignore                 # keeps secrets, databases, logs, backups out of Git
+├── README.md                  # public project overview and installation
+├── SECURITY.md                # security model and vulnerability reporting
+├── README_SICHERHEIT.txt      # German-friendly security companion notes
+├── STRUKTUR.md                # this architecture overview
+├── TESTING.md                 # automated tests, manual QA, release checks
+├── UPDATES.md                 # changelog, log anatomy, CI/version notes
+├── LICENSE                    # license terms
+├── .github/
+│   └── workflows/
+│       └── test.yml           # GitHub Actions CI for tests and JS syntax
 ├── docs/
-│   └── screenshots/
+│   └── screenshots/           # README screenshots and public visuals
 ├── models/
-│   ├── __init__.py
-│   └── database.py
+│   ├── __init__.py            # package marker
+│   └── database.py            # SQLite schema, migrations, connection helper
 ├── routes/
-│   ├── __init__.py
-│   ├── api.py
-│   ├── auth.py
-│   ├── chat.py
-│   ├── middleware.py
-│   └── pages.py
+│   ├── __init__.py            # blueprint registration
+│   ├── api.py                 # JSON endpoints for rooms, stats, privacy, artifacts
+│   ├── auth.py                # login, logout, first setup, profile setup
+│   ├── chat.py                # streaming chat, vision, model actions
+│   ├── middleware.py          # request IDs, CSRF/origin checks, security headers
+│   └── pages.py               # HTML pages, dashboard, app shell, PWA files
 ├── services/
-│   ├── __init__.py
-│   ├── artifact_service.py
-│   ├── backup_service.py
-│   ├── chat_service.py
-│   ├── export_service.py
-│   ├── memory_service.py
-│   ├── ollama_service.py
-│   ├── profile_service.py
-│   └── room_service.py
+│   ├── __init__.py            # package marker
+│   ├── artifact_service.py    # artifact versions, dedupe, preview history
+│   ├── backup_service.py      # SQLite backups and integrity metadata
+│   ├── chat_service.py        # context building, token estimates, branching, titles
+│   ├── export_service.py      # readable chat exports
+│   ├── memory_service.py      # saved memory and automatic memory entries
+│   ├── ollama_service.py      # local Ollama API and model discovery
+│   ├── profile_service.py     # first setup, user profile, migration helpers
+│   └── room_service.py        # chat rooms, pinning, empty-room cleanup
 ├── static/
 │   └── js/
-│       ├── api.js
-│       ├── artifacts.js
-│       ├── chat.js
-│       └── ui.js
+│       ├── api.js             # shared state, fetch helper, CSRF headers
+│       ├── artifacts.js       # iframe preview, Pyodide, terminal/error bridge
+│       ├── chat.js            # messages, streaming, Markdown, colors, charts
+│       └── ui.js              # sidebar, modals, theme, settings, dashboard links
 ├── templates/
-│   ├── dashboard.html
-│   └── index.html
+│   ├── dashboard.html         # dashboard UI, charts, privacy/debug panels
+│   └── index.html             # login, setup, chat shell, artifact panel markup
 ├── tests/
-│   ├── test_core.py
-│   └── test_ui_flows.py
+│   ├── test_core.py           # backend, security, database, service tests
+│   └── test_ui_flows.py       # frontend contracts and user-flow expectations
 ├── utils/
-│   ├── __init__.py
-│   ├── debug_logs.py
-│   ├── errors.py
-│   ├── logging.py
-│   ├── media.py
-│   ├── privacy.py
-│   ├── security.py
-│   ├── system_health.py
-│   └── text.py
-├── data/       # local runtime data, not part of the repository
-├── backup/     # local backups, not part of the repository
-└── venv/       # local Python environment, not part of the repository
+│   ├── __init__.py            # package marker
+│   ├── debug_logs.py          # debug-center helpers
+│   ├── errors.py              # safe error responses and log shielding
+│   ├── logging.py             # structured logs and terminal activity lines
+│   ├── media.py               # upload/media helpers
+│   ├── privacy.py             # local data summary and cleanup tools
+│   ├── security.py            # auth, CSRF, origin, rate-limit helpers
+│   ├── system_health.py       # health checks for DB, logs, backups, Ollama
+│   └── text.py                # text cleanup and sanitization helpers
+├── data/                      # local runtime data, not part of the repository
+├── backup/                    # local backups, not part of the repository
+└── venv/                      # local Python environment, not part of the repository
 ```
 
 ### Core Files
@@ -227,65 +231,69 @@ Das Backend ist in Routen, Services, Models und Utilities aufgeteilt; das Fronte
 
 ```text
 Leon-ai/
-├── app.py
-├── config.py
-├── requirements.txt
-├── Starten.command
-├── .env.example
-├── .gitignore
-├── README.md
-├── SECURITY.md
-├── README_SICHERHEIT.txt
-├── STRUKTUR.md
-├── TESTING.md
-├── LICENSE
+├── app.py                     # Flask-Einstiegspunkt und lokaler Serverstart
+├── config.py                  # zentrale Pfade, Modelle, Prompts, Auth, Limits
+├── requirements.txt           # Python-Abhängigkeiten für das Backend
+├── Starten.command            # macOS-Starter mit lokaler Statusausgabe
+├── .env.example               # sichere Vorlage für lokale Umgebungswerte
+├── .gitignore                 # hält Secrets, Datenbanken, Logs, Backups aus Git heraus
+├── README.md                  # öffentliche Projektübersicht und Installation
+├── SECURITY.md                # Sicherheitsmodell und Meldung von Sicherheitslücken
+├── README_SICHERHEIT.txt      # deutschsprachige Sicherheits-Zusatzinfos
+├── STRUKTUR.md                # diese Architekturübersicht
+├── TESTING.md                 # automatisierte Tests, manuelle QA, Release-Checks
+├── UPDATES.md                 # Changelog, Log-Aufbau, CI-/Versionshinweise
+├── LICENSE                    # Lizenzbedingungen
+├── .github/
+│   └── workflows/
+│       └── test.yml           # GitHub Actions CI für Tests und JS-Syntax
 ├── docs/
-│   └── screenshots/
+│   └── screenshots/           # README-Screenshots und öffentliche Bilder
 ├── models/
-│   ├── __init__.py
-│   └── database.py
+│   ├── __init__.py            # Paketmarkierung
+│   └── database.py            # SQLite-Schema, Migrationen, Verbindungshelfer
 ├── routes/
-│   ├── __init__.py
-│   ├── api.py
-│   ├── auth.py
-│   ├── chat.py
-│   ├── middleware.py
-│   └── pages.py
+│   ├── __init__.py            # Blueprint-Registrierung
+│   ├── api.py                 # JSON-Endpunkte für Räume, Statistik, Datenschutz, Artifacts
+│   ├── auth.py                # Login, Logout, First Setup, Profil-Setup
+│   ├── chat.py                # Streaming-Chat, Vision, Modellaktionen
+│   ├── middleware.py          # Request-IDs, CSRF-/Origin-Prüfung, Security Header
+│   └── pages.py               # HTML-Seiten, Dashboard, App-Shell, PWA-Dateien
 ├── services/
-│   ├── __init__.py
-│   ├── artifact_service.py
-│   ├── backup_service.py
-│   ├── chat_service.py
-│   ├── export_service.py
-│   ├── memory_service.py
-│   ├── ollama_service.py
-│   ├── profile_service.py
-│   └── room_service.py
+│   ├── __init__.py            # Paketmarkierung
+│   ├── artifact_service.py    # Artifact-Versionen, Dedupe, Vorschau-Verlauf
+│   ├── backup_service.py      # SQLite-Backups und Integritätsmetadaten
+│   ├── chat_service.py        # Kontext, Tokens, Branching, Auto-Titel
+│   ├── export_service.py      # lesbare Chat-Exporte
+│   ├── memory_service.py      # gespeicherte und automatische Memory-Einträge
+│   ├── ollama_service.py      # lokale Ollama-API und Modell-Erkennung
+│   ├── profile_service.py     # First Setup, Nutzerprofil, Migrationshelfer
+│   └── room_service.py        # Chat-Räume, Anpinnen, leere Räume aufräumen
 ├── static/
 │   └── js/
-│       ├── api.js
-│       ├── artifacts.js
-│       ├── chat.js
-│       └── ui.js
+│       ├── api.js             # gemeinsamer State, Fetch-Helfer, CSRF-Header
+│       ├── artifacts.js       # iframe-Vorschau, Pyodide, Terminal-/Fehlerbrücke
+│       ├── chat.js            # Nachrichten, Streaming, Markdown, Farben, Charts
+│       └── ui.js              # Sidebar, Modals, Theme, Einstellungen, Dashboard-Links
 ├── templates/
-│   ├── dashboard.html
-│   └── index.html
+│   ├── dashboard.html         # Dashboard-UI, Charts, Privacy-/Debug-Bereiche
+│   └── index.html             # Login, Setup, Chat-Shell, Artifact-Panel-Markup
 ├── tests/
-│   ├── test_core.py
-│   └── test_ui_flows.py
+│   ├── test_core.py           # Backend, Sicherheit, Datenbank, Service-Tests
+│   └── test_ui_flows.py       # Frontend-Verträge und Nutzerfluss-Erwartungen
 ├── utils/
-│   ├── __init__.py
-│   ├── debug_logs.py
-│   ├── errors.py
-│   ├── logging.py
-│   ├── media.py
-│   ├── privacy.py
-│   ├── security.py
-│   ├── system_health.py
-│   └── text.py
-├── data/       # lokale Laufzeitdaten, nicht Teil des Repositorys
-├── backup/     # lokale Backups, nicht Teil des Repositorys
-└── venv/       # lokale Python-Umgebung, nicht Teil des Repositorys
+│   ├── __init__.py            # Paketmarkierung
+│   ├── debug_logs.py          # Helfer für das Debug Center
+│   ├── errors.py              # sichere Fehlerantworten und Log-Abschirmung
+│   ├── logging.py             # strukturierte Logs und Terminal-Aktivitätszeilen
+│   ├── media.py               # Upload-/Medienhelfer
+│   ├── privacy.py             # lokale Datenübersicht und Bereinigungswerkzeuge
+│   ├── security.py            # Auth, CSRF, Origin, Rate-Limit-Helfer
+│   ├── system_health.py       # Health Checks für DB, Logs, Backups, Ollama
+│   └── text.py                # Textbereinigung und Sanitization-Helfer
+├── data/                      # lokale Laufzeitdaten, nicht Teil des Repositorys
+├── backup/                    # lokale Backups, nicht Teil des Repositorys
+└── venv/                      # lokale Python-Umgebung, nicht Teil des Repositorys
 ```
 
 ### Kerndateien
