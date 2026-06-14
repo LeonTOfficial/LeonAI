@@ -5,10 +5,6 @@
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
 
-> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
-
-## English Version
-
 ### 1. Quick Test Commands
 
 Run the full automated test suite:
@@ -96,7 +92,19 @@ pip install -r requirements.txt
 python app.py
 ```
 
-### 5. Functional Tests
+### 5. Missing Tests To Add Next
+
+The current test suite is useful, but it does not claim complete coverage. The next practical additions should focus on the highest-risk flows.
+
+| Missing area | Why it matters |
+| --- | --- |
+| Browser-level preview tests | Proves that generated HTML/CSS/JS actually renders in a real browser. |
+| Artifact security regression tests | Protects iframe, CSP, relative asset handling, and generated-code boundaries. |
+| More migration tests | Ensures older local databases upgrade cleanly. |
+| Accessibility checks | Helps keep login, chat, dashboard, and artifact controls usable. |
+| Larger end-to-end setup test | Verifies a fresh clone, first setup, login, chat, and preview flow together. |
+
+### 6. Functional Tests
 
 | Function | Expected behavior | Failure mode checked |
 | --- | --- | --- |
@@ -107,7 +115,7 @@ python app.py
 | Chat branching | Editing from older messages can create a new path without corrupting existing history | Active branch path is built from selected leaf |
 | Backup system | Backups include integrity metadata and can detect modified files | Modified backup verification fails safely |
 
-### 6. UI/UX Tests
+### 7. UI/UX Tests
 
 | UI area | What is checked |
 | --- | --- |
@@ -128,7 +136,7 @@ Manual responsive checks:
 - Long generated code blocks.
 - Artifact panel opened and closed.
 
-### 7. Error Handling Tests
+### 8. Error Handling Tests
 
 | Scenario | Expected behavior |
 | --- | --- |
@@ -142,7 +150,7 @@ Manual responsive checks:
 | Missing internet/CDN dependency | Rich preview libraries may fail gracefully; core local chat remains available. |
 | Wrong external API key | External provider calls should fail with a controlled error, not expose the key. |
 
-### 8. Manual QA Story
+### 9. Manual QA Story
 
 Manual QA describes the real user journey that the automated tests cannot fully see. It is less about clicking through a rigid list and more about proving that LEON AI feels complete as a local AI workspace.
 
@@ -158,7 +166,7 @@ Manual QA describes the real user journey that the automated tests cannot fully 
 | Dashboard and privacy center | Activity, tokens, logs, health, backups, and privacy tools are visible in one place. |
 | Logs and request IDs | When something fails, the browser message and `data/logs/leon.log` can be connected through clear diagnostic information. |
 
-### 9. Known Expected Test Logs
+### 10. Known Expected Test Logs
 
 Some automated tests intentionally trigger failures to prove security and error shielding work. These log lines can appear during testing and are expected if the final unittest result is `OK`.
 
@@ -168,7 +176,7 @@ Some automated tests intentionally trigger failures to prove security and error 
 | `500` | Hidden-error tests intentionally trigger backend errors. |
 | Internal test detail in local log | The local log may contain debug information, but the browser response must not expose it. |
 
-### 10. Release Readiness
+### 11. Release Readiness
 
 LEON AI is considered release-ready when the technical tests and the product story agree with each other: the automated suite passes, the JavaScript files parse correctly, the preview panel works in a browser, and the documentation describes the current behavior honestly.
 
@@ -179,180 +187,3 @@ LEON AI is considered release-ready when the technical tests and the product sto
 | Manual preview works | Generated HTML/CSS/JS, Mermaid, Chart.js, Pyodide, and color tags are usable in the real interface. |
 | Documentation is current | README, architecture, security, and testing files explain the same product that users actually download. |
 | Private files stay local | `.env`, `data/`, `backup/`, `venv/`, databases, logs, and tokens stay out of the public repository. |
-
----
-
-<a id="german-version"></a>
-
-## Deutsche Version
-
-### 1. Schnelle Testbefehle
-
-Vollständige automatisierte Test-Suite ausführen:
-
-```bash
-./venv/bin/python -m unittest discover -s tests -q
-```
-
-Dieselbe Suite mit ausführlicher Ausgabe:
-
-```bash
-./venv/bin/python -m unittest discover -s tests -v
-```
-
-Frontend-JavaScript auf Syntaxfehler prüfen:
-
-```bash
-node --check static/js/api.js
-node --check static/js/ui.js
-node --check static/js/artifacts.js
-node --check static/js/chat.js
-```
-
-Patch-/Leerzeichenprobleme vor dem Commit prüfen:
-
-```bash
-git diff --check
-```
-
-### 2. GitHub Actions / CI
-
-LEON AI nutzt einen kleinen fertigen GitHub-Actions-Workflow statt eines selbstgebauten CI-Runners. Der Workflow liegt in [`.github/workflows/test.yml`](.github/workflows/test.yml) und läuft bei jedem Push oder Pull Request auf `main`.
-
-| Prüfung | Werkzeug | Warum es das gibt |
-| --- | --- | --- |
-| Repository auschecken | `actions/checkout@v4` | Nutzt die offizielle Checkout-Action von GitHub. |
-| Python einrichten | `actions/setup-python@v5` | Installiert die unterstützten Python-Versionen einheitlich. |
-| Node einrichten | `actions/setup-node@v4` | Stellt Node.js für Frontend-Syntaxprüfungen bereit. |
-| Backend-Tests | `python -m unittest discover -s tests -q` | Prüft Flask-Routen, Services, Sicherheit, Datenbank, Artifacts und UI-Verträge. |
-| Frontend-Syntax | `node --check static/js/*.js` | Findet JavaScript-Syntaxfehler vor dem Release. |
-
-Die CI-Matrix nutzt bewusst **Python 3.11 und 3.12**. Python 3.9 ist nicht enthalten, weil das Projekt moderne Python-Syntax wie `str | None` verwendet. Diese Schreibweise braucht Python 3.10 oder neuer.
-
-### 3. Aktuelle automatisierte Abdeckung
-
-Die aktuelle automatisierte Suite umfasst **46 Tests** für Backend-Verhalten, Frontend-Verträge, Sicherheitskontrollen, Artifacts, Datenschutz-Werkzeuge, Backups und UI-Flow-Erwartungen.
-
-| Testbereich | Was geprüft wird | Wichtigste Belege |
-| --- | --- | --- |
-| Datenbank-Migrationen | Parent-IDs, Artifact-Versionstabellen, Schema-Kompatibilität | `tests/test_core.py`, `models/database.py` |
-| Authentifizierung | Login, geschützte Seiten, First Setup, Session-Status | `tests/test_core.py`, `tests/test_ui_flows.py`, `routes/auth.py` |
-| CSRF- und Origin-Schutz | Schreibende Requests benötigen gültige CSRF-Tokens und vertrauenswürdige Origins | `tests/test_core.py`, `utils/security.py`, `routes/middleware.py` |
-| Fehlerabschirmung | Interne Fehlerdetails bleiben aus Browser-Antworten heraus, Request-IDs bleiben sichtbar | `tests/test_core.py`, `utils/errors.py` |
-| Chat-Räume | Erstellung, Laden, Aufräumen leerer Chats, angepinnte Reihenfolge | `tests/test_ui_flows.py`, `routes/api.py`, `services/room_service.py` |
-| Chat-Branching | Parent-/Child-Nachrichten, aktiver Ast, Entfernen zukünftiger Artifacts | `tests/test_core.py`, `tests/test_ui_flows.py`, `services/chat_service.py` |
-| Auto-Titel | Schnelles Titelmodell `llama3.2:1b`, Titelbereinigung, Raum-Update | `tests/test_core.py`, `services/ollama_service.py`, `config.py` |
-| Artifact-Verlauf | Speichern, Dedupe, Löschen, API-Schutz, ZIP-/Export-Verträge | `tests/test_core.py`, `tests/test_ui_flows.py`, `services/artifact_service.py` |
-| Live-Vorschau | iframe-Sandbox, Tabs, Aktualisieren, Konsolen-/Fehlerbrücke | `tests/test_core.py`, `static/js/artifacts.js`, `templates/index.html` |
-| Rich Chat Rendering | Mermaid, Chart.js, Farbtags, Laden der Rich-Libraries | `tests/test_core.py`, `tests/test_ui_flows.py`, `static/js/chat.js` |
-| Pyodide | Loader-Vertrag, Browser-Python-Tab, sichtbare Fehlerbehandlung | `tests/test_core.py`, `static/js/artifacts.js` |
-| Dashboard | Metriken, Token-Erklärung, Privacy Center, Debug Center, Filter | `tests/test_core.py`, `tests/test_ui_flows.py`, `templates/dashboard.html` |
-| Backups | SQLite-Backup, Checksum-Manifest, Erkennung geänderter Backups | `tests/test_core.py`, `services/backup_service.py` |
-| Health Checks | Datenbank, Logs, Backups, Ollama-Warnungen | `tests/test_core.py`, `utils/system_health.py` |
-| Datenschutz-Werkzeuge | Lokale Datenübersicht, geschütztes Löschen, Backup-Bereinigung | `tests/test_core.py`, `utils/privacy.py` |
-| Release-Dokumentation | README-/Security-/Testing-Verträge und Regeln für private Dateien | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
-
-### 4. Cross-Platform-Testmatrix
-
-LEON AI ist eine Flask-, SQLite- und Vanilla-JS-Anwendung und so aufgebaut, dass sie überall laufen kann, wo Python und Ollama verfügbar sind. macOS bringt einen Komfort-Starter mit, während Windows und Linux dasselbe Python-Backend über ihren normalen Terminal-Weg starten.
-
-| Plattform | Status | Was geprüft werden sollte |
-| --- | --- | --- |
-| macOS Apple Silicon | Unterstütztes lokales Ziel | `Starten.command`, Ollama-Erkennung, Safari-/Chrome-Rendering, lokale Pfade, Backups, Logs |
-| macOS Intel | Unterstütztes lokales Ziel | Gleiches macOS-Verhalten plus zusätzliche Prüfung der Abhängigkeitsinstallation |
-| Windows-Laptops/-Desktops | Unterstütztes lokales Ziel | Python-Umgebung, `pip install -r requirements.txt`, Ollama für Windows, Browser-Rendering, lokale Datenbankpfade |
-| Linux | Kompatibles lokales Ziel | Python-Umgebung, Ollama-Service, localhost-Bindung, Dateirechte, Browser-Rendering |
-
-Empfohlenes Startmuster für Windows/Linux:
-
-```bash
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# Windows PowerShell: .\\venv\\Scripts\\Activate.ps1
-pip install -r requirements.txt
-python app.py
-```
-
-### 5. Funktionale Tests
-
-| Funktion | Erwartetes Verhalten | Geprüfter Fehlerfall |
-| --- | --- | --- |
-| Modul-Initialisierung | Routen, Services, Datenbanktabellen und Templates laden korrekt | Fehlende Tabellen oder defekte Imports lassen Tests fehlschlagen |
-| Flask-Backend-Stabilität | Lokaler Test-Client verarbeitet Login, API-Aufrufe, Mutationen und Dashboard-Routen | 403-/500-Behandlung bleibt kontrolliert |
-| KI-Schnittstellen | Ollama-Erreichbarkeit, Modellliste, Auto-Titel-Payloads, Timeout-/Fehlerpfade | Offline-Ollama gibt sichere Warnungen zurück |
-| Artifact-System | Generierte HTML-/CSS-/JS-/Python-Snippets werden gespeichert, versioniert, angezeigt und exportiert | Doppelte Versionen werden dedupliziert; gelöschte Versionen verschwinden |
-| Chat-Branching | Bearbeiten älterer Nachrichten erzeugt neue Pfade, ohne bestehenden Verlauf zu beschädigen | Aktiver Ast wird aus ausgewähltem Leaf aufgebaut |
-| Backup-System | Backups enthalten Integritätsmetadaten und erkennen geänderte Dateien | Geänderte Backup-Prüfung schlägt kontrolliert fehl |
-
-### 6. UI-/UX-Tests
-
-| UI-Bereich | Was geprüft wird |
-| --- | --- |
-| Login und First Setup | CSRF-Felder, Setup-Screen, Profilerstellung, automatischer Login nach Setup |
-| Chat-Oberfläche | Sidebar, Chatliste, angepinnte Chats, Modellwahl, Status-Steuerung, Eingabebereich |
-| Rich Messages | Mermaid-Diagramme, Chart.js-Grafiken, farbige Textmarker, Code-Blöcke |
-| Artifact-Panel | Vorschau, Code, Terminal, Fehler-Tabs, Aktualisieren-Button, Vollbildmodus |
-| Dashboard | Aktivitätsfilter, Token-Erklärung, Privacy Tools, Debug Center, Diagramme |
-| Responsives Verhalten | Laptop-Displays und externe Monitore sollen Bedienelemente lesbar und Panels nutzbar halten |
-
-Manuelle Responsive-Prüfungen:
-
-- 13-Zoll-Laptopbreite.
-- 15-/16-Zoll-Laptopbreite.
-- Externer Monitor.
-- Helles und dunkles Theme.
-- Lange Chatnamen.
-- Lange generierte Code-Blöcke.
-- Artifact-Panel geöffnet und geschlossen.
-
-### 7. Fehlerbehandlung
-
-| Szenario | Erwartetes Verhalten |
-| --- | --- |
-| Fehlendes oder offline Ollama | Die App zeigt eine sichere Warnung statt abzustürzen. |
-| Falsches Passwort | Login bleibt blockiert und zeigt keine sensiblen Details. |
-| Fehlende `.env`-Werte | Sichere Defaults werden genutzt, wo möglich; wichtige Secrets sollten vor Releases gesetzt sein. |
-| Ungültiger CSRF-Token | Schreibender Request wird mit `403` abgelehnt. |
-| Cross-Origin-Schreibversuch | Request wird durch Origin-Checks blockiert. |
-| Interner Backend-Fehler | Browser erhält saubere Meldung mit Request-ID statt Stacktrace. |
-| Fehlerhafter generierter Vorschau-Code | Fehler-Tab/Konsole erfasst das Problem, ohne die Haupt-App zu beschädigen. |
-| Fehlende Internetverbindung/CDN-Abhängigkeit | Rich-Preview-Bibliotheken können kontrolliert ausfallen; der lokale Chat-Kern bleibt verfügbar. |
-| Falscher externer API-Key | Externe Anbieteraufrufe sollen kontrolliert fehlschlagen, ohne den Schlüssel offenzulegen. |
-
-### 8. Manuelle QA-Geschichte
-
-Manuelle QA beschreibt den echten Nutzerweg, den automatisierte Tests nicht vollständig sehen können. Es geht weniger um eine starre Klickliste und mehr darum, zu beweisen, dass LEON AI sich als lokaler KI-Arbeitsbereich vollständig anfühlt.
-
-| Nutzerweg | Was dadurch sichtbar wird |
-| --- | --- |
-| Erster Start und First Setup | Ein neuer Nutzer kann Profil und Passwort einrichten und ohne Code-Berührung in den Arbeitsbereich starten. |
-| Login und neuer Chat | Geschützte App-Oberfläche, Raumliste, Modellwahl und Verhalten leerer Chats greifen ineinander. |
-| Deutsche Unterhaltung | Der Assistent respektiert deutsche Eingaben und hält die Sprache konsistent. |
-| HTML/CSS/JS-Erzeugung | Chat und Artifact-Panel arbeiten zusammen, sodass generierter Code als sichtbare Vorschau erscheint. |
-| Mermaid- und Chart.js-Ausgabe | Native Diagramme und Charts werden direkt in der Unterhaltung gerendert. |
-| Farbige Textmarker | Der Chat-Renderer kann strukturierte Farbmarkierungen wie Nomen, Verben oder Schlüsselideen anzeigen. |
-| Branching und angepinnte Chats | Längere Gespräche können neu organisiert werden, ohne den ursprünglichen Pfad zu verlieren. |
-| Dashboard und Privacy Center | Aktivität, Tokens, Logs, Health, Backups und Datenschutz-Werkzeuge sind an einem Ort sichtbar. |
-| Logs und Request-IDs | Wenn etwas fehlschlägt, lassen sich Browser-Meldung und `data/logs/leon.log` über Diagnoseinformationen verbinden. |
-
-### 9. Erwartete Test-Logs
-
-Einige automatisierte Tests lösen absichtlich Fehler aus, um Sicherheit und Fehlerabschirmung zu prüfen. Diese Log-Zeilen können während der Tests erscheinen und sind erwartbar, wenn das endgültige unittest-Ergebnis `OK` ist.
-
-| Erwarteter Test-Log | Warum er erscheint |
-| --- | --- |
-| `403` | CSRF- und Origin-Schutztests senden absichtlich ungültige Requests. |
-| `500` | Hidden-Error-Tests lösen absichtlich Backend-Fehler aus. |
-| Interne Testdetails im lokalen Log | Das lokale Log darf Debug-Informationen enthalten; die Browser-Antwort darf sie nicht zeigen. |
-
-### 10. Release-Reife
-
-LEON AI gilt als releasefähig, wenn technische Tests und Produktgeschichte zusammenpassen: Die automatisierte Suite läuft durch, die JavaScript-Dateien sind syntaktisch sauber, das Vorschau-Panel funktioniert im Browser und die Dokumentation beschreibt ehrlich den aktuellen Stand.
-
-| Release-Signal | Bedeutung |
-| --- | --- |
-| Unit Tests laufen durch | Backend-Verhalten, Sicherheitsverträge, Artifacts, Datenschutz-Werkzeuge, Backups und UI-Verträge passen zum erwarteten Modell. |
-| JavaScript-Prüfungen laufen durch | Die Frontend-Module können ohne Syntaxbruch geladen werden. |
-| Manuelle Vorschau funktioniert | Generiertes HTML/CSS/JS, Mermaid, Chart.js, Pyodide und Farbtags sind in der echten Oberfläche nutzbar. |
-| Dokumentation ist aktuell | README, Architektur, Sicherheit und Testing erklären dasselbe Produkt, das Nutzer herunterladen. |
-| Private Dateien bleiben lokal | `.env`, `data/`, `backup/`, `venv/`, Datenbanken, Logs und Tokens bleiben außerhalb des öffentlichen Repositorys. |

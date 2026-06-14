@@ -5,10 +5,6 @@
 ![Network](https://img.shields.io/badge/default%20host-127.0.0.1-111827?style=for-the-badge)
 ![Reporting](https://img.shields.io/badge/reporting-private%20first-d99b18?style=for-the-badge)
 
-> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
-
-## English Version
-
 ### 1. Security Goal
 
 LEON AI is designed as a **local-first personal AI workspace**. The goal is to keep private user data on the user’s own device, reduce accidental exposure, and make security behavior easy to inspect.
@@ -89,7 +85,35 @@ Dependency policy:
 - Review dependency changes before release.
 - Do not commit `venv/` or generated dependency folders.
 
-### 6. Vulnerability Reporting
+### 6. Artifacts, Preview Sandbox, And CSP
+
+The Artifacts panel is the most security-sensitive area because it previews AI-generated HTML, CSS, JavaScript, and browser-side Python experiments.
+
+| Area | Current approach | Security note |
+| --- | --- | --- |
+| Preview isolation | Generated pages are rendered in the Artifacts preview instead of being mixed directly into the main chat DOM. | Preview code should be treated as untrusted generated content. |
+| iframe boundary | The preview flow is handled in `static/js/artifacts.js`. | Any sandbox or iframe-policy change should be reviewed carefully. |
+| JavaScript execution | Generated JavaScript may run inside the preview context. | Do not paste secrets or private data into generated preview code. |
+| Pyodide | Python experiments run in the browser through Pyodide. | This is useful for learning and demos, but it is not a replacement for professional isolation. |
+| External CDNs | Some rich preview features may depend on trusted CDNs. | Network failures should not break the core local chat workflow. |
+| CSP trade-offs | The app uses a Content Security Policy in `routes/middleware.py`. | Rich previews may require allowances such as inline styles/scripts, `blob:`, `data:`, or trusted CDNs. Tightening CSP should be tested against Artifacts. |
+
+### 7. Logs And Debug Data
+
+Logs are local and useful for debugging, but they can contain sensitive context such as prompts, local paths, request IDs, or error details.
+
+| Log area | Location | Guidance |
+| --- | --- | --- |
+| Runtime log | `data/logs/leon.log` | Keep local; do not commit or publish full logs. |
+| Terminal activity | Controlled through `LEON_TERMINAL_ACTIVITY` | Useful for local status output. |
+| Technical log level | Controlled through `LEON_TERMINAL_LOG_LEVEL` | Keep noisy details out of normal terminal output. |
+| Error reports | GitHub Issues or private security report | Share only minimal, redacted excerpts. |
+
+### 8. Network Exposure
+
+By default, LEON AI is intended to run on `127.0.0.1`, meaning only the same machine can access it. Setting `HOST=0.0.0.0` can expose the app to other devices on the network and should only be done intentionally in a trusted environment.
+
+### 9. Vulnerability Reporting
 
 Please report security vulnerabilities **privately first**.
 
@@ -114,7 +138,7 @@ Suggested fix, if known:
 
 If the issue is urgent and no private channel is available, open a minimal public Issue that says only: **“Security contact requested”**. Do not include technical exploit details publicly.
 
-### 7. What LEON AI Does Not Claim
+### 10. What LEON AI Does Not Claim
 
 | Non-goal | Explanation |
 | --- | --- |
@@ -123,7 +147,7 @@ If the issue is urgent and no private channel is available, open a minimal publi
 | Automatic protection for custom network exposure | If `HOST=0.0.0.0` is enabled, the user is responsible for network safety. |
 | Secret recovery after leaks | Leaked credentials must be rotated at the provider immediately. |
 
-### 8. Release Security Model
+### 11. Release Security Model
 
 The public repository is meant to contain source code, documentation, tests, and screenshots, but not private runtime data. A safe release therefore keeps a clear boundary between project files and local user data.
 
@@ -134,135 +158,3 @@ The public repository is meant to contain source code, documentation, tests, and
 | Request protection | Changes in `routes/middleware.py` and `utils/security.py` are security-sensitive because they affect headers, CSRF, origin checks, sessions, and login behavior. |
 | Preview isolation | Changes in `static/js/artifacts.js` are security-sensitive because they affect how generated HTML, JavaScript, Python, and iframe previews behave. |
 | Public communication | Security-sensitive findings should use private reporting first, while normal bugs and questions can be discussed through GitHub Issues. |
-
----
-
-<a id="german-version"></a>
-
-## Deutsche Version
-
-### 1. Sicherheitsziel
-
-LEON AI ist als **lokaler, privater KI-Arbeitsbereich** konzipiert. Das Ziel ist, persönliche Nutzerdaten auf dem eigenen Gerät zu halten, unbeabsichtigte Veröffentlichungen zu vermeiden und sicherheitsrelevantes Verhalten nachvollziehbar zu dokumentieren.
-
-| Prinzip | Was LEON AI macht |
-| --- | --- |
-| Lokale Datenhoheit | Chats, Einstellungen, Logs, Artifacts und Backups werden lokal auf dem Gerät des Nutzers gespeichert. |
-| Keine ungefragte Cloud-Synchronisierung | LEON AI lädt lokale App-Daten nicht ungefragt in einen Cloud-Dienst hoch. |
-| Lokales Netzwerk als Standard | Der Flask-Server nutzt standardmäßig `HOST=127.0.0.1` und ist damit nur vom selben Gerät erreichbar. |
-| Bewusste externe Modellaufrufe | Standardmäßig wird Ollama lokal über `http://localhost:11434` genutzt. Andere Anbieter müssen bewusst eingerichtet werden. |
-| Secrets bleiben lokal | API-Schlüssel und Passwörter gehören in `.env`, niemals in Git. |
-
-### 2. Sicherheitsarchitektur im Überblick
-
-| Bereich | Umsetzung | Beleg im Repository |
-| --- | --- | --- |
-| Konfiguration | Zentrale Standardwerte für Host, Port, Authentifizierung, Rate Limit, Pfade und Ollama-Modell | `config.py` |
-| Authentifizierung | Login, Logout und Ersteinrichtung mit eigenem Passwort und Vornamen | `routes/auth.py` |
-| Passwort- und Request-Schutz | Passwortprüfung, CSRF-Tokens, Login-Decorator, Rate-Limit-Helfer, Origin-Prüfung | `utils/security.py` |
-| Security-Header | Content Security Policy, Frame-Einschränkungen, Referrer Policy, Permissions Policy, Request-IDs | `routes/middleware.py` |
-| Fehlerabschirmung | Browser-Antworten zeigen keine internen Stacktraces, sondern nachvollziehbare Request-IDs | `utils/errors.py` |
-| Logging | Strukturierte rotierende Logs in `data/logs/leon.log` | `utils/logging.py` |
-| Lokale Datenbank | SQLite-Schema, Migrationen, Chat-Branching, Artifacts und Profildaten | `models/database.py` |
-| Backups | Lokale SQLite-Backups mit Manifest- und Integritätsinformationen | `services/backup_service.py` |
-| Datenschutz-Werkzeuge | Lokales Zählen und geschütztes Löschen von Datenbereichen | `utils/privacy.py` |
-| Health Checks | Lokale Prüfung von Datenbank, Logs, Backups und Ollama-Erreichbarkeit | `utils/system_health.py` |
-| Artifact-Vorschau | Vorschau-iframe, neutralisierte relative Asset-Pfade, Browser-Python/Pyodide-Anbindung | `static/js/artifacts.js` |
-| Rich Chat Rendering | DOMPurify, Farbtags, Mermaid- und Chart.js-Rendering-Verträge | `static/js/chat.js` |
-| Git-Schutz | Lokale Laufzeitdaten, Backups, Logs, virtuelle Umgebungen und Secrets werden ignoriert | `.gitignore` |
-
-### 3. Daten-Souveränität
-
-| Datentyp | Standard-Speicherort | Cloud-Übertragung standardmäßig? | Hinweise |
-| --- | --- | ---: | --- |
-| Chats und Nachrichten | SQLite-Datenbank in `data/` | Nein | Wird lokal auf dem Gerät gespeichert. |
-| Artifacts und Vorschau-Verlauf | SQLite-Datenbank in `data/` | Nein | Dient lokalen Vorschau- und Versionsfunktionen. |
-| Logs | `data/logs/leon.log` | Nein | Hilfreich für Debugging, gehört nicht auf GitHub. |
-| Backups | `backup/` | Nein | Lokale Backup-Dateien und Manifeste. |
-| Profil-/Setup-Daten | Lokale Datenbank und `.env`-Werte | Nein | Vorname und Passwort-Einrichtung bleiben lokal. |
-| Modellanfragen | Standardmäßig lokaler Ollama-Endpunkt | Keine externe Cloud standardmäßig | Externe Modellanbieter müssen bewusst konfiguriert werden. |
-
-LEON AI ist für private lokale Nutzung gebaut. Wenn `HOST` auf `0.0.0.0` gesetzt wird, kann die App im Netzwerk erreichbar werden. Das sollte nur bewusst und ausschließlich in vertrauenswürdigen Netzwerken passieren.
-
-### 4. API-Schlüssel und Secrets
-
-| Secret | Empfohlener Speicherort | Repository-Status |
-| --- | --- | --- |
-| `LEON_PASSWORD` | `.env` | Darf nicht committed werden |
-| `SECRET_KEY` | `.env` | Darf nicht committed werden |
-| Externe LLM-/API-Schlüssel | `.env` | Dürfen nicht committed werden |
-| Lokale Datenbanken | `data/` | Dürfen nicht committed werden |
-| Logs und Backups | `data/logs/`, `backup/` | Dürfen nicht committed werden |
-
-Sicherheitsregeln:
-
-- `.env` bleibt lokal.
-- Für `SECRET_KEY` lange zufällige Werte verwenden.
-- Veröffentlichte Schlüssel sofort widerrufen und ersetzen.
-- Niemals GitHub-Tokens, API-Schlüssel, Passwörter, Logs oder `.env`-Inhalte in öffentliche Issues kopieren.
-- Vor einem Release prüfen, dass `.env`, `data/`, `backup/`, `venv/`, Datenbanken und Logs nicht für Git vorgemerkt sind.
-
-### 5. Abhängigkeiten
-
-LEON AI hält die Python-Abhängigkeiten bewusst überschaubar:
-
-| Abhängigkeit | Zweck |
-| --- | --- |
-| `Flask>=3.0.0` | Lokales Web-Backend |
-| `requests>=2.31.0` | HTTP-Kommunikation mit lokalen/externen Modell-Endpunkten |
-| `python-dotenv>=1.0.0` | Lokale `.env`-Konfiguration |
-| `pyopenssl>=23.0.0` | TLS-/Krypto-Unterstützung, wo benötigt |
-
-Regeln für Abhängigkeiten:
-
-- Abhängigkeiten minimal und verständlich halten.
-- Etablierte und gepflegte Bibliotheken bevorzugen.
-- Installation in einer lokalen virtuellen Umgebung durchführen.
-- Änderungen an Abhängigkeiten vor Releases prüfen.
-- `venv/` und generierte Abhängigkeitsordner niemals committen.
-
-### 6. Sicherheitslücken melden
-
-Bitte melde Sicherheitslücken **zuerst privat**.
-
-| Bitte tun | Bitte vermeiden |
-| --- | --- |
-| GitHubs private Vulnerability-Reporting-Funktion/Security Advisories verwenden, wenn verfügbar. | Keine Exploit-Details in ein öffentliches Issue schreiben. |
-| Falls kein privater Meldeweg verfügbar ist, Leon privat über GitHub kontaktieren und um einen sicheren Kanal bitten. | Keine API-Schlüssel, Passwörter, Tokens, privaten Logs oder persönlichen Dateien öffentlich posten. |
-| Klare Reproduktionsschritte, betroffene Version/Commit, sichere Screenshots und Auswirkungen nennen. | Keine destruktiven Tests gegen fremde Systeme ausführen. |
-
-Empfohlene Struktur für eine Meldung:
-
-```text
-Titel: Kurze Zusammenfassung der Sicherheitslücke
-Betroffene Version/Commit:
-Umgebung: macOS / Windows / Linux, Python-Version, Browser
-Auswirkung:
-Reproduktionsschritte:
-Erwartetes Verhalten:
-Tatsächliches Verhalten:
-Vorgeschlagene Lösung, falls bekannt:
-```
-
-Falls das Problem dringend ist und kein privater Kanal verfügbar ist, eröffne nur ein minimales öffentliches Issue mit dem Text: **„Security contact requested“**. Technische Exploit-Details gehören nicht in die Öffentlichkeit.
-
-### 7. Was LEON AI nicht verspricht
-
-| Kein Ziel | Erklärung |
-| --- | --- |
-| Gehärteter öffentlicher Multi-User-Cloud-Dienst | LEON AI ist primär ein lokaler persönlicher Arbeitsbereich, kein gehostetes Enterprise-SaaS. |
-| Perfekte Sicherheit für generierten Code | KI-generierter Code kann falsch oder unsicher sein und muss vor echter Nutzung geprüft werden. |
-| Automatischer Schutz bei eigener Netzwerkfreigabe | Wenn `HOST=0.0.0.0` aktiviert wird, ist der Nutzer für Netzwerksicherheit verantwortlich. |
-| Wiederherstellung nach Secret-Leaks | Veröffentlichte Zugangsdaten müssen sofort beim jeweiligen Anbieter widerrufen werden. |
-
-### 8. Sicherheitsmodell bei Veröffentlichungen
-
-Das öffentliche Repository soll Quellcode, Dokumentation, Tests und Screenshots enthalten, aber keine privaten Laufzeitdaten. Eine sichere Veröffentlichung trennt deshalb klar zwischen Projektdateien und lokalen Nutzerdaten.
-
-| Release-Bereich | Sicherheitsbedeutung |
-| --- | --- |
-| Automatisierte Tests | Die in [`TESTING.md`](TESTING.md) beschriebene Test-Suite dokumentiert erwartetes Verhalten für Authentifizierung, CSRF, Fehler, Datenschutz-Werkzeuge, Backups und Rich-Frontend-Verträge. |
-| Secrets | `.env`, Passwörter, API-Schlüssel, Tokens, lokale Datenbanken, Logs und Backups sind Laufzeitdaten und bleiben außerhalb von Git. |
-| Request-Schutz | Änderungen in `routes/middleware.py` und `utils/security.py` sind sicherheitsrelevant, weil sie Header, CSRF, Origin-Prüfungen, Sessions und Login-Verhalten betreffen. |
-| Vorschau-Isolation | Änderungen in `static/js/artifacts.js` sind sicherheitsrelevant, weil sie beeinflussen, wie generiertes HTML, JavaScript, Python und iframe-Vorschauen ausgeführt werden. |
-| Öffentliche Kommunikation | Sicherheitskritische Funde sollten zuerst privat gemeldet werden, während normale Fehler und Fragen über GitHub Issues besprochen werden können. |

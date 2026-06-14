@@ -1,43 +1,44 @@
-LEON AI - START HIER
+LEON AI - START HERE
 
-Dokumentation (zuerst lesen):
-- STRUKTUR.md   → Projektbriefing: Wie ist alles aufgebaut? Was macht welche Datei?
-- UPDATES.md    → Änderungsprotokoll: Was wurde wann hinzugefügt/geändert/entfernt?
-- data/logs/leon.log → Laufzeit-Log: Bei Problemen ZUERST hier schauen, Fehler auswerten & beheben
-                     (Anleitung dazu steht in STRUKTUR.md → Abschnitt „Log-Datei auswerten“)
+Main documentation:
+- README.md     -> Project overview, screenshots, installation, storage needs, and license summary
+- SECURITY.md   -> Security model, local data, secrets, logs, network exposure, and reporting
+- TESTING.md    -> Test commands, CI, current coverage, and missing tests
+- STRUKTUR.md   -> Architecture, folders, data flow, and runtime files
+- CHANGELOG.md  -> Public release history
+- UPDATES.md    -> Internal developer log and debugging notes
 
-────────────────────────────────────────
+Quick start:
 
-1. ZIP entpacken.
-2. Den Ordner exakt so nennen:
-   Leon-ai
+1. Install Ollama:
+   https://ollama.com/
 
-3. Empfohlener Speicherort auf deinem Mac:
-   ~/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai
+2. Pull the recommended models:
+   ollama pull llama3
+   ollama pull llama3.2:1b
 
-4. Starten per Terminal:
-   cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
+3. Clone the repository:
+   git clone https://github.com/LeonTOfficial/LeonAI.git
+   cd LeonAI
+
+4. Create local settings:
+   cp .env.example .env
+
+5. Start on macOS:
    chmod +x Starten.command
    ./Starten.command
 
-5. Browser öffnen:
-   http://localhost:5001
+6. Start on Windows or Linux:
+   python -m venv venv
+   pip install -r requirements.txt
+   python app.py
 
-Standard-Passwort:
-   leon2026
+7. Open:
+   http://127.0.0.1:5001
 
-Wichtig:
-- Ollama muss laufen.
-- Wenn kein Modell da ist:
-   ollama pull llama3
-- Port 5001 wird genutzt, weil Port 5000 auf macOS oft blockiert ist.
-- data/ und backup/ nicht löschen, wenn du Chats behalten willst.
-
-Bei Fehlern oder seltsamem Verhalten:
-- data/logs/leon.log öffnen (live: tail -f data/logs/leon.log)
-- Fehler auswerten – Anleitung in STRUKTUR.md
-- Fix dokumentieren in UPDATES.md
-
-Falls Safari/Chrome altes Design zeigt:
-- Cmd + Shift + R drücken.
-- Danach nochmal http://localhost:5001 öffnen.
+Important:
+- Ollama must be running.
+- Keep `.env`, `data/`, `backup/`, databases, logs, and virtual environments out of Git.
+- For errors, check `data/logs/leon.log`.
+- For public release notes, update `CHANGELOG.md`.
+- For detailed internal implementation notes, update `UPDATES.md`.

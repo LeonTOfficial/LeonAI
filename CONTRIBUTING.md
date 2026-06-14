@@ -1,198 +1,107 @@
-> 🇩🇪 **[German version available](#german-contribution-version)** – Scroll down to read contribution guidelines in German.
-
 # Contributing to LEON AI
 
 LEON AI is proprietary source-available software. The code, design, architecture, and intellectual property are owned by Leon.
 
-## What You CAN Do ✅
+This repository is open for feedback, bug reports, documentation suggestions, and approved contributions. It is not an open-source project where code can be freely copied, modified, redistributed, or reused without permission.
 
-- **Report bugs** via GitHub Issues (with clear reproduction steps)
-- **Suggest features** via GitHub Issues (describe the use case and benefit)
-- **Ask questions** via GitHub Issues or Discussions
-- **Review** the source code for educational and learning purposes
-- **Provide feedback** on functionality, design, and user experience
+## What You Can Do
 
-## What You CANNOT Do ❌
+- Report bugs via GitHub Issues with clear reproduction steps.
+- Suggest features via GitHub Issues with a clear use case.
+- Ask questions via GitHub Issues or Discussions.
+- Review the source code for learning, evaluation, and feedback.
+- Provide feedback on usability, documentation, design, project structure, and reliability.
 
-- Fork and redistribute the code
-- Use LEON AI code or architecture in your own projects or products
-- Create commercial products based on LEON AI
-- Modify and self-host your own version as a separate product
-- Rebrand or republish LEON AI under a different name
-- Pull requests will not be accepted (source code is closed)
-- Use the code to train AI or machine learning models
+## What Requires Permission
+
+Prior written permission from Leon is required before you:
+
+- Copy, modify, redistribute, rebrand, publish, or self-host the source code.
+- Use LEON AI code or architecture in another project or product.
+- Create commercial products or services based on LEON AI.
+- Submit large code changes or feature pull requests.
+- Use the code to train AI or machine-learning models.
 
 For details, see [LICENSE](LICENSE).
 
----
+## Code Contributions
 
-## If You Want to Contribute Code
+Code contributions may be considered, but they require approval before work starts.
 
-All code contributions are welcome but **require prior approval from Leon** before submission.
+1. Open an Issue first.
+2. Describe the problem, improvement, or feature idea.
+3. Explain the user benefit and expected behavior.
+4. Wait for explicit approval before submitting code.
+5. Include tests and documentation updates when relevant.
 
-### Process
+Unapproved large feature pull requests may be closed even if the idea is interesting.
 
-1. **Open an Issue first**
-   - Describe what you want to improve or fix
-   - Explain the use case or benefit
-   - Include examples or screenshots if helpful
+## Bug Reports
 
-2. **Wait for approval**
-   - Leon will review your proposal
-   - If the idea aligns with LEON AI's vision, you'll get approval to proceed
+Good bug reports should include:
 
-3. **Submit your contribution**
-   - Only submit code after explicit approval
-   - Follow the existing code style and structure
-   - Write clear commit messages
-   - Include tests where appropriate
+- A clear title.
+- Platform: macOS, Windows, or Linux.
+- Python version.
+- Browser.
+- Steps to reproduce.
+- Expected behavior.
+- Actual behavior.
+- Relevant safe log excerpts from `data/logs/leon.log`, if available.
+- Screenshots if useful and safe to share.
 
-4. **Review and merge**
-   - Your contribution will be reviewed
-   - If accepted, it becomes part of LEON AI
-   - All contributions are owned by Leon under the license terms
+Do not include passwords, API keys, tokens, personal prompts, private data, full logs, databases, or `.env` content in public Issues.
 
----
+## Feature Suggestions
 
-## How to Report Bugs
+Helpful feature suggestions include:
 
-Good bug reports help LEON AI improve. Include:
+- The problem or workflow you want to improve.
+- Why the feature would be useful.
+- How you expect it to behave.
+- Any examples, sketches, or references.
+- Whether it affects privacy, security, local data, or generated code execution.
 
-- **Title**: Clear, short summary (e.g., "Chat stops responding after 10 messages")
-- **Environment**: Platform (macOS / Windows / Linux), Python version, browser
-- **Steps to reproduce**: Exact steps to trigger the bug
-- **Expected behavior**: What should happen
-- **Actual behavior**: What actually happens
-- **Logs**: Relevant excerpts from `data/logs/leon.log` (if available)
-- **Screenshots**: If helpful and safe to share
+## Security Issues
 
-**⚠️ Security Note**: Do NOT include passwords, API keys, personal data, or sensitive logs in public issues.
+Do not report security vulnerabilities publicly with exploit details. Follow the process in [SECURITY.md](SECURITY.md).
 
----
+If a security finding is urgent and no private channel is available, open a minimal public Issue saying only:
 
-## How to Suggest Features
+```text
+Security contact requested.
+```
 
-Feature suggestions help shape LEON AI's future. Include:
+## Before Opening A Pull Request
 
-- **Title**: Clear, short summary (e.g., "Add syntax highlighting for Python code blocks")
-- **Use case**: Why would this feature be useful?
-- **Proposed behavior**: How should it work?
-- **Alternative approaches**: Any other ways to solve this?
-- **Examples**: Sketches, wireframes, or references to similar tools
+Run the checks that apply to your change:
 
----
+```bash
+python -m unittest discover -s tests -q
+node --check static/js/api.js
+node --check static/js/ui.js
+node --check static/js/artifacts.js
+node --check static/js/chat.js
+git diff --check
+```
 
-## Code of Conduct
+Also confirm that no local runtime files are staged:
 
-- Be respectful and constructive
-- No harassment, spam, or abuse
-- Focus on the idea, not the person
-- Provide helpful feedback with suggestions, not just criticism
+- `.env`
+- `data/`
+- `backup/`
+- `venv/`
+- databases
+- logs
+- tokens or credentials
 
----
+## Code Of Conduct
 
-## Questions?
+- Be respectful and constructive.
+- Stay focused on the project and the technical issue.
+- Give actionable feedback, not personal attacks.
+- Do not spam, harass, or pressure maintainers.
+
+## Questions
 
 Open a GitHub Issue with the label `question` or start a GitHub Discussion.
-
----
-
----
-
-<a id="german-contribution-version"></a>
-
-# Zu LEON AI beitragen
-
-LEON AI ist proprietäre Source-Available-Software. Der Code, das Design, die Architektur und das geistige Eigentum gehören Leon.
-
-## Was Du KANNST ✅
-
-- **Fehler melden** via GitHub Issues (mit klaren Reproduktionsschritten)
-- **Features vorschlagen** via GitHub Issues (beschreibe den Use Case und den Nutzen)
-- **Fragen stellen** via GitHub Issues oder Discussions
-- **Quellcode lesen** zu Lern- und Bildungszwecken
-- **Feedback geben** zu Funktionalität, Design und Nutzererlebnis
-
-## Was Du NICHT KANNST ❌
-
-- Den Code forken und weitergeben
-- LEON AI Code oder Architektur in eigenen Projekten verwenden
-- Kommerzielle Produkte auf Basis von LEON AI erstellen
-- Deine eigene gehostete Version als separates Produkt anbieten
-- LEON AI umbenennen oder unter einem anderen Namen veröffentlichen
-- Pull Requests einreichen (der Quellcode ist geschlossen)
-- Den Code zum Training von KI oder Machine-Learning-Modellen verwenden
-
-Details siehe [LICENSE](LICENSE).
-
----
-
-## Wenn Du Code beitragen möchtest
-
-Alle Code-Beiträge sind willkommen, benötigen aber **vorherige Genehmigung von Leon** vor der Einreichung.
-
-### Prozess
-
-1. **Öffne zuerst ein Issue**
-   - Beschreibe, was du verbessern oder reparieren möchtest
-   - Erkläre den Use Case oder den Nutzen
-   - Ergänze Beispiele oder Screenshots, falls hilfreich
-
-2. **Warte auf Genehmigung**
-   - Leon wird deinen Vorschlag überprüfen
-   - Wenn die Idee zu LEON AI passt, bekommst du die Freigabe
-   - Dann kannst du mit der Arbeit beginnen
-
-3. **Reiche deinen Beitrag ein**
-   - Nur nach ausdrücklicher Genehmigung Code einreichen
-   - Folge dem bestehenden Code-Stil und der Struktur
-   - Schreibe klare Commit-Nachrichten
-   - Füge Tests hinzu, wo sinnvoll
-
-4. **Review und Merge**
-   - Dein Beitrag wird überprüft
-   - Wenn akzeptiert, wird er Teil von LEON AI
-   - Alle Beiträge gehören Leon unter den Lizenzbestimmungen
-
----
-
-## Fehler richtig melden
-
-Gute Fehlerberichte helfen LEON AI zu verbessern. Enthalten sollten:
-
-- **Titel**: Klare, kurze Zusammenfassung (z.B. "Chat antwortet nicht nach 10 Nachrichten")
-- **Umgebung**: Plattform (macOS / Windows / Linux), Python-Version, Browser
-- **Reproduktionsschritte**: Exakte Schritte, um den Fehler auszulösen
-- **Erwartetes Verhalten**: Was sollte passieren
-- **Tatsächliches Verhalten**: Was passiert tatsächlich
-- **Logs**: Relevante Auszüge aus `data/logs/leon.log` (falls vorhanden)
-- **Screenshots**: Falls hilfreich und sicher zu teilen
-
-**⚠️ Sicherheit**: Passwörter, API-Schlüssel, persönliche Daten oder sensible Logs NICHT in öffentliche Issues einfügen.
-
----
-
-## Features vorschlagen
-
-Feature-Vorschläge helfen LEON AI zu entwickeln. Enthalten sollten:
-
-- **Titel**: Klare, kurze Zusammenfassung (z.B. "Syntax-Highlighting für Python-Code-Blöcke")
-- **Use Case**: Warum wäre dieses Feature nützlich?
-- **Gewünschtes Verhalten**: Wie sollte es funktionieren?
-- **Alternative Ansätze**: Andere Wege, das Problem zu lösen?
-- **Beispiele**: Skizzen, Wireframes oder Referenzen zu ähnlichen Tools
-
----
-
-## Code of Conduct
-
-- Sei respektvoll und konstruktiv
-- Kein Mobbing, Spam oder Missbrauch
-- Konzentriere dich auf die Idee, nicht die Person
-- Gib hilfreiches Feedback mit Verbesserungsvorschlägen, nicht nur Kritik
-
----
-
-## Fragen?
-
-Öffne ein GitHub Issue mit dem Label `question` oder starte eine GitHub Discussion.

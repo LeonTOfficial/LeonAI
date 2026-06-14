@@ -496,13 +496,14 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("Farbig markieren", auth_route)
         self.assertIn("LEON AI läuft bereits", start_script)
         self.assertIn("## Features That Make You Want To Try It", readme)
-        self.assertIn("## Features, Die Hunger Machen", readme)
         self.assertIn("## About The Developer", readme)
-        self.assertIn("## Über Den Entwickler", readme)
-        self.assertIn("cd \"$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai\"", readme)
+        self.assertIn("English is the main documentation language", readme)
+        self.assertIn("LeonAI-DE", readme)
+        self.assertIn("## Download / Clone And Install", readme)
         self.assertIn("## Storage Needed", readme)
-        self.assertIn("## Speicherbedarf", readme)
-        self.assertIn("Echte Ordnerstruktur", readme)
+        self.assertIn("CHANGELOG.md", readme)
+        self.assertNotIn("Mobile Documents/com~apple~CloudDocs", readme)
+        self.assertIn("Real folder overview", readme)
 
 
 class DebugAndMediaTests(unittest.TestCase):

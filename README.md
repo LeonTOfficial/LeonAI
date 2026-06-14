@@ -1,5 +1,3 @@
-> 🇩🇪 **German version available:** [Click here for the German description](#german-version)
-
 # LEON AI
 
 ![Local-First Architecture](https://img.shields.io/badge/local--first-architecture-5357ff?style=for-the-badge)
@@ -8,7 +6,11 @@
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
+> English is the main documentation language for this repository. German documentation will be maintained separately in `LeonAI-DE`.
+
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
+
+**Chat workspace preview:** LEON AI combines local AI conversations, code output, rendered artifacts, and project context in one workspace.
 
 ## What Is LEON AI?
 
@@ -28,11 +30,11 @@ LEON AI is a private, local AI workspace for your own computer. It brings chat, 
 
 ![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
 
-> **Note:** The Artifacts feature allows you to test HTML, CSS, JavaScript, and Tailwind setups in a live environment directly within your chat.
+**Artifacts preview:** Generated HTML, CSS, JavaScript, and Tailwind-style layouts can be checked directly beside the chat.
 
 
 
-## Quick Start / Installation
+## Download / Clone And Install
 
 LEON AI is a cross-platform Flask application. macOS includes a convenience launcher, while Windows laptops/desktops and Linux systems run the same project through Python and Ollama.
 
@@ -43,7 +45,7 @@ ollama pull llama3
 ollama pull llama3.2:1b
 ```
 
-2. Clone the project and enter the folder:
+2. Download the project with Git and enter the folder:
 
 ```bash
 git clone https://github.com/LeonTOfficial/LeonAI.git
@@ -75,10 +77,9 @@ chmod +x Starten.command
 ./Starten.command
 ```
 
-If macOS refuses to run the command file for security reasons, open Terminal and run:
+If macOS refuses to run the command file for security reasons, open Terminal in the project folder and run:
 
 ```bash
-cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
 chmod +x Starten.command
 ./Starten.command
 ```
@@ -120,6 +121,8 @@ On a fresh install, LEON AI shows a first-setup screen where you choose your own
 
 ![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
 
+**Login and first setup:** On first launch, LEON AI asks for a first name and password before opening the local workspace.
+
 ## Storage Needed
 
 | Component | Approx. size |
@@ -139,11 +142,11 @@ Read:
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
-- [`UPDATES.md`](UPDATES.md) for changelogs, log file structure, and handling issues with older Python versions.
+- [`CHANGELOG.md`](CHANGELOG.md) for public release notes and version history.
 
 ![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
 
-> **Note:** Monitor your privacy, token usage, logs, and system health from the built-in dashboard.
+**Dashboard preview:** Monitor privacy information, token usage, logs, system health, and project activity from the built-in dashboard.
 
 ## Verified Engineering Highlights
 
@@ -166,7 +169,7 @@ LeonAI/
 ├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
-├── UPDATES.md
+├── CHANGELOG.md
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── .github/
@@ -228,236 +231,3 @@ LEON AI is designed as a portable local AI workspace for macOS, Windows laptops/
 Community feedback is very welcome: please test the app actively, try real workflows, and open a GitHub Issue whenever you find a bug, have a question, or want to suggest an improvement. For security findings, please see [`SECURITY.md`](SECURITY.md) for responsible disclosure.
 
 If you like this project, leave a **star ⭐️** and **follow** me on GitHub. It supports my learning path and helps me keep building better, safer, and more useful AI projects.
-
----
-
-<a id="german-version"></a>
-
-# LEON AI
-
-![Lokale Priorität](https://img.shields.io/badge/Lokale%20Priorit%C3%A4t-5357ff?style=for-the-badge)
-![Ollama](https://img.shields.io/badge/Ollama-bereit-111827?style=for-the-badge)
-![Flask](https://img.shields.io/badge/Flask-3.x-17a673?style=for-the-badge)
-![SQLite](https://img.shields.io/badge/SQLite-privat-d99b18?style=for-the-badge)
-![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
-
-![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
-
-## Was Ist LEON AI?
-
-LEON AI ist dein privater, lokaler KI-Arbeitsplatz für deinen eigenen Computer. Die App verbindet Chat, Code, Live-Vorschau, Diagramme, Python-Tests, Speicher, Logs und Dashboard in einer Oberfläche. Sie ist für macOS, Windows und Linux optimiert und legt großen Wert auf Datenschutz, Sicherheit und deutsche Sprachunterstützung.
-
-## Features, Die Hunger Machen
-
-- **Lokale KI-Modelle:** Läuft mit Ollama und Modellen wie `llama3`, `llama3.2:1b`, LLaVA und mehr.
-- **Starker Chat-Arbeitsbereich:** Auto-Titel, angepinnte Chats, Branching, Favoriten, Speicher, Export und konsequent deutsche Antworten.
-- **Farbe im Chat:** Lass LEON AI Nomen rot markieren, Schlüsselstellen hervorheben oder Feedback farbig strukturieren.
-- **Diagramme und Charts im Chat:** Mermaid-Diagramme und Chart.js-Grafiken werden direkt gerendert statt nur als Code angezeigt.
-- **Super-Artifacts:** HTML, CSS, JavaScript, Tailwind-Oberflächen und Python-Snippets direkt in einer Live-Vorschau ausprobieren.
-- **Python-Sandbox im Browser:** Python läuft über Pyodide im Browser und nicht direkt auf deinem Betriebssystem.
-- **Vision-Bild-Uploads:** Bilder hochladen und analysieren lassen, wenn ein Vision-Modell installiert ist.
-- **Privacy Dashboard:** Aktivität, Token-Nutzung, Health Checks, Backups, Logs und Datenschutz-Werkzeuge an einem Ort.
-- **First Setup:** Bei einer frischen Installation legst du dein eigenes Passwort und deinen Vornamen fest.
-
-![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
-
-> **Hinweis:** Mit dem Artifacts-Feature lassen sich HTML, CSS, JavaScript und Tailwind in einer Live-Umgebung direkt im Chat testen.
-
-
-
-## Quick Start / Installation
-
-LEON AI ist eine plattformübergreifende Flask-Anwendung. macOS enthält einen Komfort-Starter, während Windows-Laptops/-Desktops und Linux-Systeme dasselbe Projekt über Python und Ollama starten.
-
-1. Installiere [Ollama](https://ollama.com/) und lade die empfohlenen Modelle:
-
-```bash
-ollama pull llama3
-ollama pull llama3.2:1b
-```
-
-2. Klone das Projekt und öffne den Ordner:
-
-```bash
-git clone https://github.com/LeonTOfficial/LeonAI.git
-cd LeonAI
-```
-
-3. Erstelle deine lokale Konfiguration:
-
-```bash
-cp .env.example .env
-```
-
-4. Öffne `.env` und passe die wichtigsten Werte an:
-
-```env
-LEON_PASSWORD=neues-langes-passwort
-SECRET_KEY=langer-geheimer-wert
-PORT=5001
-HOST=127.0.0.1
-OLLAMA_MODEL=llama3
-```
-
-5. Starte LEON AI auf deiner Plattform:
-
-### macOS
-
-```bash
-chmod +x Starten.command
-./Starten.command
-```
-
-Wenn macOS die Datei aus Sicherheitsgründen nicht direkt ausführen kann, öffne das Terminal und gib ein:
-
-```bash
-cd "$HOME/Library/Mobile Documents/com~apple~CloudDocs/Leon-ai"
-chmod +x Starten.command
-./Starten.command
-```
-
-### Windows PowerShell
-
-```powershell
-py -m venv venv
-.\venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python app.py
-```
-
-Wenn PowerShell das Aktivieren der virtuellen Umgebung blockiert, erlaube Skripte nur für die aktuelle Sitzung:
-
-```powershell
-Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\venv\Scripts\Activate.ps1
-```
-
-### Linux
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python app.py
-```
-
-6. Öffne die App im Browser:
-
-```text
-http://127.0.0.1:5001
-```
-
-Bei einer frischen Installation erscheint zuerst ein Setup-Screen. Dort legst du dein eigenes Passwort und deinen Vornamen fest. Danach erscheint nur noch der normale Login.
-
-![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
-
-## Speicherbedarf
-
-| Komponente | Ungefährer Speicherbedarf |
-| --- | ---: |
-| LEON AI Code + Python-Abhängigkeiten | ca. 0,5 - 1,5 GB |
-| Llama 3 Modell | ca. 4,7 GB |
-| Llama 3.2 1B Modell | ca. 1,3 GB |
-| Gesamtbedarf | ca. 6,5 - 7,5 GB |
-
-## Für Die Nerds
-
-Du willst wissen, wie sicher das ist oder wie die modulare Architektur aus dem v4-Refactoring funktioniert?
-
-Lies:
-
-- [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
-- [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
-- [`TESTING.md`](TESTING.md) für Unit Tests, QA und Prüfschritte.
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) für Richtlinien zur Mitarbeit und wie man Bugs meldet oder Features vorschlägt.
-- [`UPDATES.md`](UPDATES.md) für Changelogs, den Aufbau der Log-Dateien und Problemlösungen bei älteren Python-Versionen.
-
-![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
-
-> **Hinweis:** Überwache deine Privatsphäre, Token-Nutzung, Logs und Systemressourcen direkt über das Dashboard.
-
-## Geprüfte Technik-Highlights
-
-LEON AI ist nicht nur eine schöne Oberfläche. Das Projekt hat eine gezielte Test-Suite und ein dokumentiertes Sicherheitsmodell.
-
-- **Getestete Backend-Flows:** Login, First Setup, Chat-Erstellung, Branching, Artifact-Versionen, Backups, Privacy-Aktionen und Fehlerbehandlung.
-- **Getestete Frontend-Verträge:** CSRF-Header, Farbtags im Chat, Mermaid/Chart.js-Marker, Pyodide-Anbindung und Artifact-Vorschau-Controls.
-- **CI-Prüfungen:** GitHub Actions in `.github/workflows/test.yml` führen die Tests mit Python 3.11 und 3.12 aus und prüfen die wichtigsten JavaScript-Module.
-- **Sicherheitsbelege:** CSRF-Schutz liegt in `utils/security.py`, Security-Header in `routes/middleware.py`, Fehlerabschirmung in `utils/errors.py`, und die `.gitignore` schließt lokale Laufzeitdaten und Secrets aus.
-- **Aktueller QA-Befehl:** `./venv/bin/python -m unittest discover -s tests -q`
-
-Echte Ordnerstruktur:
-
-```text
-LeonAI/
-├── app.py
-├── config.py
-├── Starten.command
-├── README.md
-├── SECURITY.md
-├── STRUKTUR.md
-├── TESTING.md
-├── UPDATES.md
-├── LICENSE
-├── CONTRIBUTING.md
-├── .github/
-│   └── workflows/
-│       └── test.yml
-├── models/
-│   └── database.py
-├── routes/
-│   ├── api.py
-│   ├── auth.py
-│   ├── chat.py
-│   ├── middleware.py
-│   └── pages.py
-├── services/
-│   ├── artifact_service.py
-│   ├── backup_service.py
-│   ├── chat_service.py
-│   ├── memory_service.py
-│   ├── ollama_service.py
-│   ├── profile_service.py
-│   └── room_service.py
-├── static/
-│   └── js/
-│       ├── api.js
-│       ├── artifacts.js
-│       ├── chat.js
-│       └── ui.js
-├── templates/
-│   ├── dashboard.html
-│   └── index.html
-├── tests/
-│   ├── test_core.py
-│   └── test_ui_flows.py
-└── docs/
-    └── screenshots/
-```
-
-## Über Den Entwickler
-
-Ich bin **Leon**, 16 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf meinen Weg in die Wirtschaftsinformatik/Angewandte Informatik vor. LEON AI ist mein persönliches Lernprojekt, um zu verstehen, wie moderne Full-Stack-Software funktioniert: modulare Architektur, sichere Authentifizierung, lokale Datenhoheit, Tests und echte Deployment-Prozesse.
-
-Das Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wichtiger Punkt: Es zeigt, wie effizient man heute als junger Entwickler mit KI als ernstem Engineering-Partner modulare, sichere und bedienbare Software bauen kann. Die Code-Qualität, die Test-Abdeckung und die Dokumentation spiegeln diese Partnerschaft.
-
-Ein besonderes Highlight: Ich habe den **Landespreis Medienbildung** für ein KI-Projekt erhalten, mit dem ich Bildungsinhalte erstellt habe, die KI verständlicher machen: was Machine Learning grundlegend ist, was hinter Systemen wie ChatGPT steckt, und wie man KI-Tools verantwortungsvoll einsetzt.
-
-## Lizenz & Support
-
-**LEON AI ist proprietäre Source-Available-Software.** Alle Rechte bleiben beim Urheber: **Copyright © 2026 Leon**.
-
-| Nutzung | Genehmigung nötig? | Erklärung |
-| --- | --- | --- |
-| Offizielle App/Demo privat nutzen | **Nein** | Jeder darf die offizielle App/Demo völlig normal und kostenlos für den privaten Gebrauch nutzen. |
-| Quellcode zu Lern- oder Prüfzwecken ansehen | **Nein** | Das Repository darf zu Bildungs-, Evaluierungs- und Review-Zwecken gelesen werden. |
-| Quellcode kopieren, verändern, selbst hosten, weiterverbreiten, umbenennen oder veröffentlichen | **Ja** | Dafür ist vorher eine schriftliche Genehmigung von Leon erforderlich. |
-| Kommerzielle Nutzung oder Integration in ein anderes Produkt/einen Dienst | **Ja** | Dafür ist eine gesonderte schriftliche Genehmigung/Lizenz erforderlich. |
-
-LEON AI ist als portabler lokaler KI-Arbeitsplatz für macOS, Windows-Laptops/-Desktops und Linux-Systeme konzipiert, wenn Python, die benötigten Abhängigkeiten und Ollama auf dem Gerät verfügbar sind.
-
-Community-Feedback ist ausdrücklich willkommen: Teste die App gerne aktiv, probiere echte Workflows aus und eröffne jederzeit ein GitHub Issue, wenn ein Fehler auftritt, eine Frage offen ist oder du eine Verbesserung vorschlagen möchtest. Für Sicherheitsfunde siehe bitte [`SECURITY.md`](SECURITY.md) für verantwortungsvolle Offenlegung.
-
-Wenn dir das Projekt gefällt, lass gerne einen **Stern ⭐️** da und **folge** mir auf GitHub. Damit unterstützt du meinen Lernweg und hilfst mir, weitere bessere, sicherere und nützlichere KI-Projekte zu bauen.
