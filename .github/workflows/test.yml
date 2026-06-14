@@ -41,6 +41,9 @@ jobs:
       - name: Create local test environment
         run: cp .env.example .env
 
+      - name: Run release readiness doctor
+        run: python scripts/leon_doctor.py
+
       - name: Run backend and contract tests
         run: python -m unittest discover -s tests -q
 

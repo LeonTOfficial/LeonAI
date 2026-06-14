@@ -1,6 +1,6 @@
 # LEON AI Testing
 
-![Tests](https://img.shields.io/badge/tests-47%20automated-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-48%20automated-17a673?style=for-the-badge)
 ![Backend](https://img.shields.io/badge/backend-Flask-111827?style=for-the-badge)
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
@@ -63,7 +63,7 @@ The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not inc
 
 ### 3. Current Automated Coverage
 
-The current automated suite covers **47 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
+The current automated suite covers **48 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
 
 | Test area | What is checked | Main evidence |
 | --- | --- | --- |

@@ -35,6 +35,8 @@ Leon-ai/
 ├── .github/
 │   └── workflows/
 │       └── test.yml           # GitHub Actions CI for tests and JS syntax
+├── scripts/
+│   └── leon_doctor.py         # release readiness checks for docs, CI, and secrets
 ├── docs/
 │   └── screenshots/           # README screenshots and public visuals
 ├── models/
@@ -92,6 +94,7 @@ Leon-ai/
 | `config.py` | Central configuration for paths, host/port, model names, authentication, rate limits, uploads, and system prompts. |
 | `requirements.txt` | Small Python dependency list for the local backend. |
 | `Starten.command` | macOS convenience launcher. Windows and Linux use the same backend through their normal Python/terminal workflow. |
+| `scripts/leon_doctor.py` | Local release readiness checker for required files, public documentation, CI wiring, and accidental runtime-data tracking. |
 
 ### Backend Layers
 
