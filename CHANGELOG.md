@@ -10,6 +10,13 @@ This file is the public release history. [`UPDATES.md`](UPDATES.md) remains an i
 - Main repository documentation is now English-first.
 - Public release history moved to `CHANGELOG.md`.
 - `UPDATES.md` remains available as an internal developer log.
+- API and streaming errors now return safe user-facing messages with request IDs while internal details stay in local logs.
+- CI is now focused on one workflow: tests, JavaScript syntax checks, and release readiness checks.
+
+### Security
+- Added a shared JSON error helper for API routes, middleware, and chat streams.
+- Expanded automated coverage for hidden internal API errors.
+- Added `scripts/leon_doctor.py` to detect missing public files, broken local doc links, CI drift, and accidentally tracked runtime data.
 
 ## v1.0.0
 

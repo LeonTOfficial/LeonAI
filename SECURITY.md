@@ -25,7 +25,7 @@ LEON AI is designed as a **local-first personal AI workspace**. The goal is to k
 | Authentication | Login, logout, and first-time setup with a user-defined password and first name | `routes/auth.py` |
 | Password and request protection | Password checks, CSRF tokens, login decorator, rate-limit helpers, origin validation | `utils/security.py` |
 | Security headers | Content Security Policy, frame restrictions, referrer policy, permissions policy, request IDs | `routes/middleware.py` |
-| Error shielding | Browser responses avoid internal stack traces and expose request IDs for debugging | `utils/errors.py` |
+| Error shielding | Browser responses avoid internal stack traces and expose request IDs for debugging | `utils/errors.py`, `routes/api.py`, `routes/chat.py` |
 | Logging | Structured rotating logs in `data/logs/leon.log` | `utils/logging.py` |
 | Local database | SQLite schema, migrations, chat branching, artifacts, and profile data | `models/database.py` |
 | Backups | Local SQLite backup flow with manifest/integrity metadata | `services/backup_service.py` |
@@ -108,6 +108,16 @@ Logs are local and useful for debugging, but they can contain sensitive context 
 | Terminal activity | Controlled through `LEON_TERMINAL_ACTIVITY` | Useful for local status output. |
 | Technical log level | Controlled through `LEON_TERMINAL_LOG_LEVEL` | Keep noisy details out of normal terminal output. |
 | Error reports | GitHub Issues or private security report | Share only minimal, redacted excerpts. |
+
+#### Error Response Pattern
+
+When something fails, LEON AI separates the browser-facing message from the developer-facing log entry.
+
+| Layer | What the user sees | What stays local |
+| --- | --- | --- |
+| Browser/API response | A short safe message and a `request_id`. | No stack trace, database path, token, or raw exception detail. |
+| Local log | Full technical context for debugging. | Stored locally in `data/logs/leon.log`. |
+| Debug workflow | The user can copy the request ID. | The developer searches that ID in the local log. |
 
 ### 8. Network Exposure
 

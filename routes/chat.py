@@ -5,13 +5,14 @@ import threading
 from datetime import datetime
 
 import requests
-from flask import Blueprint, Response, g, jsonify, request, stream_with_context
+from flask import Blueprint, Response, g, request, stream_with_context
 
 from config import DB_PATH, MAX_TEXT_CHARS, OLLAMA_BASE
 from models.database import get_db
 from services.chat_service import approx_tokens, build_messages, generate_auto_title
 from services.memory_service import try_save_memory_async
 from services.ollama_service import get_vision_model, ollama_is_running
+from utils.errors import json_error
 from utils.logging import get_logger
 from utils.media import decode_image_base64
 from utils.security import is_rate_limited, login_required
@@ -26,14 +27,14 @@ logger = get_logger("leon.chat")
 def chat_stream():
     ip = request.remote_addr
     if is_rate_limited(ip):
-        return jsonify({"error": "Zu viele Anfragen. Bitte warte einen Moment."}), 429
+        return json_error("Zu viele Anfragen. Bitte warte einen Moment.", 429)
 
     data = request.get_json(silent=True) or {}
     msg = clean_text(data.get("message", ""), MAX_TEXT_CHARS)
     try:
         room_id = int(data.get("room_id", 1))
     except (TypeError, ValueError):
-        return jsonify({"error": "Ungültiger Raum"}), 400
+        return json_error("Ungültiger Raum", 400)
     parent_id = data.get("parent_id")
     if parent_id is not None:
         try:
@@ -42,13 +43,13 @@ def chat_stream():
             parent_id = None
     
     if not msg:
-        return jsonify({"error": "Leer"}), 400
+        return json_error("Leer", 400)
 
     con = get_db()
     room = con.execute("SELECT id FROM rooms WHERE id=?", (room_id,)).fetchone()
     if not room:
         con.close()
-        return jsonify({"error": "Raum nicht gefunden"}), 404
+        return json_error("Raum nicht gefunden", 404)
     if parent_id is not None:
         parent = con.execute(
             "SELECT id FROM messages WHERE id=? AND room_id=?",
@@ -56,10 +57,10 @@ def chat_stream():
         ).fetchone()
         if not parent:
             con.close()
-            return jsonify({"error": "Ungültiger Verlaufspunkt"}), 400
+            return json_error("Ungültiger Verlaufspunkt", 400)
     con.close()
     if not ollama_is_running():
-        return jsonify({"error": "ollama_offline", "message": "⚠️ Ollama läuft nicht!"}), 503
+        return json_error("⚠️ Ollama läuft nicht!", 503, code="ollama_offline")
 
     con = get_db()
     user_msg_id = None
@@ -74,7 +75,7 @@ def chat_stream():
         msg_count = con.execute("SELECT COUNT(*) FROM messages WHERE room_id=?", (room_id,)).fetchone()[0]
     except Exception as e:
         logger.error("User-Nachricht speichern fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": "Nachricht konnte nicht gespeichert werden"}), 500
+        return json_error("Nachricht konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -120,7 +121,7 @@ def chat_stream():
             yield f"data: {json.dumps({'token': err, 'done': False, 'error': True, 'request_id': request_id})}\n\n"
         except Exception as e:
             logger.error("Chat-Stream Fehler: %s", e, exc_info=True)
-            err = f"⚠️ Fehler: {str(e)}"
+            err = "⚠️ Die Antwort konnte nicht vollständig erzeugt werden."
             full = err
             had_error = True
             yield f"data: {json.dumps({'token': err, 'done': False, 'error': True, 'request_id': request_id})}\n\n"
@@ -152,15 +153,15 @@ def chat_stream():
 def chat_vision_stream():
     ip = request.remote_addr
     if is_rate_limited(ip):
-        return jsonify({"error": "Zu viele Anfragen. Bitte warte einen Moment."}), 429
+        return json_error("Zu viele Anfragen. Bitte warte einen Moment.", 429)
     if not ollama_is_running():
-        return jsonify({"error": "ollama_offline", "message": "⚠️ Ollama läuft nicht!"}), 503
+        return json_error("⚠️ Ollama läuft nicht!", 503, code="ollama_offline")
 
     data = request.get_json(silent=True) or {}
     try:
         room_id = int(data.get("room_id", 1))
     except (TypeError, ValueError):
-        return jsonify({"error": "Ungültiger Raum"}), 400
+        return json_error("Ungültiger Raum", 400)
     parent_id = data.get("parent_id")
     if parent_id is not None:
         try:
@@ -181,19 +182,19 @@ def chat_vision_stream():
         raw_b64 = image_b64
         stored_image = f"data:image/jpeg;base64,{raw_b64}" if raw_b64 else ""
     if not raw_b64:
-        return jsonify({"error": "Kein Bild übermittelt"}), 400
+        return json_error("Kein Bild übermittelt", 400)
     if len(raw_b64) > 10 * 1024 * 1024:
-        return jsonify({"error": "Bild zu groß"}), 413
+        return json_error("Bild zu groß", 413)
     try:
         decode_image_base64(raw_b64)
     except ValueError as e:
-        return jsonify({"error": str(e)}), 400
+        return json_error(str(e), 400)
 
     con = get_db()
     room = con.execute("SELECT id, model FROM rooms WHERE id=?", (room_id,)).fetchone()
     if not room:
         con.close()
-        return jsonify({"error": "Raum nicht gefunden"}), 404
+        return json_error("Raum nicht gefunden", 404)
     if parent_id is not None:
         parent = con.execute(
             "SELECT id FROM messages WHERE id=? AND room_id=?",
@@ -201,14 +202,12 @@ def chat_vision_stream():
         ).fetchone()
         if not parent:
             con.close()
-            return jsonify({"error": "Ungültiger Verlaufspunkt"}), 400
+            return json_error("Ungültiger Verlaufspunkt", 400)
     con.close()
 
     vision_model = get_vision_model(room["model"])
     if not vision_model:
-        return jsonify({
-            "error": "Kein Vision-Modell installiert. Installiere z.B. mit: ollama pull llava"
-        }), 503
+        return json_error("Kein Vision-Modell installiert. Installiere z.B. mit: ollama pull llava", 503)
 
     user_text = f"📎 Bild hochgeladen: {image_name}\n{prompt}"
     con = get_db()
@@ -227,7 +226,7 @@ def chat_vision_stream():
         msg_count = con.execute("SELECT COUNT(*) FROM messages WHERE room_id=?", (room_id,)).fetchone()[0]
     except Exception as e:
         logger.error("Vision-User-Nachricht speichern fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": "Nachricht konnte nicht gespeichert werden"}), 500
+        return json_error("Nachricht konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -279,7 +278,7 @@ def chat_vision_stream():
         except Exception as e:
             logger.error("Vision-Stream Fehler: %s", e, exc_info=True)
             had_error = True
-            full = f"⚠️ Fehler: {str(e)}"
+            full = "⚠️ Die Bildanalyse konnte nicht vollständig erzeugt werden."
             yield f"data: {json.dumps({'token': full, 'done': False, 'error': True, 'request_id': request_id})}\n\n"
 
         elapsed = (datetime.now() - start_time).total_seconds()
@@ -309,9 +308,9 @@ def chat_vision_stream():
 def vision_stream():
     ip = request.remote_addr
     if is_rate_limited(ip):
-        return jsonify({"error": "Zu viele Anfragen"}), 429
+        return json_error("Zu viele Anfragen", 429)
     if not ollama_is_running():
-        return jsonify({"error": "Ollama offline"}), 503
+        return json_error("Ollama offline", 503)
 
     data = request.get_json(silent=True) or {}
     image_b64 = clean_text(data.get("image_b64", ""), 15 * 1024 * 1024)
@@ -319,13 +318,13 @@ def vision_stream():
     model_req = clean_text(data.get("model", ""), 90)
 
     if not image_b64:
-        return jsonify({"error": "Kein Bild"}), 400
+        return json_error("Kein Bild", 400)
     if len(image_b64) > 15 * 1024 * 1024:
-        return jsonify({"error": "Bild zu groß"}), 413
+        return json_error("Bild zu groß", 413)
 
     vision_model = get_vision_model(model_req)
     if not vision_model:
-        return jsonify({"error": "Kein Vision-Modell installiert"}), 503
+        return json_error("Kein Vision-Modell installiert", 503)
     request_id = getattr(g, "request_id", "-")
 
     def generate():
@@ -353,7 +352,7 @@ def vision_stream():
                         continue
         except Exception as e:
             logger.error("Vision-Stream API Fehler: %s", e, exc_info=True)
-            yield f"data: {json.dumps({'error': str(e), 'done': True, 'request_id': request_id})}\n\n"
+            yield f"data: {json.dumps({'error': 'Bildanalyse konnte nicht abgeschlossen werden', 'done': True, 'request_id': request_id})}\n\n"
         yield f"data: {json.dumps({'token': '', 'done': True, 'model': vision_model, 'request_id': request_id})}\n\n"
 
     return Response(
@@ -368,11 +367,11 @@ def vision_stream():
 def pull_model():
     model = clean_text((request.get_json(silent=True) or {}).get("model", ""), 90)
     if not model:
-        return jsonify({"error": "Kein Modell angegeben"}), 400
+        return json_error("Kein Modell angegeben", 400)
     if not is_safe_model_name(model):
-        return jsonify({"error": "Ungültiger Modellname"}), 400
+        return json_error("Ungültiger Modellname", 400)
     if not ollama_is_running():
-        return jsonify({"error": "Ollama offline"}), 503
+        return json_error("Ollama offline", 503)
     request_id = getattr(g, "request_id", "-")
 
     def generate():
@@ -395,7 +394,7 @@ def pull_model():
                         continue
         except Exception as e:
             logger.error("Modell-Pull fehlgeschlagen: %s", e, exc_info=True)
-            yield f"data: {json.dumps({'error': str(e), 'request_id': request_id})}\n\n"
+            yield f"data: {json.dumps({'error': 'Modell konnte nicht heruntergeladen werden', 'request_id': request_id})}\n\n"
 
     return Response(
         stream_with_context(generate()),

@@ -26,6 +26,19 @@ def _is_benign_404(path: str) -> bool:
     return any(path == p or path.startswith(p) for p in _BENIGN_404_PREFIXES)
 
 
+def json_error(message: str, status: int = 400, *, code: str | None = None, details: dict | None = None):
+    """Return a safe JSON error payload with the current request id."""
+    payload = {
+        "error": message,
+        "request_id": getattr(g, "request_id", "-"),
+    }
+    if code:
+        payload["code"] = code
+    if details:
+        payload["details"] = details
+    return jsonify(payload), status
+
+
 def register_error_handlers(app) -> None:
     logger = get_logger("leon.errors")
 

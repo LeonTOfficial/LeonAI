@@ -1,6 +1,8 @@
 import os
 import base64
 import sqlite3
+import subprocess
+import sys
 import tempfile
 import unittest
 from datetime import datetime
@@ -246,6 +248,7 @@ class MiddlewareAndErrorTests(unittest.TestCase):
         app.secret_key = "test"
         register_middleware(app)
         register_error_handlers(app)
+        app.register_blueprint(api_bp)
 
         @app.route("/api/ok", methods=["POST"])
         def ok():
@@ -301,6 +304,32 @@ class MiddlewareAndErrorTests(unittest.TestCase):
         self.assertIn("https://cdnjs.cloudflare.com", csp)
         self.assertIn("https://cdn.jsdelivr.net", csp)
         self.assertIn("https://cdn.tailwindcss.com", csp)
+
+    def test_api_route_errors_hide_internal_details_and_keep_request_id(self):
+        class BrokenConnection:
+            def execute(self, *_args, **_kwargs):
+                raise RuntimeError("secret db path should stay in logs")
+
+            def close(self):
+                pass
+
+        app = self.make_app()
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["authenticated"] = True
+                sess[CSRF_SESSION_KEY] = "known-token"
+            with patch("routes.api.get_db", return_value=BrokenConnection()):
+                res = client.post(
+                    "/api/rooms",
+                    json={"name": "Test"},
+                    headers={CSRF_HEADER: "known-token", "X-Request-ID": "api-safe-1"},
+                )
+
+        body = res.get_json()
+        self.assertEqual(res.status_code, 500)
+        self.assertEqual(body["error"], "Raum konnte nicht erstellt werden")
+        self.assertEqual(body["request_id"], "api-safe-1")
+        self.assertNotIn("secret db path", str(body))
 
 
 class AuthSecurityTests(unittest.TestCase):
@@ -502,8 +531,28 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("## Download / Clone And Install", readme)
         self.assertIn("## Storage Needed", readme)
         self.assertIn("CHANGELOG.md", readme)
+        self.assertIn("https://github.com/LeonTOfficial/LeonAI-DE", readme)
         self.assertNotIn("Mobile Documents/com~apple~CloudDocs", readme)
         self.assertIn("Real folder overview", readme)
+
+    def test_release_doctor_passes_and_is_documented(self):
+        result = subprocess.run(
+            [sys.executable, "scripts/leon_doctor.py"],
+            cwd=self.root,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            check=False,
+        )
+        readme = self.read("README.md")
+        testing = self.read("TESTING.md")
+        workflow = self.read(".github/workflows/test.yml")
+
+        self.assertEqual(result.returncode, 0, result.stdout)
+        self.assertIn("LEON AI Release Doctor", result.stdout)
+        self.assertIn("scripts/leon_doctor.py", readme)
+        self.assertIn("scripts/leon_doctor.py", testing)
+        self.assertIn("python scripts/leon_doctor.py", workflow)
 
 
 class DebugAndMediaTests(unittest.TestCase):

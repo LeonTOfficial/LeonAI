@@ -14,6 +14,7 @@ from services.export_service import export_room
 from services.memory_service import add_memory_fact
 from services.ollama_service import get_available_models, get_vision_model, ollama_is_running
 from utils.debug_logs import read_debug_logs
+from utils.errors import json_error
 from utils.logging import get_logger
 from utils.media import decode_image_base64
 from utils.privacy import privacy_summary, purge_private_data
@@ -70,7 +71,7 @@ def purge_privacy_data():
         result = purge_private_data(categories, clean_text(data.get("confirmation", ""), 80))
         return jsonify({"ok": True, **result, "summary": privacy_summary()})
     except ValueError as exc:
-        return jsonify({"error": str(exc)}), 400
+        return json_error(str(exc), 400)
 
 
 @api_bp.route("/debug/logs", methods=["GET"])
@@ -92,7 +93,7 @@ def log_client_error():
     stack = clean_text(data.get("stack", ""), 1800)
     client_request_id = clean_text(data.get("request_id", ""), 80)
     if not message:
-        return jsonify({"error": "Keine Fehlermeldung"}), 400
+        return json_error("Keine Fehlermeldung", 400)
     logger.warning(
         "Client-Fehler | kind=%s | source=%s | related_request_id=%s | message=%s%s",
         kind,
@@ -133,7 +134,7 @@ def create_room():
         return jsonify({"id": cur.lastrowid, "name": name, "model": model, "icon": icon, "color": color})
     except Exception as e:
         logger.error("Raum erstellen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Raum konnte nicht erstellt werden", 500)
     finally:
         con.close()
 
@@ -151,7 +152,7 @@ def delete_room(room_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Raum löschen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Raum konnte nicht gelöscht werden", 500)
     finally:
         con.close()
 
@@ -176,7 +177,7 @@ def update_room(room_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Raum aktualisieren fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Raum konnte nicht aktualisiert werden", 500)
     finally:
         con.close()
 
@@ -186,7 +187,7 @@ def update_room(room_id):
 def set_room_model(room_id):
     model = clean_text((request.get_json(silent=True) or {}).get("model", DEFAULT_MODEL), 90)
     if not is_safe_model_name(model):
-        return jsonify({"error": "Ungültiger Modellname"}), 400
+        return json_error("Ungültiger Modellname", 400)
     con = get_db()
     try:
         con.execute("UPDATE rooms SET model=? WHERE id=?", (model, room_id))
@@ -194,7 +195,7 @@ def set_room_model(room_id):
         return jsonify({"ok": True, "model": model})
     except Exception as e:
         logger.error("Modell setzen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Modell konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -211,7 +212,7 @@ def clear_room(room_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Verlauf leeren fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Chatverlauf konnte nicht geleert werden", 500)
     finally:
         con.close()
 
@@ -227,11 +228,11 @@ def summarize_room(room_id):
     ).fetchall()
     con.close()
     if not room:
-        return jsonify({"error": "Nicht gefunden"}), 404
+        return json_error("Nicht gefunden", 404)
     if not msgs:
         return jsonify({"summary": "Noch keine Nachrichten."})
     if not ollama_is_running():
-        return jsonify({"error": "Ollama offline"}), 503
+        return json_error("Ollama offline", 503)
     history = "\n".join(
         f"{'Nutzer' if m['role'] == 'user' else 'LEON AI'}: {m['content'][:300]}"
         for m in msgs
@@ -248,10 +249,10 @@ def summarize_room(room_id):
         )
         if r.status_code == 200:
             return jsonify({"summary": r.json().get("message", {}).get("content", "")})
-        return jsonify({"error": "Ollama Fehler"}), 500
+        return json_error("Ollama Fehler", 500)
     except Exception as e:
         logger.error("Zusammenfassung fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Zusammenfassung konnte nicht erstellt werden", 500)
 
 
 @api_bp.route("/rooms/<int:room_id>/messages", methods=["GET"])
@@ -272,7 +273,7 @@ def get_artifact_versions(room_id):
     room = con.execute("SELECT id FROM rooms WHERE id=?", (room_id,)).fetchone()
     con.close()
     if not room:
-        return jsonify({"error": "Raum nicht gefunden"}), 404
+        return json_error("Raum nicht gefunden", 404)
     return jsonify({"versions": list_artifacts(room_id)})
 
 
@@ -284,14 +285,14 @@ def save_artifact_versions(room_id):
     if isinstance(artifacts, dict):
         artifacts = [artifacts]
     if not isinstance(artifacts, list) or not artifacts:
-        return jsonify({"error": "Keine Artefakte übermittelt"}), 400
+        return json_error("Keine Artefakte übermittelt", 400)
     try:
         return jsonify({"ok": True, **save_artifacts(room_id, artifacts)})
     except ValueError as exc:
-        return jsonify({"error": str(exc)}), 400
+        return json_error(str(exc), 400)
     except Exception as exc:
         logger.error("Artifact-Versionen speichern fehlgeschlagen: %s", exc, exc_info=True)
-        return jsonify({"error": "Artifact-Versionen konnten nicht gespeichert werden"}), 500
+        return json_error("Artifact-Versionen konnten nicht gespeichert werden", 500)
 
 
 @api_bp.route("/rooms/<int:room_id>/artifacts/<int:artifact_id>", methods=["DELETE"])
@@ -300,10 +301,10 @@ def delete_artifact_version(room_id, artifact_id):
     try:
         return jsonify({"ok": True, **delete_artifact(room_id, artifact_id)})
     except ValueError as exc:
-        return jsonify({"error": str(exc)}), 404
+        return json_error(str(exc), 404)
     except Exception as exc:
         logger.error("Artifact-Version löschen fehlgeschlagen: %s", exc, exc_info=True)
-        return jsonify({"error": "Artifact-Version konnte nicht gelöscht werden"}), 500
+        return json_error("Artifact-Version konnte nicht gelöscht werden", 500)
 
 
 @api_bp.route("/rooms/<int:room_id>/messages/count", methods=["GET"])
@@ -364,13 +365,13 @@ def get_memory(room_id):
 def add_memory(room_id):
     fact = clean_text((request.get_json(silent=True) or {}).get("fact", ""), 300)
     if not fact:
-        return jsonify({"error": "Leer"}), 400
+        return json_error("Leer", 400)
     try:
         result = add_memory_fact(room_id, fact)
         return jsonify(result)
     except Exception as e:
         logger.error("Memory hinzufügen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Erinnerung konnte nicht gespeichert werden", 500)
 
 
 @api_bp.route("/rooms/<int:room_id>/memory/<int:mem_id>", methods=["DELETE"])
@@ -383,7 +384,7 @@ def delete_memory_item(room_id, mem_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Memory löschen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Erinnerung konnte nicht gelöscht werden", 500)
     finally:
         con.close()
 
@@ -405,7 +406,7 @@ def create_template():
     content = clean_text(data.get("content", ""))
     icon = clean_text(data.get("icon", "💡"), 8)
     if not label or not content:
-        return jsonify({"error": "Fehlende Felder"}), 400
+        return json_error("Fehlende Felder", 400)
     con = get_db()
     try:
         cur = con.execute(
@@ -416,7 +417,7 @@ def create_template():
         return jsonify({"id": cur.lastrowid, "label": label, "content": content, "icon": icon})
     except Exception as e:
         logger.error("Vorlage erstellen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Vorlage konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -431,7 +432,7 @@ def delete_template(tpl_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Vorlage löschen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Vorlage konnte nicht gelöscht werden", 500)
     finally:
         con.close()
 
@@ -453,7 +454,7 @@ def create_snippet():
     code = clean_text(data.get("code", ""), 50000)
     lang = clean_text(data.get("language", "plaintext"), 40)
     if not title or not code:
-        return jsonify({"error": "Fehlende Felder"}), 400
+        return json_error("Fehlende Felder", 400)
     con = get_db()
     try:
         cur = con.execute(
@@ -464,7 +465,7 @@ def create_snippet():
         return jsonify({"id": cur.lastrowid, "title": title, "code": code, "language": lang})
     except Exception as e:
         logger.error("Snippet erstellen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Snippet konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -479,7 +480,7 @@ def delete_snippet(snip_id):
         return jsonify({"ok": True})
     except Exception as e:
         logger.error("Snippet löschen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Snippet konnte nicht gelöscht werden", 500)
     finally:
         con.close()
 
@@ -492,14 +493,14 @@ def set_reaction(msg_id):
     try:
         row = con.execute("SELECT reaction FROM messages WHERE id=?", (msg_id,)).fetchone()
         if not row:
-            return jsonify({"error": "Nicht gefunden"}), 404
+            return json_error("Nicht gefunden", 404)
         new_reaction = "" if row["reaction"] == reaction else reaction
         con.execute("UPDATE messages SET reaction=? WHERE id=?", (new_reaction, msg_id))
         con.commit()
         return jsonify({"reaction": new_reaction})
     except Exception as e:
         logger.error("Reaktion setzen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Reaktion konnte nicht gespeichert werden", 500)
     finally:
         con.close()
 
@@ -511,14 +512,14 @@ def toggle_favorite(msg_id):
     try:
         row = con.execute("SELECT favorite FROM messages WHERE id=?", (msg_id,)).fetchone()
         if not row:
-            return jsonify({"error": "Nicht gefunden"}), 404
+            return json_error("Nicht gefunden", 404)
         new = 0 if row["favorite"] else 1
         con.execute("UPDATE messages SET favorite=? WHERE id=?", (new, msg_id))
         con.commit()
         return jsonify({"favorite": bool(new)})
     except Exception as e:
         logger.error("Favorit togglen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Favorit konnte nicht geändert werden", 500)
     finally:
         con.close()
 
@@ -615,7 +616,7 @@ def get_stats():
         })
     except Exception as e:
         logger.error("Stats fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Statistiken konnten nicht geladen werden", 500)
     finally:
         con.close()
 
@@ -625,9 +626,9 @@ def get_stats():
 def vision_analyze():
     ip = request.remote_addr
     if is_rate_limited(ip):
-        return jsonify({"error": "Zu viele Anfragen. Bitte warte kurz."}), 429
+        return json_error("Zu viele Anfragen. Bitte warte kurz.", 429)
     if not ollama_is_running():
-        return jsonify({"error": "Ollama ist nicht erreichbar"}), 503
+        return json_error("Ollama ist nicht erreichbar", 503)
 
     image_b64 = None
     prompt = "Beschreibe was du auf diesem Bild siehst. Antworte auf Deutsch."
@@ -636,14 +637,14 @@ def vision_analyze():
     if request.content_type and "multipart/form-data" in request.content_type:
         file = request.files.get("image")
         if not file:
-            return jsonify({"error": "Kein Bild hochgeladen"}), 400
+            return json_error("Kein Bild hochgeladen", 400)
         raw = file.read()
         if len(raw) > 10 * 1024 * 1024:
-            return jsonify({"error": "Bild zu groß (max 10 MB)"}), 413
+            return json_error("Bild zu groß (max 10 MB)", 413)
         try:
             _raw_check, _kind = decode_image_base64(base64.b64encode(raw).decode("utf-8"))
         except ValueError as e:
-            return jsonify({"error": str(e)}), 400
+            return json_error(str(e), 400)
         image_b64 = base64.b64encode(raw).decode("utf-8")
         prompt = clean_text(request.form.get("prompt", prompt), 1000)
         model = clean_text(request.form.get("model", ""), 90)
@@ -653,24 +654,23 @@ def vision_analyze():
         prompt = clean_text(data.get("prompt", prompt), 1000)
         model = clean_text(data.get("model", ""), 90)
         if not image_b64:
-            return jsonify({"error": "Kein Bild (image_b64) übermittelt"}), 400
+            return json_error("Kein Bild (image_b64) übermittelt", 400)
         if len(image_b64) > 15 * 1024 * 1024:
-            return jsonify({"error": "Bild zu groß"}), 413
+            return json_error("Bild zu groß", 413)
         try:
             decode_image_base64(image_b64)
         except ValueError as e:
-            return jsonify({"error": str(e)}), 400
+            return json_error(str(e), 400)
     else:
-        return jsonify({"error": "Ungültiger Content-Type"}), 400
+        return json_error("Ungültiger Content-Type", 400)
 
     vision_model = get_vision_model(model)
     if not vision_model:
-        return jsonify({
-            "error": (
-                "Kein Vision-Modell installiert. Bitte installiere z.B. "
-                "'ollama pull llava' oder 'ollama pull moondream'."
-            )
-        }), 503
+        return json_error(
+            "Kein Vision-Modell installiert. Bitte installiere z.B. "
+            "'ollama pull llava' oder 'ollama pull moondream'.",
+            503,
+        )
 
     try:
         payload = {
@@ -681,14 +681,14 @@ def vision_analyze():
         }
         r = requests.post(f"{OLLAMA_BASE}/api/chat", json=payload, timeout=120)
         if r.status_code != 200:
-            return jsonify({"error": f"Ollama Vision Fehler: {r.status_code}"}), 500
+            return json_error("Ollama Vision Fehler", 500, details={"status": r.status_code})
         result = r.json().get("message", {}).get("content", "")
         return jsonify({"result": result, "model": vision_model, "prompt": prompt})
     except requests.exceptions.Timeout:
-        return jsonify({"error": "Zeitüberschreitung beim Bild-Analysieren"}), 504
+        return json_error("Zeitüberschreitung beim Bild-Analysieren", 504)
     except Exception as e:
         logger.error("Vision-Analyse fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Bildanalyse konnte nicht abgeschlossen werden", 500)
 
 
 @api_bp.route("/messages/<int:msg_id>/pin", methods=["POST"])
@@ -698,14 +698,14 @@ def toggle_pin(msg_id):
     try:
         row = con.execute("SELECT pinned FROM messages WHERE id=?", (msg_id,)).fetchone()
         if not row:
-            return jsonify({"error": "Nicht gefunden"}), 404
+            return json_error("Nicht gefunden", 404)
         new = 0 if row["pinned"] else 1
         con.execute("UPDATE messages SET pinned=? WHERE id=?", (new, msg_id))
         con.commit()
         return jsonify({"pinned": bool(new)})
     except Exception as e:
         logger.error("Pin togglen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Pin konnte nicht geändert werden", 500)
     finally:
         con.close()
 
@@ -716,12 +716,12 @@ def update_message(msg_id):
     data = request.get_json(silent=True) or {}
     content = clean_text(data.get("content", ""))
     if not content:
-        return jsonify({"error": "Leer"}), 400
+        return json_error("Leer", 400)
     con = get_db()
     try:
         row = con.execute("SELECT id, room_id FROM messages WHERE id=?", (msg_id,)).fetchone()
         if not row:
-            return jsonify({"error": "Nicht gefunden"}), 404
+            return json_error("Nicht gefunden", 404)
         con.execute(
             "UPDATE messages SET content=?, tokens=? WHERE id=?",
             (content, approx_tokens(content), msg_id),
@@ -730,7 +730,7 @@ def update_message(msg_id):
         return jsonify({"ok": True, "id": msg_id, "content": content, "tokens": approx_tokens(content)})
     except Exception as e:
         logger.error("Nachricht aktualisieren fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Nachricht konnte nicht aktualisiert werden", 500)
     finally:
         con.close()
 
@@ -744,7 +744,7 @@ def delete_messages_after(room_id, msg_id):
             "SELECT id FROM messages WHERE id=? AND room_id=?", (msg_id, room_id)
         ).fetchone()
         if not row:
-            return jsonify({"error": "Nicht gefunden"}), 404
+            return json_error("Nicht gefunden", 404)
         con.execute(
             "DELETE FROM artifact_versions WHERE room_id=? AND message_id>?",
             (room_id, msg_id),
@@ -756,7 +756,7 @@ def delete_messages_after(room_id, msg_id):
         return jsonify({"ok": True, "deleted": cur.rowcount})
     except Exception as e:
         logger.error("Nachrichten löschen fehlgeschlagen: %s", e, exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return json_error("Nachrichten konnten nicht gelöscht werden", 500)
     finally:
         con.close()
 

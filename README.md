@@ -6,7 +6,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-> English is the main documentation language for this repository. German documentation will be maintained separately in `LeonAI-DE`.
+> English is the main documentation language for this repository. German documentation will be maintained separately in [LeonAI-DE](https://github.com/LeonTOfficial/LeonAI-DE).
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
@@ -119,6 +119,18 @@ http://127.0.0.1:5001
 
 On a fresh install, LEON AI shows a first-setup screen where you choose your own password and first name. After that, the normal login is used.
 
+Before publishing changes, you can run the local release doctor:
+
+```bash
+python scripts/leon_doctor.py
+```
+
+For a fuller local check, run it together with the test suite:
+
+```bash
+python scripts/leon_doctor.py --run-tests
+```
+
 ![LEON AI Login Light and Dark Mode](docs/screenshots/leon-ai-login-light-dark.png)
 
 **Login and first setup:** On first launch, LEON AI asks for a first name and password before opening the local workspace.
@@ -155,6 +167,7 @@ LEON AI is not just a visual demo. The project includes a focused test suite and
 - **Tested backend flows:** login, setup, room creation, branching, artifact history, backups, privacy actions, and error handling.
 - **Tested frontend contracts:** CSRF headers, colored chat tags, Mermaid/Chart.js integration markers, Pyodide wiring, and artifact preview controls.
 - **CI checks:** GitHub Actions in `.github/workflows/test.yml` run the test suite on Python 3.11 and 3.12 and check the main JavaScript modules.
+- **Release doctor:** `scripts/leon_doctor.py` checks public docs, required files, CI wiring, and accidental runtime-data tracking before publishing.
 - **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local runtime data and secrets.
 - **Current QA command:** `./venv/bin/python -m unittest discover -s tests -q`
 
@@ -175,6 +188,8 @@ LeonAI/
 ├── .github/
 │   └── workflows/
 │       └── test.yml
+├── scripts/
+│   └── leon_doctor.py
 ├── models/
 │   └── database.py
 ├── routes/

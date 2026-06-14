@@ -1,6 +1,6 @@
 # LEON AI Testing
 
-![Tests](https://img.shields.io/badge/tests-46%20automated-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-47%20automated-17a673?style=for-the-badge)
 ![Backend](https://img.shields.io/badge/backend-Flask-111827?style=for-the-badge)
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
@@ -11,6 +11,18 @@ Run the full automated test suite:
 
 ```bash
 ./venv/bin/python -m unittest discover -s tests -q
+```
+
+Run the release readiness doctor:
+
+```bash
+python scripts/leon_doctor.py
+```
+
+Run the doctor and the Python tests together:
+
+```bash
+python scripts/leon_doctor.py --run-tests
 ```
 
 Run the same suite with detailed output:
@@ -43,6 +55,7 @@ LEON AI uses a small ready-made GitHub Actions workflow instead of a custom runn
 | Repository checkout | `actions/checkout@v4` | Uses the official GitHub checkout action. |
 | Python setup | `actions/setup-python@v5` | Installs the supported Python versions consistently. |
 | Node setup | `actions/setup-node@v4` | Provides Node.js for frontend syntax checks. |
+| Release doctor | `python scripts/leon_doctor.py` | Checks required files, public docs, CI wiring, and accidental runtime-data tracking. |
 | Backend tests | `python -m unittest discover -s tests -q` | Verifies Flask routes, services, security, database, artifacts, and UI contracts. |
 | Frontend syntax | `node --check static/js/*.js` | Catches JavaScript syntax breakage before release. |
 
@@ -50,14 +63,14 @@ The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not inc
 
 ### 3. Current Automated Coverage
 
-The current automated suite covers **46 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
+The current automated suite covers **47 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
 
 | Test area | What is checked | Main evidence |
 | --- | --- | --- |
 | Database migrations | Parent IDs, artifact version tables, schema compatibility | `tests/test_core.py`, `models/database.py` |
 | Authentication | Login, protected pages, first setup, session state | `tests/test_core.py`, `tests/test_ui_flows.py`, `routes/auth.py` |
 | CSRF and origin protection | Mutating requests require valid CSRF and trusted origins | `tests/test_core.py`, `utils/security.py`, `routes/middleware.py` |
-| Error shielding | Internal error details stay out of browser responses, request IDs remain visible | `tests/test_core.py`, `utils/errors.py` |
+| Error shielding | Internal API/chat error details stay out of browser responses, request IDs remain visible | `tests/test_core.py`, `utils/errors.py`, `routes/api.py`, `routes/chat.py` |
 | Chat rooms | Creation, loading, empty-chat cleanup, pinning/order behavior | `tests/test_ui_flows.py`, `routes/api.py`, `services/room_service.py` |
 | Chat branching | Parent/child messages, active branch path, pruning future artifacts | `tests/test_core.py`, `tests/test_ui_flows.py`, `services/chat_service.py` |
 | Auto titles | Fast title model `llama3.2:1b`, title cleanup, room update | `tests/test_core.py`, `services/ollama_service.py`, `config.py` |
@@ -70,6 +83,7 @@ The current automated suite covers **46 tests** across backend behavior, fronten
 | Health checks | Database, logs, backups, Ollama warnings | `tests/test_core.py`, `utils/system_health.py` |
 | Privacy tools | Local data summary, protected purge flow, backup cleanup | `tests/test_core.py`, `utils/privacy.py` |
 | Release documentation | README/security/testing contracts and private-file rules | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
+| Release readiness | Doctor script validates docs, CI, required files, and ignored runtime data | `tests/test_core.py`, `scripts/leon_doctor.py`, `.github/workflows/test.yml` |
 
 ### 4. Cross-Platform Test Matrix
 

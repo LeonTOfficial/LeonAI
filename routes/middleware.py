@@ -1,7 +1,7 @@
 """Request/response middleware and security headers."""
-from flask import g, jsonify, request
+from flask import g, request
 
-from utils.errors import _is_benign_404
+from utils.errors import _is_benign_404, json_error
 from utils.logging import log_activity, new_request_id, set_request_id
 from utils.security import csrf_allowed, same_origin_allowed
 
@@ -16,9 +16,9 @@ def register_middleware(app) -> None:
     @app.before_request
     def security_gate():
         if not same_origin_allowed():
-            return jsonify({"error": "Ungültiger Ursprung", "request_id": getattr(g, "request_id", "-")}), 403
+            return json_error("Ungültiger Ursprung", 403)
         if not csrf_allowed():
-            return jsonify({"error": "Ungültiger Sicherheits-Token", "request_id": getattr(g, "request_id", "-")}), 403
+            return json_error("Ungültiger Sicherheits-Token", 403)
 
     @app.before_request
     def log_request():
