@@ -25,7 +25,7 @@ LEON AI is a private, local AI workspace for your own computer. It brings chat, 
 - **Super Artifacts:** Generate HTML, CSS, JavaScript, Tailwind layouts, and Python snippets with a live preview panel.
 - **Browser Python sandbox:** Python can run inside the browser through Pyodide, isolated from your operating system.
 - **Vision image uploads:** Upload images and ask LEON AI to describe, analyze, or reason about them when a vision model is installed.
-- **Privacy dashboard:** See activity, token usage, health checks, backups, logs, and privacy tools in one dashboard.
+- **Privacy dashboard:** See activity, token usage, health checks, backups, restore controls, logs, and privacy tools in one dashboard.
 - **First setup:** On a fresh install, choose your own password and first name before using the app.
 
 ![LEON AI Artifacts Preview](docs/screenshots/leon-ai-artifacts-preview.png)
@@ -164,7 +164,7 @@ Read:
 
 LEON AI is not just a visual demo. The project includes a focused test suite and a documented security model.
 
-- **Tested backend flows:** login, setup, room creation, branching, artifact history, backups, privacy actions, and error handling.
+- **Tested backend flows:** login, setup, room creation, branching, artifact history, backup restore, privacy actions, and error handling.
 - **Tested frontend contracts:** CSRF headers, colored chat tags, Mermaid/Chart.js integration markers, Pyodide wiring, and artifact preview controls.
 - **CI checks:** GitHub Actions in `.github/workflows/test.yml` run the test suite on Python 3.11 and 3.12 and check the main JavaScript modules.
 - **Release doctor:** `scripts/leon_doctor.py` checks public docs, required files, CI wiring, and accidental runtime-data tracking before publishing.

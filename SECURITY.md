@@ -28,7 +28,7 @@ LEON AI is designed as a **local-first personal AI workspace**. The goal is to k
 | Error shielding | Browser responses avoid internal stack traces and expose request IDs for debugging | `utils/errors.py`, `routes/api.py`, `routes/chat.py` |
 | Logging | Structured rotating logs in `data/logs/leon.log` | `utils/logging.py` |
 | Local database | SQLite schema, migrations, chat branching, artifacts, and profile data | `models/database.py` |
-| Backups | Local SQLite backup flow with manifest/integrity metadata | `services/backup_service.py` |
+| Backups and restore | Local SQLite backup flow with manifest/integrity metadata, restore confirmation, and pre-restore safety backup | `services/backup_service.py`, `routes/api.py` |
 | Privacy tools | Local data counting and protected purge operations | `utils/privacy.py` |
 | Health checks | Local checks for database, logs, backups, and Ollama availability | `utils/system_health.py` |
 | Artifact preview | Preview iframe, neutralized relative asset paths, browser-side Python/Pyodide wiring | `static/js/artifacts.js` |
@@ -42,7 +42,7 @@ LEON AI is designed as a **local-first personal AI workspace**. The goal is to k
 | Chats and messages | `data/` SQLite database | No | Stored locally on the device. |
 | Artifacts and preview history | `data/` SQLite database | No | Used for local preview/version history. |
 | Logs | `data/logs/leon.log` | No | Useful for debugging, should not be published. |
-| Backups | `backup/` | No | Local backup files and manifests. |
+| Backups | `backup/` | No | Local backup files, restore safety backups, and manifests. |
 | Profile/setup data | Local database and `.env` settings | No | First name/password setup remains local. |
 | Model requests | Local Ollama endpoint by default | No external cloud by default | External model providers require explicit configuration. |
 

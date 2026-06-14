@@ -1,6 +1,6 @@
 # LEON AI Testing
 
-![Tests](https://img.shields.io/badge/tests-48%20automated-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-51%20automated-17a673?style=for-the-badge)
 ![Backend](https://img.shields.io/badge/backend-Flask-111827?style=for-the-badge)
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
@@ -63,7 +63,7 @@ The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not inc
 
 ### 3. Current Automated Coverage
 
-The current automated suite covers **48 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
+The current automated suite covers **51 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
 
 | Test area | What is checked | Main evidence |
 | --- | --- | --- |
@@ -79,7 +79,7 @@ The current automated suite covers **48 tests** across backend behavior, fronten
 | Rich chat rendering | Mermaid, Chart.js, color tags, rich-library loading | `tests/test_core.py`, `tests/test_ui_flows.py`, `static/js/chat.js` |
 | Pyodide | Loader contract, browser Python tab, error handling surface | `tests/test_core.py`, `static/js/artifacts.js` |
 | Dashboard | Metrics, token explanation, privacy center, debug center, filters | `tests/test_core.py`, `tests/test_ui_flows.py`, `templates/dashboard.html` |
-| Backups | SQLite backup creation, checksum manifest, verification failure detection | `tests/test_core.py`, `services/backup_service.py` |
+| Backups and restore | SQLite backup creation, checksum manifests, verification, restore confirmation, pre-restore safety backup | `tests/test_core.py`, `services/backup_service.py`, `routes/api.py` |
 | Health checks | Database, logs, backups, Ollama warnings | `tests/test_core.py`, `utils/system_health.py` |
 | Privacy tools | Local data summary, protected purge flow, backup cleanup | `tests/test_core.py`, `utils/privacy.py` |
 | Release documentation | README/security/testing contracts and private-file rules | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
@@ -127,7 +127,7 @@ The current test suite is useful, but it does not claim complete coverage. The n
 | AI interface handling | Ollama availability, model listing, auto-title payloads, timeout/error paths | Offline Ollama returns safe warnings |
 | Artifact system | Generated HTML/CSS/JS/Python snippets are saved, versioned, previewed, and exportable | Duplicate versions are deduped; deleted versions are removed |
 | Chat branching | Editing from older messages can create a new path without corrupting existing history | Active branch path is built from selected leaf |
-| Backup system | Backups include integrity metadata and can detect modified files | Modified backup verification fails safely |
+| Backup system | Backups include integrity metadata, can detect modified files, and can restore after confirmation | Modified backup verification fails safely; restore creates a pre-restore backup |
 
 ### 7. UI/UX Tests
 

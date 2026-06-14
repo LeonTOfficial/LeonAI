@@ -6,6 +6,10 @@ This file is the public release history. [`UPDATES.md`](UPDATES.md) remains an i
 
 ## Unreleased
 
+### Added
+- Backup inventory and restore flow for the dashboard.
+- Restore safety checks: checksum verification, filename confirmation, SQLite quick check, and automatic pre-restore backup.
+
 ### Changed
 - Main repository documentation is now English-first.
 - Public release history moved to `CHANGELOG.md`.

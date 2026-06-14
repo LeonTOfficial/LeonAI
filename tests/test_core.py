@@ -496,6 +496,10 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn("/api/privacy/summary", html)
         self.assertIn("/api/privacy/purge", html)
         self.assertIn("/api/backups/run", html)
+        self.assertIn("/api/backups", html)
+        self.assertIn("/api/backups/restore", html)
+        self.assertIn("restoreBackup", html)
+        self.assertIn("Backups laden", html)
         self.assertIn("p.artifacts", html)
 
     def test_dashboard_and_chat_expose_premium_polish_controls(self):
@@ -629,6 +633,78 @@ class BackupSecurityTests(IsolatedDatabaseTest):
 
         self.assertEqual(verification["status"], "error")
         self.assertIn("Prüfsumme", verification["detail"])
+
+    def test_restore_backup_replaces_database_after_verification(self):
+        con = database.get_db()
+        con.execute(
+            "INSERT INTO rooms (name,model,created) VALUES (?,?,?)",
+            ("Vor Restore", "llama3", datetime.now().isoformat()),
+        )
+        con.commit()
+        con.close()
+        result = backup_service.backup_db()
+
+        con = database.get_db()
+        con.execute(
+            "INSERT INTO rooms (name,model,created) VALUES (?,?,?)",
+            ("Nach Backup", "llama3", datetime.now().isoformat()),
+        )
+        con.commit()
+        con.close()
+
+        restored = backup_service.restore_backup(result["file"])
+
+        con = database.get_db()
+        names = [row["name"] for row in con.execute("SELECT name FROM rooms").fetchall()]
+        con.close()
+
+        self.assertTrue(restored["ok"])
+        self.assertIn("Vor Restore", names)
+        self.assertNotIn("Nach Backup", names)
+        self.assertTrue((Path(self.backup_dir) / restored["before_restore"]).exists())
+
+    def test_restore_backup_rejects_path_traversal(self):
+        with self.assertRaises(ValueError):
+            backup_service.restore_backup("../chats_2026-01-01.db")
+
+    def test_backup_api_lists_and_restores_with_confirmation(self):
+        con = database.get_db()
+        con.execute(
+            "INSERT INTO rooms (name,model,created) VALUES (?,?,?)",
+            ("API Backup", "llama3", datetime.now().isoformat()),
+        )
+        con.commit()
+        con.close()
+        result = backup_service.backup_db()
+
+        app = Flask(__name__)
+        app.secret_key = "test"
+        register_middleware(app)
+        register_error_handlers(app)
+        app.register_blueprint(auth_bp)
+        app.register_blueprint(api_bp)
+
+        with app.test_client() as client:
+            with client.session_transaction() as sess:
+                sess["authenticated"] = True
+                sess[CSRF_SESSION_KEY] = "backup-token"
+            listed = client.get("/api/backups")
+            blocked = client.post(
+                "/api/backups/restore",
+                json={"file": result["file"], "confirmation": "wrong"},
+                headers={CSRF_HEADER: "backup-token"},
+            )
+            restored = client.post(
+                "/api/backups/restore",
+                json={"file": result["file"], "confirmation": result["file"]},
+                headers={CSRF_HEADER: "backup-token"},
+            )
+
+        self.assertEqual(listed.status_code, 200)
+        self.assertEqual(listed.get_json()["backups"][0]["file"], result["file"])
+        self.assertEqual(blocked.status_code, 400)
+        self.assertEqual(restored.status_code, 200)
+        self.assertEqual(restored.get_json()["restored"], result["file"])
 
     def test_privacy_purge_backups_removes_manifests_too(self):
         backup_service.backup_db()

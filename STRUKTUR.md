@@ -52,7 +52,7 @@ Leon-ai/
 ├── services/
 │   ├── __init__.py            # package marker
 │   ├── artifact_service.py    # artifact versions, dedupe, preview history
-│   ├── backup_service.py      # SQLite backups and integrity metadata
+│   ├── backup_service.py      # SQLite backups, verification, and restore flow
 │   ├── chat_service.py        # context building, token estimates, branching, titles
 │   ├── export_service.py      # readable chat exports
 │   ├── memory_service.py      # saved memory and automatic memory entries
@@ -120,7 +120,7 @@ Leon-ai/
 | File | Responsibility |
 | --- | --- |
 | `artifact_service.py` | Stores artifact versions, deduplicates repeated content, deletes versions, and supports preview history. |
-| `backup_service.py` | Creates SQLite backups and writes integrity metadata. |
+| `backup_service.py` | Creates SQLite backups, writes integrity metadata, lists restorable backups, and restores verified backups after confirmation. |
 | `chat_service.py` | Builds chat context, estimates tokens, follows selected branch paths, and creates auto titles. |
 | `export_service.py` | Exports chats in readable formats. |
 | `memory_service.py` | Handles manually and automatically stored memory items. |

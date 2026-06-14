@@ -1,6 +1,7 @@
 """Database backup service with integrity manifests."""
 import json
 import os
+import shutil
 import sqlite3
 import threading
 from datetime import date, datetime
@@ -27,6 +28,23 @@ def _manifest_path(path: Path) -> Path:
     return path.with_suffix(path.suffix + ".sha256.json")
 
 
+def _backup_dir() -> Path:
+    path = Path(BACKUP_DIR)
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def _safe_backup_path(file_name: str) -> Path:
+    clean = Path(file_name).name
+    if clean != file_name or not clean.startswith("chats_") or not clean.endswith(".db"):
+        raise ValueError("Ungültiger Backup-Dateiname")
+    path = (_backup_dir() / clean).resolve()
+    backup_root = _backup_dir().resolve()
+    if not path.is_relative_to(backup_root):
+        raise ValueError("Ungültiger Backup-Pfad")
+    return path
+
+
 def _write_manifest(path: Path) -> dict:
     checksum = _checksum(path)
     manifest = {
@@ -40,6 +58,31 @@ def _write_manifest(path: Path) -> dict:
     tmp.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
     os.replace(tmp, _manifest_path(path))
     return manifest
+
+
+def _read_manifest(path: Path) -> dict:
+    manifest_file = _manifest_path(path)
+    if not manifest_file.exists():
+        return {}
+    try:
+        return json.loads(manifest_file.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def _quick_check_sqlite(path: Path) -> None:
+    if not path.exists():
+        raise ValueError("Backup-Datei fehlt")
+    try:
+        con = sqlite3.connect(f"file:{path}?mode=ro", uri=True)
+        try:
+            result = con.execute("PRAGMA quick_check").fetchone()
+            if not result or result[0] != "ok":
+                raise ValueError("SQLite-Integritätsprüfung fehlgeschlagen")
+        finally:
+            con.close()
+    except sqlite3.Error as exc:
+        raise ValueError(f"Backup ist keine gültige SQLite-Datenbank: {exc}") from exc
 
 
 def verify_backup(path: str | Path) -> dict:
@@ -76,12 +119,31 @@ def backup_inventory() -> dict:
     backup_dir = Path(BACKUP_DIR)
     backups = sorted(backup_dir.glob("chats_*.db")) if backup_dir.exists() else []
     latest = backups[-1] if backups else None
+    items = list_backups()
     return {
         "count": len(backups),
         "files": [p.name for p in backups],
         "latest": latest.name if latest else None,
         "latest_verification": verify_backup(latest) if latest else None,
+        "items": items,
     }
+
+
+def list_backups() -> list[dict]:
+    backup_dir = _backup_dir()
+    items = []
+    for path in sorted(backup_dir.glob("chats_*.db"), reverse=True):
+        manifest = _read_manifest(path)
+        verification = verify_backup(path)
+        items.append({
+            "file": path.name,
+            "bytes": path.stat().st_size,
+            "created": manifest.get("created") or datetime.fromtimestamp(path.stat().st_mtime).isoformat(timespec="seconds"),
+            "sha256": manifest.get("sha256", ""),
+            "verification": verification,
+            "restorable": verification.get("status") == "ok",
+        })
+    return items
 
 
 def _prune_old_backups() -> list[str]:
@@ -128,6 +190,49 @@ def backup_db() -> dict:
     except Exception as e:
         logger.error("Backup fehlgeschlagen: %s", e, exc_info=True)
         return {"ok": False, "error": str(e)}
+
+
+def restore_backup(file_name: str) -> dict:
+    source = _safe_backup_path(file_name)
+    verification = verify_backup(source)
+    if verification.get("status") != "ok":
+        raise ValueError(f"Backup kann nicht wiederhergestellt werden: {verification.get('detail', 'Prüfung fehlgeschlagen')}")
+    _quick_check_sqlite(source)
+
+    current = Path(database.DB_PATH)
+    current.parent.mkdir(parents=True, exist_ok=True)
+    before_restore = _backup_dir() / f"chats_before_restore_{datetime.now().strftime('%Y%m%d_%H%M%S')}.db"
+
+    if current.exists():
+        tmp_before = before_restore.with_suffix(".tmp")
+        src = sqlite3.connect(current)
+        dst = sqlite3.connect(tmp_before)
+        try:
+            src.backup(dst)
+        finally:
+            dst.close()
+            src.close()
+        os.replace(tmp_before, before_restore)
+        before_manifest = _write_manifest(before_restore)
+    else:
+        before_manifest = {}
+
+    tmp_restore = current.with_suffix(".restore.tmp")
+    shutil.copy2(source, tmp_restore)
+    os.replace(tmp_restore, current)
+    database.init_db()
+    logger.warning(
+        "Backup wiederhergestellt: restored=%s before_restore=%s",
+        source.name,
+        before_restore.name if before_restore.exists() else "-",
+    )
+    return {
+        "ok": True,
+        "restored": source.name,
+        "restored_verification": verification,
+        "before_restore": before_restore.name if before_restore.exists() else None,
+        "before_restore_sha256": before_manifest.get("sha256", ""),
+    }
 
 
 def start_backup_thread() -> None:
