@@ -13,12 +13,14 @@ Dies ist die deutsche Zusammenfassung der öffentlichen Änderungen. Die englisc
 - Pull-Request-Vorlage mit Hinweis auf Source-Available-Lizenz.
 - Öffentliche Roadmap im Hauptrepo.
 - Vorbereitung für den deutschen Doku-Bereich `docs/de/`.
+- Öffentliche Fehlerhilfe `TROUBLESHOOTING.md` plus deutsche Spiegeldatei für häufige Setup-, Vorschau-, Ollama-, Log-, Request-ID- und CI-Probleme.
 
 ### Geändert
 
 - Hauptrepo ist Englisch-first.
 - Deutsche Dokumentation wird im Ordner `docs/de/` gepflegt.
 - README erklärt nun einen empfohlenen Startweg pro Plattform.
+- README verlinkt eine eigene Fehlerhilfe, statt häufige Lösungen im Installationsabschnitt zu verstecken.
 - CI prüft zusätzlich Browser-QA.
 
 ## v1.0.0

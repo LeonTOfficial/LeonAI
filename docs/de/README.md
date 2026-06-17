@@ -153,6 +153,7 @@ Lies:
 - [`STRUKTUR.md`](STRUKTUR.md) für Architektur, Module, Routen, Services und Frontend-Struktur.
 - [`SECURITY.md`](SECURITY.md) für das lokale Sicherheitsmodell, `.env`-Hinweise, Abhängigkeiten und das Melden von Sicherheitslücken.
 - [`TESTING.md`](TESTING.md) für Unit Tests, Browser-QA und den aktuellen QA-Workflow.
+- [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) für häufige Setup-, Starter-, Vorschau-, Ollama- und CI-Probleme.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) für Feedback-Regeln, Issues und genehmigte Beiträge.
 - [`ROADMAP.md`](ROADMAP.md) für erledigte Punkte, nächste Schritte, spätere Ideen und gewünschtes Feedback.
 - [`CHANGELOG.md`](CHANGELOG.md) für öffentliche Release Notes und Versionshistorie.
@@ -186,6 +187,7 @@ LeonAI/
 ├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
+├── TROUBLESHOOTING.md
 ├── CHANGELOG.md
 ├── ROADMAP.md
 ├── LICENSE
@@ -227,6 +229,7 @@ LeonAI/
 │   ├── dashboard.html
 │   └── index.html
 └── docs/
+    ├── de/
     └── screenshots/
 ```
 

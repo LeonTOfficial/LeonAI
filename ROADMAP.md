@@ -12,11 +12,12 @@ This roadmap keeps public feedback focused without turning the README into a lon
 - Dashboard for activity, tokens, logs, health, backups, and privacy tools.
 - Backup creation, verification, and restore safety flow.
 - English-first public documentation with screenshots and release notes.
+- Troubleshooting guide for setup, launchers, Ollama, preview issues, logs, request IDs, and CI failures.
 - GitHub Actions for Python tests, JavaScript syntax checks, release doctor, and browser QA.
 
 ## Next
 
-- Improve installer comfort on every platform based on real user feedback.
+- Improve installer comfort on every platform based on real user feedback and recurring troubleshooting patterns.
 - Add more browser-level regression tests for artifact preview and rich chat rendering.
 - Continue polishing dashboard explanations for non-technical users.
 - Improve fallback behavior when optional browser libraries cannot be loaded.

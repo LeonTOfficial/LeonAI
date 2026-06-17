@@ -14,11 +14,12 @@ Die englische Hauptdokumentation liegt im Repository-Root: [`README.md`](../../R
 - Dashboard für Aktivität, Tokens, Logs, Health, Backups und Privacy.
 - Backup-Erstellung, Prüfung und geschützter Restore-Flow.
 - Englische Hauptdokumentation und deutscher Doku-Bereich unter `docs/de/`.
+- Fehlerhilfe für Setup, Starter, Ollama, Vorschau, Logs, Request IDs und CI-Fehler.
 - GitHub Actions für Python-Tests, JavaScript-Prüfung, Release Doctor und Browser-QA.
 
 ## Als Nächstes
 
-- Installation auf macOS, Windows und Linux mit echtem Nutzerfeedback weiter vereinfachen.
+- Installation auf macOS, Windows und Linux anhand echtem Nutzerfeedback und wiederkehrenden Fehlerbildern weiter vereinfachen.
 - Browser-QA für Artifacts und Rich Rendering ausbauen.
 - Dashboard-Erklärungen für normale Nutzer weiter verbessern.
 - Fallbacks verbessern, wenn optionale Browser-Bibliotheken nicht geladen werden können.

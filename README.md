@@ -154,6 +154,7 @@ Read:
 - [`STRUKTUR.md`](STRUKTUR.md) for the architecture, modules, routes, services, and frontend structure.
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
+- [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for common setup, launcher, preview, Ollama, and CI problems.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
 - [`ROADMAP.md`](ROADMAP.md) for done, next, later, and feedback-wanted areas.
 - [`CHANGELOG.md`](CHANGELOG.md) for public release notes and version history.
@@ -187,6 +188,7 @@ LeonAI/
 ├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
+├── TROUBLESHOOTING.md
 ├── CHANGELOG.md
 ├── ROADMAP.md
 ├── LICENSE

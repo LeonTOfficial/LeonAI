@@ -499,6 +499,8 @@ class PublicLaunchFileTests(unittest.TestCase):
             ".github/ISSUE_TEMPLATE/general_feedback.yml",
             ".github/ISSUE_TEMPLATE/security_contact.yml",
             ".github/PULL_REQUEST_TEMPLATE.md",
+            "TROUBLESHOOTING.md",
+            "docs/de/TROUBLESHOOTING.md",
             "ROADMAP.md",
         ]
 
@@ -515,6 +517,7 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("STRUKTUR.md", german_readme)
         self.assertIn("SECURITY.md", german_readme)
         self.assertIn("TESTING.md", german_readme)
+        self.assertIn("TROUBLESHOOTING.md", german_readme)
         self.assertIn("CONTRIBUTING.md", german_readme)
         self.assertIn("ROADMAP.md", german_readme)
         self.assertIn("CHANGELOG.md", german_readme)
@@ -593,6 +596,7 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("## Download / Clone And Install", readme)
         self.assertIn("## Storage Needed", readme)
         self.assertIn("CHANGELOG.md", readme)
+        self.assertIn("TROUBLESHOOTING.md", readme)
         self.assertNotIn("LeonAI-DE", readme)
         self.assertNotIn("Mobile Documents/com~apple~CloudDocs", readme)
         self.assertIn("Real folder overview", readme)
@@ -615,6 +619,32 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("scripts/leon_doctor.py", readme)
         self.assertIn("scripts/leon_doctor.py", testing)
         self.assertIn("python scripts/leon_doctor.py", workflow)
+
+    def test_troubleshooting_docs_cover_common_public_support_cases(self):
+        english = self.read("TROUBLESHOOTING.md")
+        german = self.read("docs/de/TROUBLESHOOTING.md")
+
+        for needle in (
+            "Ollama",
+            "Artifacts preview is blank",
+            "Mermaid diagram does not render",
+            "Chart.js output stays as code",
+            "Request ID",
+            "data/logs/leon.log",
+            "GitHub Actions",
+        ):
+            self.assertIn(needle, english)
+
+        for needle in (
+            "Ollama",
+            "Artifacts-Vorschau bleibt leer",
+            "Mermaid-Diagramm rendert nicht",
+            "Chart.js-Ausgabe bleibt Code",
+            "Request ID",
+            "data/logs/leon.log",
+            "GitHub Actions",
+        ):
+            self.assertIn(needle, german)
 
 
 class DebugAndMediaTests(unittest.TestCase):

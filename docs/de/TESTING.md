@@ -15,6 +15,12 @@ python scripts/leon_doctor.py --run-tests
 git diff --check
 ```
 
+Wenn ein lokales Setup anders reagiert als CI, hilft die Fehlerhilfe:
+
+```text
+docs/de/TROUBLESHOOTING.md
+```
+
 JavaScript und Browser-QA:
 
 ```bash
@@ -35,6 +41,7 @@ npm run test:browser
 | Rich Rendering | Farbtags, Mermaid, Chart.js und Codeblöcke. |
 | Dashboard | Metriken, Tokens, Privacy Center, Health Center und Debug Center. |
 | Sicherheit | CSRF, Origin-Checks, sichere Fehlerantworten und private Runtime-Dateien. |
+| Fehlerhilfe | Häufige Setup-, Starter-, Vorschau-, Ollama-, Log-, Request-ID- und CI-Probleme. |
 | Browser-QA | Echte Oberfläche im Chromium-Browser mit festen Testdaten. |
 
 ## GitHub Actions

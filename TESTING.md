@@ -19,6 +19,12 @@ Run the release readiness doctor:
 python scripts/leon_doctor.py
 ```
 
+If a local setup behaves differently from CI, check the common troubleshooting guide:
+
+```text
+TROUBLESHOOTING.md
+```
+
 Run the doctor and the Python tests together:
 
 ```bash
@@ -94,6 +100,7 @@ The current Python suite covers **55 tests** across backend behavior, frontend c
 | Health checks | Database, logs, backups, Ollama warnings | `tests/test_core.py`, `utils/system_health.py` |
 | Privacy tools | Local data summary, protected purge flow, backup cleanup | `tests/test_core.py`, `utils/privacy.py` |
 | Release documentation | README/security/testing contracts and private-file rules | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
+| Troubleshooting documentation | Common launcher, preview, Ollama, log, request-ID, and CI failure paths | `TROUBLESHOOTING.md`, `docs/de/TROUBLESHOOTING.md`, `scripts/leon_doctor.py` |
 | Release readiness | Doctor script validates docs, CI, required files, and ignored runtime data | `tests/test_core.py`, `scripts/leon_doctor.py`, `.github/workflows/test.yml` |
 
 ### 4. Cross-Platform Test Matrix
