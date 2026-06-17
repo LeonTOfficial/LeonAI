@@ -19,6 +19,8 @@ data/
 backup/
 data_browser_test/
 backup_browser_test/
+data_browser_test_*/
+backup_browser_test_*/
 *.db
 LEON AI*.html
 LEON AI *.html

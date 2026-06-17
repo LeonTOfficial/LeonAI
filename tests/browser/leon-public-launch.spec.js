@@ -3,7 +3,7 @@ const { test, expect } = require('@playwright/test');
 async function loginOrSetup(page) {
   await page.goto('/login');
   const setupForm = page.locator('form[action="/setup"]');
-  if (await setupForm.count()) {
+  if (await setupForm.isVisible().catch(() => false)) {
     await page.locator('#first_name').fill('Leon');
     await page.locator('#password').fill('playwright-pass');
     await page.locator('#password_confirm').fill('playwright-pass');
@@ -53,7 +53,7 @@ test('login or first setup opens the chat shell', async ({ page }) => {
   await loginOrSetup(page);
 
   await expect(page.getByText('LEON AI').first()).toBeVisible();
-  await expect(page.getByPlaceholder('Nachricht an LEON...')).toBeVisible();
+  await expect(page.locator('#user-input')).toBeVisible();
   await expect(page.getByRole('link', { name: /Dashboard/i })).toBeVisible();
   await expect(page.locator('#status-dot')).toBeVisible();
 });

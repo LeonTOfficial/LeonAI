@@ -16,7 +16,11 @@ jobs:
       matrix:
         # Python 3.9 is intentionally not used:
         # LEON AI uses modern Python syntax such as `str | None`.
-        python-version: ["3.11", "3.12"]
+        include:
+          - python-version: "3.11"
+            browser-port: "5101"
+          - python-version: "3.12"
+            browser-port: "5102"
 
     steps:
       - name: Checkout repository
@@ -57,4 +61,8 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run browser QA
+        env:
+          PLAYWRIGHT_PORT: ${{ matrix.browser-port }}
+          PLAYWRIGHT_DATA_DIR: data_browser_test_${{ matrix.python-version }}
+          PLAYWRIGHT_BACKUP_DIR: backup_browser_test_${{ matrix.python-version }}
         run: npm run test:browser
