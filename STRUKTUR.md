@@ -36,8 +36,10 @@ Leon-ai/
 ├── CHANGELOG.md               # public release history
 ├── ROADMAP.md                 # public done/next/later planning overview
 ├── CONTRIBUTING.md            # feedback, issue, and pull-request guidance
-├── LEONAI_DE_SETUP.md         # plan for the separate German docs repository
 ├── LICENSE                    # license terms
+├── docs/
+│   ├── de/                    # German documentation pages
+│   └── screenshots/           # README screenshots and public visuals
 ├── .github/
 │   ├── ISSUE_TEMPLATE/        # bug, feature, feedback, and security contact forms
 │   ├── PULL_REQUEST_TEMPLATE.md # pull-request checklist and license reminder
@@ -45,8 +47,6 @@ Leon-ai/
 │       └── test.yml           # GitHub Actions CI for tests, JS, and browser QA
 ├── scripts/
 │   └── leon_doctor.py         # release readiness checks for docs, CI, and secrets
-├── docs/
-│   └── screenshots/           # README screenshots and public visuals
 ├── models/
 │   ├── __init__.py            # package marker
 │   └── database.py            # SQLite schema, migrations, connection helper

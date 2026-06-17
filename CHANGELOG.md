@@ -12,7 +12,7 @@ This file is the public release history. A separate internal developer log may c
 - GitHub Issue Templates for bugs, feature requests, general feedback, and security contact requests.
 - Pull Request Template with source-available contribution expectations.
 - Public `ROADMAP.md` with done, next, later, and feedback-wanted areas.
-- `LEONAI_DE_SETUP.md` as the English planning note for the future German documentation repository.
+- German documentation inside `docs/de/`, linked from the English README.
 - Backup inventory and restore flow for the dashboard.
 - Restore safety checks: checksum verification, filename confirmation, SQLite quick check, and automatic pre-restore backup.
 

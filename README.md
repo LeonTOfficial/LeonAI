@@ -6,7 +6,7 @@
 ![SQLite](https://img.shields.io/badge/SQLite-private-d99b18?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-source--available%20proprietary-red?style=for-the-badge)
 
-> English is the main documentation language for this repository. German documentation will be maintained separately in [LeonAI-DE](https://github.com/LeonTOfficial/LeonAI-DE).
+> English is the main documentation language for this repository. German documentation is available in [`docs/de/README.md`](docs/de/README.md).
 
 ![LEON AI Chat Demo](docs/screenshots/leon-ai-chat-demo.png)
 
@@ -191,6 +191,9 @@ LeonAI/
 ├── ROADMAP.md
 ├── LICENSE
 ├── CONTRIBUTING.md
+├── docs/
+│   ├── de/
+│   └── screenshots/
 ├── .github/
 │   ├── ISSUE_TEMPLATE/
 │   ├── PULL_REQUEST_TEMPLATE.md
@@ -227,8 +230,6 @@ LeonAI/
 ├── templates/
 │   ├── dashboard.html
 │   └── index.html
-└── docs/
-    └── screenshots/
 ```
 
 ## About The Developer

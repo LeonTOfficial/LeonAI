@@ -20,7 +20,7 @@ This roadmap keeps public feedback focused without turning the README into a lon
 - Add more browser-level regression tests for artifact preview and rich chat rendering.
 - Continue polishing dashboard explanations for non-technical users.
 - Improve fallback behavior when optional browser libraries cannot be loaded.
-- Prepare the separate German documentation repository: `LeonTOfficial/LeonAI-DE`.
+- Maintain the German documentation inside `docs/de/` and keep it aligned with the English public docs.
 
 ## Later
 

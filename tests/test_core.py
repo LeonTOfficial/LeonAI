@@ -507,12 +507,17 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("Feedback Wanted", self.read("ROADMAP.md"))
         self.assertIn("source-available", self.read(".github/PULL_REQUEST_TEMPLATE.md"))
 
-    def test_german_documentation_repository_plan_is_linked(self):
+    def test_german_documentation_lives_inside_docs_de(self):
         readme = self.read("README.md")
-        plan = self.read("LEONAI_DE_SETUP.md")
+        german_readme = self.read("docs/de/README.md")
 
-        self.assertIn("https://github.com/LeonTOfficial/LeonAI-DE", readme)
-        self.assertIn("LeonTOfficial/LeonAI-DE", plan)
+        self.assertIn("docs/de/README.md", readme)
+        self.assertIn("STRUKTUR.md", german_readme)
+        self.assertIn("SECURITY.md", german_readme)
+        self.assertIn("TESTING.md", german_readme)
+        self.assertIn("CONTRIBUTING.md", german_readme)
+        self.assertIn("ROADMAP.md", german_readme)
+        self.assertIn("CHANGELOG.md", german_readme)
 
     def test_frontend_error_diagnostics_include_request_ids(self):
         api_js = self.read("static/js/api.js")
@@ -584,11 +589,11 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("## Features That Make You Want To Try It", readme)
         self.assertIn("## About The Developer", readme)
         self.assertIn("English is the main documentation language", readme)
-        self.assertIn("LeonAI-DE", readme)
+        self.assertIn("docs/de/README.md", readme)
         self.assertIn("## Download / Clone And Install", readme)
         self.assertIn("## Storage Needed", readme)
         self.assertIn("CHANGELOG.md", readme)
-        self.assertIn("https://github.com/LeonTOfficial/LeonAI-DE", readme)
+        self.assertNotIn("LeonAI-DE", readme)
         self.assertNotIn("Mobile Documents/com~apple~CloudDocs", readme)
         self.assertIn("Real folder overview", readme)
 

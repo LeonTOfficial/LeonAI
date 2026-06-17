@@ -32,7 +32,6 @@ REQUIRED_FILES = [
     "CONTRIBUTING.md",
     "CHANGELOG.md",
     "ROADMAP.md",
-    "LEONAI_DE_SETUP.md",
     "LICENSE",
     "Starten.command",
     "Starten.ps1",
@@ -43,6 +42,7 @@ REQUIRED_FILES = [
 
 REQUIRED_DIRS = [
     "docs/screenshots",
+    "docs/de",
     ".github/ISSUE_TEMPLATE",
     "models",
     "routes",
@@ -61,6 +61,13 @@ PUBLIC_DOCS = [
     "STRUKTUR.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",
+    "docs/de/README.md",
+    "docs/de/SECURITY.md",
+    "docs/de/TESTING.md",
+    "docs/de/STRUKTUR.md",
+    "docs/de/CONTRIBUTING.md",
+    "docs/de/ROADMAP.md",
+    "docs/de/CHANGELOG.md",
 ]
 
 SENSITIVE_EXACT = {
@@ -199,17 +206,25 @@ def check_public_docs() -> list[CheckResult]:
         if "Mobile Documents/com~apple~CloudDocs" in text:
             results.append(fail(f"{doc} contains a private local iCloud path."))
         if doc == "README.md":
-            if "https://github.com/LeonTOfficial/LeonAI-DE" not in text:
-                results.append(fail("README.md does not link the German documentation repository."))
+            if "docs/de/README.md" not in text:
+                results.append(fail("README.md does not link the German documentation in docs/de/."))
             if "README_SICHERHEIT" in text:
                 results.append(fail("README.md still links the legacy README_SICHERHEIT bridge."))
             if "UPDATES.md" in text:
                 results.append(fail("README.md should link CHANGELOG.md publicly, not UPDATES.md."))
+        if "LeonAI-DE" in text:
+            results.append(fail(f"{doc} still references the removed separate German repository."))
         for link in markdown_links(text):
             clean = strip_anchor(link).strip()
             if not clean or is_external_link(clean):
                 continue
-            if not (ROOT / clean).exists():
+            target = (path.parent / clean).resolve()
+            try:
+                target.relative_to(ROOT)
+            except ValueError:
+                results.append(fail(f"{doc} has a local link outside the repository: {link}"))
+                continue
+            if not target.exists():
                 results.append(fail(f"{doc} has a broken local link: {link}"))
     if not any(not result.ok for result in results):
         results.append(ok("Public documentation links and release notes look consistent."))
