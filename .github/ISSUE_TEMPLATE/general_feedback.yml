@@ -1,0 +1,33 @@
+name: General feedback
+description: Share broad feedback about the project, README, setup, UI, or structure.
+title: "[Feedback]: "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to review LEON AI. Honest feedback is especially useful for future releases.
+  - type: textarea
+    id: good
+    attributes:
+      label: What looks good?
+      placeholder: "README, screenshots, setup, UI, structure, idea..."
+  - type: textarea
+    id: unclear
+    attributes:
+      label: What is unclear or confusing?
+  - type: textarea
+    id: improve
+    attributes:
+      label: What would you improve next?
+  - type: dropdown
+    id: reviewer
+    attributes:
+      label: Your perspective
+      options:
+        - Beginner user
+        - Developer
+        - Security-minded reviewer
+        - Designer / UI reviewer
+        - AI / local models user
+        - Other

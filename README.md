@@ -36,7 +36,7 @@ LEON AI is a private, local AI workspace for your own computer. It brings chat, 
 
 ## Download / Clone And Install
 
-LEON AI is a cross-platform Flask application. macOS includes a convenience launcher, while Windows laptops/desktops and Linux systems run the same project through Python and Ollama.
+LEON AI is a cross-platform Flask application. Each platform has one recommended beginner-friendly start path.
 
 1. Install [Ollama](https://ollama.com/) and pull the recommended models:
 
@@ -87,21 +87,22 @@ chmod +x Starten.command
 ### Windows PowerShell
 
 ```powershell
-py -m venv venv
-.\venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-python app.py
-```
-
-If PowerShell blocks the virtual environment activation script, run PowerShell as your user and allow scripts for the current session:
-
-```powershell
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
-.\venv\Scripts\Activate.ps1
+.\Starten.ps1
 ```
 
-### Linux
+The PowerShell launcher creates the virtual environment, installs dependencies, creates `.env` from `.env.example` if needed, runs the release doctor, and starts the app.
+
+### Linux / macOS Terminal
+
+```bash
+chmod +x start.sh
+./start.sh
+```
+
+The shell launcher uses the same project files as macOS and Windows, but works from a normal terminal.
+
+### Manual Python Fallback
 
 ```bash
 python3 -m venv venv
@@ -154,6 +155,7 @@ Read:
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
+- [`ROADMAP.md`](ROADMAP.md) for done, next, later, and feedback-wanted areas.
 - [`CHANGELOG.md`](CHANGELOG.md) for public release notes and version history.
 
 ![LEON AI Dashboard](docs/screenshots/leon-ai-dashboard.png)
@@ -167,6 +169,7 @@ LEON AI is not just a visual demo. The project includes a focused test suite and
 - **Tested backend flows:** login, setup, room creation, branching, artifact history, backup restore, privacy actions, and error handling.
 - **Tested frontend contracts:** CSRF headers, colored chat tags, Mermaid/Chart.js integration markers, Pyodide wiring, and artifact preview controls.
 - **CI checks:** GitHub Actions in `.github/workflows/test.yml` run the test suite on Python 3.11 and 3.12 and check the main JavaScript modules.
+- **Browser QA:** Playwright checks login/setup, dashboard loading, chat shell, color tags, charts, Mermaid diagrams, and artifact preview with fixed browser fixtures.
 - **Release doctor:** `scripts/leon_doctor.py` checks public docs, required files, CI wiring, and accidental runtime-data tracking before publishing.
 - **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local runtime data and secrets.
 - **Current QA command:** `./venv/bin/python -m unittest discover -s tests -q`
@@ -178,16 +181,25 @@ LeonAI/
 ├── app.py
 ├── config.py
 ├── Starten.command
+├── Starten.ps1
+├── start.sh
 ├── README.md
 ├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md
 ├── CHANGELOG.md
+├── ROADMAP.md
 ├── LICENSE
 ├── CONTRIBUTING.md
 ├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   ├── PULL_REQUEST_TEMPLATE.md
 │   └── workflows/
 │       └── test.yml
+├── tests/
+│   ├── browser/
+│   ├── test_core.py
+│   └── test_ui_flows.py
 ├── scripts/
 │   └── leon_doctor.py
 ├── models/
@@ -215,9 +227,6 @@ LeonAI/
 ├── templates/
 │   ├── dashboard.html
 │   └── index.html
-├── tests/
-│   ├── test_core.py
-│   └── test_ui_flows.py
 └── docs/
     └── screenshots/
 ```

@@ -31,11 +31,19 @@ REQUIRED_FILES = [
     "STRUKTUR.md",
     "CONTRIBUTING.md",
     "CHANGELOG.md",
+    "ROADMAP.md",
+    "LEONAI_DE_SETUP.md",
     "LICENSE",
+    "Starten.command",
+    "Starten.ps1",
+    "start.sh",
+    "package.json",
+    "playwright.config.js",
 ]
 
 REQUIRED_DIRS = [
     "docs/screenshots",
+    ".github/ISSUE_TEMPLATE",
     "models",
     "routes",
     "scripts",
@@ -218,7 +226,9 @@ def check_ci_workflows() -> list[CheckResult]:
         text = test_workflow.read_text(encoding="utf-8")
         for needle in (
             "python -m unittest discover -s tests -q",
-            "node --check static/js/api.js",
+            "npm run check:js",
+            "npm run test:browser",
+            "npx playwright install --with-deps chromium",
             "python scripts/leon_doctor.py",
         ):
             if needle not in text:
@@ -226,7 +236,7 @@ def check_ci_workflows() -> list[CheckResult]:
     if legacy_workflow.exists():
         results.append(fail("Duplicate legacy workflow still exists: .github/workflows/main.yml"))
     if not any(not result.ok for result in results):
-        results.append(ok("CI workflow is focused and includes tests, JS checks, and release doctor."))
+        results.append(ok("CI workflow is focused and includes tests, JS checks, browser QA, and release doctor."))
     return results
 
 

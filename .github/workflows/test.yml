@@ -47,9 +47,14 @@ jobs:
       - name: Run backend and contract tests
         run: python -m unittest discover -s tests -q
 
+      - name: Install browser QA dependencies
+        run: npm install
+
       - name: Check frontend JavaScript syntax
-        run: |
-          node --check static/js/api.js
-          node --check static/js/ui.js
-          node --check static/js/artifacts.js
-          node --check static/js/chat.js
+        run: npm run check:js
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run browser QA
+        run: npm run test:browser

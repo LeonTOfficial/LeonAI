@@ -461,6 +461,59 @@ class FrontendIntegrationTests(unittest.TestCase):
         self.assertIn('name="csrf-token"', dashboard_html)
         self.assertIn("requestHeaders(options)", dashboard_html)
 
+
+class PublicLaunchFileTests(unittest.TestCase):
+    root = Path(__file__).resolve().parents[1]
+
+    def read(self, path):
+        return (self.root / path).read_text(encoding="utf-8")
+
+    def test_cross_platform_launchers_are_documented(self):
+        readme = self.read("README.md")
+
+        self.assertTrue((self.root / "Starten.command").is_file())
+        self.assertTrue((self.root / "Starten.ps1").is_file())
+        self.assertTrue((self.root / "start.sh").is_file())
+        self.assertIn(".\\Starten.ps1", readme)
+        self.assertIn("./start.sh", readme)
+        self.assertIn("./Starten.command", readme)
+
+    def test_playwright_browser_qa_is_wired_into_ci(self):
+        workflow = self.read(".github/workflows/test.yml")
+        config = self.read("playwright.config.js")
+        spec = self.read("tests/browser/leon-public-launch.spec.js")
+        package = self.read("package.json")
+
+        self.assertIn("npm install", workflow)
+        self.assertIn("npx playwright install --with-deps chromium", workflow)
+        self.assertIn("npm run test:browser", workflow)
+        self.assertIn("webServer", config)
+        self.assertIn("data_browser_test", config)
+        self.assertIn("artifact preview renders simple HTML", spec)
+        self.assertIn("@playwright/test", package)
+
+    def test_feedback_templates_and_roadmap_exist(self):
+        expected = [
+            ".github/ISSUE_TEMPLATE/bug_report.yml",
+            ".github/ISSUE_TEMPLATE/feature_request.yml",
+            ".github/ISSUE_TEMPLATE/general_feedback.yml",
+            ".github/ISSUE_TEMPLATE/security_contact.yml",
+            ".github/PULL_REQUEST_TEMPLATE.md",
+            "ROADMAP.md",
+        ]
+
+        for path in expected:
+            self.assertTrue((self.root / path).is_file(), path)
+        self.assertIn("Feedback Wanted", self.read("ROADMAP.md"))
+        self.assertIn("source-available", self.read(".github/PULL_REQUEST_TEMPLATE.md"))
+
+    def test_german_documentation_repository_plan_is_linked(self):
+        readme = self.read("README.md")
+        plan = self.read("LEONAI_DE_SETUP.md")
+
+        self.assertIn("https://github.com/LeonTOfficial/LeonAI-DE", readme)
+        self.assertIn("LeonTOfficial/LeonAI-DE", plan)
+
     def test_frontend_error_diagnostics_include_request_ids(self):
         api_js = self.read("static/js/api.js")
         chat_js = self.read("static/js/chat.js")

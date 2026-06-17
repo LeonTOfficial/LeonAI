@@ -1,0 +1,13 @@
+{
+  "name": "leon-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser QA tooling for LEON AI.",
+  "scripts": {
+    "check:js": "node --check static/js/api.js && node --check static/js/ui.js && node --check static/js/artifacts.js && node --check static/js/chat.js",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1"
+  }
+}

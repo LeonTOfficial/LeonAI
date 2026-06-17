@@ -1,0 +1,39 @@
+name: Feature request
+description: Suggest a focused improvement or new workflow.
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature ideas are welcome. Please focus on the user problem, not only the technical solution.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      placeholder: "When I use LEON AI for ..., I need ..."
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: Proposed feature
+      placeholder: "Describe the behavior you would like to see."
+    validations:
+      required: true
+  - type: textarea
+    id: benefit
+    attributes:
+      label: Why would this help?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Chat
+        - Artifacts / preview
+        - Dashboard
+        - Security / privacy
+        - Installer / setup
+        - Documentation
+        - Other

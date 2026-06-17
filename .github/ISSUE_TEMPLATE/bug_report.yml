@@ -1,0 +1,61 @@
+name: Bug report
+description: Report something that is broken or behaving unexpectedly.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for testing LEON AI. Please remove secrets, passwords, private prompts, screenshots with private data, and full log files before submitting.
+  - type: input
+    id: version
+    attributes:
+      label: LEON AI version or commit
+      placeholder: "v1.0.0 or commit hash"
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS Apple Silicon
+        - macOS Intel
+        - Windows laptop/desktop
+        - Linux
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: "Safari, Chrome, Edge, Firefox..."
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Tell us exactly what you clicked or ran.
+      placeholder: |
+        1. Start LEON AI
+        2. Open ...
+        3. Click ...
+        4. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Safe log excerpt
+      description: Paste only short, safe excerpts. Do not paste `.env`, passwords, API keys, databases, or full logs.
+      render: text

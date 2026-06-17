@@ -70,7 +70,7 @@ if [ ! -f "venv/.tests_run" ]; then
     echo -e "${YLW}⚠️ Einige Tests sind fehlgeschlagen. LEON AI startet trotzdem, aber vielleicht fehlen gewisse Komponenten.${RST}"
   }
   touch venv/.tests_run
-  echo -e "${GRN}✅ Alle 46 Checks erfolgreich abgeschlossen. Alles funktioniert einwandfrei!${RST}\n"
+  echo -e "${GRN}✅ System-Checks abgeschlossen. Alles funktioniert einwandfrei!${RST}\n"
   sleep 2
 fi
 

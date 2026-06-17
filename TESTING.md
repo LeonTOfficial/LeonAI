@@ -1,6 +1,6 @@
 # LEON AI Testing
 
-![Tests](https://img.shields.io/badge/tests-51%20automated-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-55%20Python%20%2B%20browser%20QA-17a673?style=for-the-badge)
 ![Backend](https://img.shields.io/badge/backend-Flask-111827?style=for-the-badge)
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
@@ -46,6 +46,14 @@ Check for whitespace/patch problems before committing:
 git diff --check
 ```
 
+Run real-browser QA with Playwright:
+
+```bash
+npm install
+npx playwright install chromium
+npm run test:browser
+```
+
 ### 2. GitHub Actions / CI
 
 LEON AI uses a small ready-made GitHub Actions workflow instead of a custom runner. The workflow lives in [`.github/workflows/test.yml`](.github/workflows/test.yml) and runs on every push or pull request to `main`.
@@ -55,15 +63,17 @@ LEON AI uses a small ready-made GitHub Actions workflow instead of a custom runn
 | Repository checkout | `actions/checkout@v4` | Uses the official GitHub checkout action. |
 | Python setup | `actions/setup-python@v5` | Installs the supported Python versions consistently. |
 | Node setup | `actions/setup-node@v4` | Provides Node.js for frontend syntax checks. |
+| Browser QA dependencies | `npm install` | Installs Playwright test tooling from `package.json`. |
 | Release doctor | `python scripts/leon_doctor.py` | Checks required files, public docs, CI wiring, and accidental runtime-data tracking. |
 | Backend tests | `python -m unittest discover -s tests -q` | Verifies Flask routes, services, security, database, artifacts, and UI contracts. |
-| Frontend syntax | `node --check static/js/*.js` | Catches JavaScript syntax breakage before release. |
+| Frontend syntax | `npm run check:js` | Catches JavaScript syntax breakage before release. |
+| Playwright browser QA | `npm run test:browser` | Opens a real Chromium browser against the Flask app and checks visible UI/rendering behavior. |
 
 The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not included because the project uses modern Python syntax such as `str | None`, which requires Python 3.10 or newer.
 
 ### 3. Current Automated Coverage
 
-The current automated suite covers **51 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, and UI flow expectations.
+The current Python suite covers **55 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, documentation contracts, and UI flow expectations. Playwright adds browser-level QA for the most important visible screens and rich-rendering flows.
 
 | Test area | What is checked | Main evidence |
 | --- | --- | --- |
@@ -77,6 +87,7 @@ The current automated suite covers **51 tests** across backend behavior, fronten
 | Artifact history | Save, dedupe, delete, API protection, ZIP/export contracts | `tests/test_core.py`, `tests/test_ui_flows.py`, `services/artifact_service.py` |
 | Live preview | iframe sandbox, tabs, reload controls, console/error bridge | `tests/test_core.py`, `static/js/artifacts.js`, `templates/index.html` |
 | Rich chat rendering | Mermaid, Chart.js, color tags, rich-library loading | `tests/test_core.py`, `tests/test_ui_flows.py`, `static/js/chat.js` |
+| Browser rendering | Login/setup, dashboard, chat shell, color tags, charts, Mermaid SVG, artifact iframe preview | `tests/browser/leon-public-launch.spec.js`, `playwright.config.js` |
 | Pyodide | Loader contract, browser Python tab, error handling surface | `tests/test_core.py`, `static/js/artifacts.js` |
 | Dashboard | Metrics, token explanation, privacy center, debug center, filters | `tests/test_core.py`, `tests/test_ui_flows.py`, `templates/dashboard.html` |
 | Backups and restore | SQLite backup creation, checksum manifests, verification, restore confirmation, pre-restore safety backup | `tests/test_core.py`, `services/backup_service.py`, `routes/api.py` |
@@ -93,17 +104,22 @@ LEON AI is a Flask + SQLite + Vanilla JS application and is designed to be porta
 | --- | --- | --- |
 | macOS Apple Silicon | Supported local target | `Starten.command`, Ollama detection, Safari/Chrome rendering, local paths, backups, logs |
 | macOS Intel | Supported local target | Same macOS behavior, with additional dependency install verification |
-| Windows laptops/desktops | Supported local target | Python virtual environment, `pip install -r requirements.txt`, Ollama for Windows, browser rendering, local database paths |
-| Linux | Compatible local target | Python virtual environment, Ollama service, localhost binding, file permissions, browser rendering |
+| Windows laptops/desktops | Supported local target | `Starten.ps1`, Python virtual environment, dependency install, Ollama for Windows, browser rendering, local database paths |
+| Linux | Compatible local target | `start.sh`, Python virtual environment, Ollama service, localhost binding, file permissions, browser rendering |
 
-Recommended Windows/Linux start pattern:
+Recommended start commands:
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# Windows PowerShell: .\\venv\\Scripts\\Activate.ps1
-pip install -r requirements.txt
-python app.py
+# macOS
+./Starten.command
+
+# Linux / normal shell
+./start.sh
+```
+
+```powershell
+# Windows PowerShell
+.\Starten.ps1
 ```
 
 ### 5. Missing Tests To Add Next
@@ -112,7 +128,6 @@ The current test suite is useful, but it does not claim complete coverage. The n
 
 | Missing area | Why it matters |
 | --- | --- |
-| Browser-level preview tests | Proves that generated HTML/CSS/JS actually renders in a real browser. |
 | Artifact security regression tests | Protects iframe, CSP, relative asset handling, and generated-code boundaries. |
 | More migration tests | Ensures older local databases upgrade cleanly. |
 | Accessibility checks | Helps keep login, chat, dashboard, and artifact controls usable. |
@@ -137,6 +152,7 @@ The current test suite is useful, but it does not claim complete coverage. The n
 | Chat shell | Sidebar, chat list, pinned chats, model selector, status controls, input area |
 | Rich messages | Mermaid diagrams, Chart.js graphs, colored text markers, code blocks |
 | Artifact panel | Preview, Code, Terminal, Error tabs, reload button, fullscreen mode |
+| Browser QA fixtures | Fixed rich-rendering fixtures prove color tags, Chart.js, Mermaid, and iframe previews without waiting for a real LLM answer |
 | Dashboard | Activity filters, token explanation, privacy tools, debug center, charts |
 | Responsive behavior | Laptop displays and external monitors should keep controls readable and panels usable |
 
@@ -198,6 +214,7 @@ LEON AI is considered release-ready when the technical tests and the product sto
 | --- | --- |
 | Unit tests pass | Backend behavior, security contracts, artifacts, privacy tools, backups, and UI contracts match the expected model. |
 | JavaScript checks pass | The frontend modules can load without syntax-level breakage. |
+| Browser QA passes | Core screens and rich rendering work in a real Chromium browser. |
 | Manual preview works | Generated HTML/CSS/JS, Mermaid, Chart.js, Pyodide, and color tags are usable in the real interface. |
 | Documentation is current | README, architecture, security, and testing files explain the same product that users actually download. |
 | Private files stay local | `.env`, `data/`, `backup/`, `venv/`, databases, logs, and tokens stay out of the public repository. |

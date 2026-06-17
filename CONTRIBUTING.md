@@ -4,6 +4,13 @@ LEON AI is proprietary source-available software. The code, design, architecture
 
 This repository is open for feedback, bug reports, documentation suggestions, and approved contributions. It is not an open-source project where code can be freely copied, modified, redistributed, or reused without permission.
 
+The easiest way to help is to use the GitHub Issue Templates:
+
+- **Bug report:** broken behavior, setup problems, rendering issues, or crashes.
+- **Feature request:** focused improvements with a clear user workflow.
+- **General feedback:** README, screenshots, UI, structure, setup, or license clarity.
+- **Security contact request:** minimal public note only, without exploit details.
+
 ## What You Can Do
 
 - Report bugs via GitHub Issues with clear reproduction steps.
@@ -78,10 +85,10 @@ Run the checks that apply to your change:
 
 ```bash
 python -m unittest discover -s tests -q
-node --check static/js/api.js
-node --check static/js/ui.js
-node --check static/js/artifacts.js
-node --check static/js/chat.js
+python scripts/leon_doctor.py
+npm install
+npm run check:js
+npm run test:browser
 git diff --check
 ```
 

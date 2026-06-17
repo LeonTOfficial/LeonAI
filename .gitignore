@@ -9,6 +9,7 @@ venv/
 env/
 ENV/
 .env
+node_modules/
 
 # MacOS
 .DS_Store
@@ -16,6 +17,8 @@ ENV/
 # LEON AI spezifisch
 data/
 backup/
+data_browser_test/
+backup_browser_test/
 *.db
 LEON AI*.html
 LEON AI *.html
@@ -25,6 +28,9 @@ README_FEINSCHLIFF*.txt
 # Logs
 logs/
 *.log
+test-results/
+playwright-report/
+.playwright/
 
 # Sonstiges
 .idea/

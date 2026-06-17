@@ -23,6 +23,10 @@ Leon-ai/
 ├── config.py                  # central paths, models, prompts, auth, limits
 ├── requirements.txt           # Python dependencies for the backend
 ├── Starten.command            # macOS launcher with local status output
+├── Starten.ps1                # Windows PowerShell launcher
+├── start.sh                   # Linux/macOS terminal launcher
+├── package.json               # Node tooling for JavaScript and browser QA
+├── playwright.config.js       # Playwright browser-test configuration
 ├── .env.example               # safe template for local environment values
 ├── .gitignore                 # keeps secrets, databases, logs, backups out of Git
 ├── README.md                  # public project overview and installation
@@ -30,11 +34,15 @@ Leon-ai/
 ├── STRUKTUR.md                # this architecture overview
 ├── TESTING.md                 # automated tests, manual QA, release checks
 ├── CHANGELOG.md               # public release history
-├── UPDATES.md                 # internal developer log and debugging notes
+├── ROADMAP.md                 # public done/next/later planning overview
+├── CONTRIBUTING.md            # feedback, issue, and pull-request guidance
+├── LEONAI_DE_SETUP.md         # plan for the separate German docs repository
 ├── LICENSE                    # license terms
 ├── .github/
+│   ├── ISSUE_TEMPLATE/        # bug, feature, feedback, and security contact forms
+│   ├── PULL_REQUEST_TEMPLATE.md # pull-request checklist and license reminder
 │   └── workflows/
-│       └── test.yml           # GitHub Actions CI for tests and JS syntax
+│       └── test.yml           # GitHub Actions CI for tests, JS, and browser QA
 ├── scripts/
 │   └── leon_doctor.py         # release readiness checks for docs, CI, and secrets
 ├── docs/
@@ -69,8 +77,9 @@ Leon-ai/
 │   ├── dashboard.html         # dashboard UI, charts, privacy/debug panels
 │   └── index.html             # login, setup, chat shell, artifact panel markup
 ├── tests/
-│   ├── test_core.py           # backend, security, database, service tests
-│   └── test_ui_flows.py       # frontend contracts and user-flow expectations
+│   ├── browser/               # Playwright tests for real browser QA
+│   ├── test_core.py           # backend, security, docs, and contract tests
+│   └── test_ui_flows.py       # Flask UI-flow and template contract tests
 ├── utils/
 │   ├── __init__.py            # package marker
 │   ├── debug_logs.py          # debug-center helpers
