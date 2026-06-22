@@ -37,6 +37,7 @@ The log is local runtime data. It should not be uploaded publicly if it contains
 | Python version errors | Python is too old | Use Python 3.10 or newer. Python 3.11/3.12 are recommended and used in CI. |
 | Dependency installation fails | `pip` is old, the virtual environment is broken, or the network failed | Activate the virtual environment, run `python -m pip install --upgrade pip`, then install `requirements.txt` again. |
 | Artifacts preview is blank | Generated code is incomplete, browser libraries failed to load, or the iframe needs a refresh | Open the Error tab, click Refresh, and try a small HTML example first. |
+| You are unsure whether preview itself is broken | The generated artifact may be broken rather than LEON AI's preview | Click **Self-test** in the Artifacts panel. If the self-test renders, the preview engine is basically working. |
 | Mermaid diagram does not render | Mermaid syntax is invalid | Ask for a simpler `flowchart TD` diagram and avoid malformed arrows such as `|label|>`. |
 | Chart.js output stays as code | The answer is not using the expected chart block shape | Ask for a fenced `chart` code block with valid JSON. |
 | Pyodide/Python does not load | CDN/network loading failed or the browser blocked the script | Reload the preview, check the Error tab, and try again with internet access. |

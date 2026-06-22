@@ -15,6 +15,7 @@ This roadmap keeps public feedback focused without turning the README into a lon
 - Troubleshooting guide for setup, launchers, Ollama, preview issues, logs, request IDs, and CI failures.
 - Beginner setup and feedback guides for public testers.
 - Privacy-safe dashboard diagnostics for support reports.
+- Built-in Artifacts preview self-test for faster user-side debugging.
 - GitHub Actions for Python tests, JavaScript syntax checks, release doctor, and browser QA.
 - Dependabot dependency checks for Python, JavaScript, and GitHub Actions.
 

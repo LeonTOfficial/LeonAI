@@ -672,6 +672,7 @@
         <div class="artifact-head-actions">
           <select class="artifact-select" id="artifact-select" onchange="switchArtifactVersion(this.value)" title="Artifact auswählen"></select>
           <button class="plain-btn" id="artifact-refresh" onclick="refreshArtifactPreview()">Aktualisieren</button>
+          <button class="plain-btn" id="artifact-self-test" onclick="runArtifactSelfTest()">Selbsttest</button>
           <button class="plain-btn" id="artifact-ask" onclick="askLeonAboutArtifact()">KI prüfen</button>
           <button class="plain-btn" id="artifact-download-html" onclick="downloadArtifactHtml()">HTML laden</button>
           <button class="plain-btn" id="artifact-download-zip" onclick="downloadArtifactZip()">ZIP laden</button>
@@ -799,7 +800,10 @@
 
   <div class="overlay" id="mod-shortcuts"><div class="modal" style="max-width:480px">
     <div class="modal-head"><h3>? Hilfe & Shortcuts</h3><button class="close-btn" onclick="closeModal('mod-shortcuts')">×</button></div>
-    <div class="row-list">
+      <div class="row-list">
+      <div class="list-item"><div class="list-item-main"><div class="list-item-title">Erste Schritte</div><div class="list-item-sub">Starte mit einer normalen Frage, danach HTML, Diagramm oder Chart testen.</div></div></div>
+      <div class="list-item"><div class="list-item-main"><div class="list-item-title">Vorschau prüfen</div><div class="list-item-sub">Im Artifacts-Panel kann der Selbsttest HTML, CSS, JavaScript, Canvas und Terminalmeldungen prüfen.</div></div></div>
+      <div class="list-item"><div class="list-item-main"><div class="list-item-title">Fehler melden</div><div class="list-item-sub">Im Dashboard kann eine datensparsame Diagnose kopiert werden.</div></div></div>
       <div class="list-item"><div class="list-item-main"><div class="list-item-title">Nachricht senden</div><div class="list-item-sub">Enter</div></div></div>
       <div class="list-item"><div class="list-item-main"><div class="list-item-title">Neue Zeile</div><div class="list-item-sub">Shift + Enter</div></div></div>
       <div class="list-item"><div class="list-item-main"><div class="list-item-title">Antwort stoppen</div><div class="list-item-sub">Stop-Button während LEON antwortet</div></div></div>
@@ -813,9 +817,9 @@
     window.LEON_PROFILE = {{ profile_json|default('{"first_name":"Leon"}')|safe }};
   </script>
 
-  <script src="{{ url_for('static', filename='js/api.js') }}?v=20260607-preview-reset"></script>
-  <script src="{{ url_for('static', filename='js/ui.js') }}?v=20260607-preview-reset"></script>
-  <script src="{{ url_for('static', filename='js/artifacts.js') }}?v=20260607-preview-reset"></script>
-  <script src="{{ url_for('static', filename='js/chat.js') }}?v=20260607-preview-reset"></script>
+  <script src="{{ url_for('static', filename='js/api.js') }}?v=20260622-polish"></script>
+  <script src="{{ url_for('static', filename='js/ui.js') }}?v=20260622-polish"></script>
+  <script src="{{ url_for('static', filename='js/artifacts.js') }}?v=20260622-polish"></script>
+  <script src="{{ url_for('static', filename='js/chat.js') }}?v=20260622-polish"></script>
 </body>
 </html>

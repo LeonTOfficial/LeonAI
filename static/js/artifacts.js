@@ -721,6 +721,83 @@ ${artifactBridgeBody()}
     Leon.toast('Code liegt im Eingabefeld.');
   }
 
+  function artifactSelfTestHtml() {
+    const body = `
+<main class="min-h-screen bg-slate-950 text-white p-8 font-sans">
+  <section class="mx-auto max-w-3xl rounded-2xl border border-white/10 bg-white/10 p-6 shadow-2xl">
+    <p class="text-sm uppercase tracking-wide text-cyan-200">LEON AI Preview Self-Test</p>
+    <h1 class="mt-2 text-4xl font-bold">Vorschau läuft.</h1>
+    <p class="mt-3 text-slate-200">Wenn du diese Karte, den grünen Status und das Canvas siehst, funktionieren HTML, CSS, JavaScript und die iframe-Vorschau grundsätzlich.</p>
+    <div class="mt-5 grid gap-3 sm:grid-cols-3">
+      <div class="rounded-xl bg-emerald-400/20 p-4 text-emerald-100">HTML sichtbar</div>
+      <div class="rounded-xl bg-indigo-400/20 p-4 text-indigo-100">CSS aktiv</div>
+      <div class="rounded-xl bg-cyan-400/20 p-4 text-cyan-100" id="js-status">JS startet...</div>
+    </div>
+    <canvas id="self-test-canvas" width="520" height="160" class="mt-6 w-full rounded-xl bg-white"></canvas>
+  </section>
+</main>`;
+    const css = `
+body { margin: 0; }
+#js-status.ok { background: rgba(16,185,129,.35); color: #d1fae5; }
+`;
+    const js = `
+const status = document.getElementById('js-status');
+status.textContent = 'JS aktiv';
+status.classList.add('ok');
+const canvas = document.getElementById('self-test-canvas');
+const ctx = canvas.getContext('2d');
+ctx.fillStyle = '#eef2ff';
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = '#5357ff';
+ctx.fillRect(36, 68, 90, 58);
+ctx.fillStyle = '#17a673';
+ctx.fillRect(160, 42, 90, 84);
+ctx.fillStyle = '#d99b18';
+ctx.fillRect(284, 22, 90, 104);
+ctx.fillStyle = '#20232b';
+ctx.font = '18px system-ui';
+ctx.fillText('Canvas OK', 392, 92);
+console.log('LEON AI Vorschau-Selbsttest: HTML, CSS, JS, Canvas und Terminal-Bridge OK.');
+`;
+    return Leon.buildPreviewHtml(body, css, js);
+  }
+
+  function runArtifactSelfTest() {
+    const panel = $('artifact-panel');
+    const frame = $('artifact-frame');
+    const empty = $('artifact-empty');
+    const meta = $('artifact-meta');
+    if (!panel || !frame) return;
+    const artifact = {
+      title: 'Vorschau-Selbsttest',
+      lang: 'HTML + CSS + JS',
+      html: artifactSelfTestHtml(),
+      source: 'LEON AI Vorschau-Selbsttest: rendert HTML/CSS/JS und Canvas direkt im iframe.',
+      key: `self-test:${Date.now()}`,
+      label: 'Vorschau-Selbsttest · aktuell',
+      selfTest: true,
+    };
+    state.artifactLogs = [];
+    state.artifactErrors = [];
+    state.activeArtifact = artifact;
+    state.artifacts = [...(state.artifacts || []).filter(item => !item.selfTest), artifact];
+    state.artifactIndex = state.artifacts.length - 1;
+    state.artifactCount = state.artifacts.length;
+    state.artifactKey = artifact.key;
+    state.artifactClosedKey = '';
+    if (empty) empty.style.display = 'none';
+    if (meta) meta.textContent = 'HTML + CSS + JS · Selbsttest';
+    panel.classList.add('show');
+    $('main')?.classList.add('artifacts-open');
+    setFrameHtml(frame, artifact.html, artifact.source);
+    Leon.updateArtifactSelect();
+    Leon.updateArtifactCode();
+    appendArtifactLog('system', 'Vorschau-Selbsttest gestartet.');
+    switchArtifactTab('preview');
+    Leon.updateArtifactReopen(false);
+    Leon.toast('Vorschau-Selbsttest gestartet.');
+  }
+
   function closeArtifactsPanel() {
     if (state.artifactKey) state.artifactClosedKey = state.artifactKey;
     const panel = $('artifact-panel');
@@ -744,6 +821,7 @@ ${artifactBridgeBody()}
     downloadArtifactZip,
     downloadAllArtifactsZip,
     deleteArtifactVersion,
+    runArtifactSelfTest,
     refreshArtifactPreview,
     askLeonAboutArtifact,
     switchArtifactTab,

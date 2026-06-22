@@ -16,6 +16,7 @@ This file is the public release history. A separate internal developer log may c
 - Public `TROUBLESHOOTING.md` plus German mirror documentation for common setup, preview, Ollama, log, request-ID, and CI problems.
 - Beginner-friendly `GETTING_STARTED.md` and feedback-focused `FEEDBACK.md`, each with German mirror docs.
 - Privacy-safe diagnostics endpoint and dashboard copy action for support reports.
+- Artifacts preview self-test for checking iframe rendering, HTML/CSS/JS execution, Canvas output, and terminal bridge logs.
 - Dependabot configuration for Python, JavaScript, and GitHub Actions dependencies.
 - Backup inventory and restore flow for the dashboard.
 - Restore safety checks: checksum verification, filename confirmation, SQLite quick check, and automatic pre-restore backup.

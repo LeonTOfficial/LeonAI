@@ -37,6 +37,7 @@ Das Log ist lokale Laufzeitinformation. Es sollte nicht öffentlich hochgeladen 
 | Python-Versionsfehler | Python ist zu alt | Python 3.10 oder neuer nutzen. Python 3.11/3.12 werden empfohlen und in CI getestet. |
 | Installation der Abhängigkeiten schlägt fehl | `pip` ist alt, die virtuelle Umgebung ist beschädigt oder das Netzwerk hatte einen Fehler | Virtuelle Umgebung aktivieren, `python -m pip install --upgrade pip` ausführen und danach `requirements.txt` erneut installieren. |
 | Artifacts-Vorschau bleibt leer | Generierter Code ist unvollständig, Browser-Bibliotheken laden nicht oder das iframe braucht einen Refresh | Fehler-Tab öffnen, Aktualisieren klicken und zuerst ein kleines HTML-Beispiel testen. |
+| Du bist unsicher, ob die Vorschau selbst kaputt ist | Vielleicht ist nur das generierte Artifact fehlerhaft | Klicke im Artifacts-Panel auf **Selbsttest**. Wenn der Selbsttest rendert, funktioniert die Vorschau grundsätzlich. |
 | Mermaid-Diagramm rendert nicht | Mermaid-Syntax ist ungültig | Ein einfacheres `flowchart TD` verlangen und fehlerhafte Pfeile wie `|label|>` vermeiden. |
 | Chart.js-Ausgabe bleibt Code | Die Antwort nutzt nicht die erwartete Chart-Block-Struktur | Nach einem umzäunten `chart`-Codeblock mit gültigem JSON fragen. |
 | Pyodide/Python lädt nicht | CDN/Netzwerk lädt nicht oder der Browser blockiert das Skript | Vorschau neu laden, Fehler-Tab prüfen und mit Internetzugang erneut versuchen. |

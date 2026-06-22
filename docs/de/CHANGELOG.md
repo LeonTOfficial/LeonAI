@@ -16,6 +16,7 @@ Dies ist die deutsche Zusammenfassung der öffentlichen Änderungen. Die englisc
 - Öffentliche Fehlerhilfe `TROUBLESHOOTING.md` plus deutsche Spiegeldatei für häufige Setup-, Vorschau-, Ollama-, Log-, Request-ID- und CI-Probleme.
 - Anfängerfreundliche `GETTING_STARTED.md` und feedbackorientierte `FEEDBACK.md`, jeweils mit deutscher Spiegeldatei.
 - Datensparsame Diagnose-API und Dashboard-Aktion zum Kopieren von Support-Informationen.
+- Artifacts-Vorschau-Selbsttest für iframe-Rendering, HTML/CSS/JS-Ausführung, Canvas-Ausgabe und Terminal-Bridge-Logs.
 - Dependabot-Konfiguration für Python-, JavaScript- und GitHub-Actions-Abhängigkeiten.
 
 ### Geändert

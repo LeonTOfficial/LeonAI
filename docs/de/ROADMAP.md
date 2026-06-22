@@ -17,6 +17,7 @@ Die englische Hauptdokumentation liegt im Repository-Root: [`README.md`](../../R
 - Fehlerhilfe für Setup, Starter, Ollama, Vorschau, Logs, Request IDs und CI-Fehler.
 - Einsteiger- und Feedback-Leitfäden für öffentliche Tester.
 - Datensparsame Dashboard-Diagnose für Supportmeldungen.
+- Eingebauter Artifacts-Vorschau-Selbsttest für schnelleres Debugging durch Nutzer.
 - GitHub Actions für Python-Tests, JavaScript-Prüfung, Release Doctor und Browser-QA.
 - Dependabot-Prüfung für Python-, JavaScript- und GitHub-Actions-Abhängigkeiten.
 

@@ -92,6 +92,7 @@ The current Python suite covers **60 tests** across backend behavior, frontend c
 | Auto titles | Fast title model `llama3.2:1b`, title cleanup, room update | `tests/test_core.py`, `services/ollama_service.py`, `config.py` |
 | Artifact history | Save, dedupe, delete, API protection, ZIP/export contracts | `tests/test_core.py`, `tests/test_ui_flows.py`, `services/artifact_service.py` |
 | Live preview | iframe sandbox, tabs, reload controls, console/error bridge | `tests/test_core.py`, `static/js/artifacts.js`, `templates/index.html` |
+| Preview self-test | Built-in artifact self-test for iframe rendering, HTML/CSS/JS, Canvas, and terminal bridge logs | `static/js/artifacts.js`, `templates/index.html`, `tests/test_ui_flows.py` |
 | Rich chat rendering | Mermaid, Chart.js, color tags, rich-library loading | `tests/test_core.py`, `tests/test_ui_flows.py`, `static/js/chat.js` |
 | Browser rendering | Login/setup, dashboard, chat shell, color tags, charts, Mermaid SVG, artifact iframe preview | `tests/browser/leon-public-launch.spec.js`, `playwright.config.js` |
 | Pyodide | Loader contract, browser Python tab, error handling surface | `tests/test_core.py`, `static/js/artifacts.js` |

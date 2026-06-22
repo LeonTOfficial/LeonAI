@@ -38,6 +38,7 @@ npm run test:browser
 | Authentifizierung | Login, First Setup, Sessions, CSRF und geschützte Routen. |
 | Chat | Räume, Nachrichten, Branching, Auto-Titel und Favoriten. |
 | Artifacts | Speichern, Deduplizieren, Löschen, Export und Vorschau-Verträge. |
+| Vorschau-Selbsttest | Eingebauter Artifacts-Test für iframe, HTML/CSS/JS, Canvas und Terminal-Bridge. |
 | Rich Rendering | Farbtags, Mermaid, Chart.js und Codeblöcke. |
 | Dashboard | Metriken, Tokens, Privacy Center, Health Center und Debug Center. |
 | Sicherheit | CSRF, Origin-Checks, sichere Fehlerantworten und private Runtime-Dateien. |

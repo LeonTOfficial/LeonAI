@@ -273,8 +273,11 @@ class ArtifactRichOutputUiFlowTests(UiFlowTestCase):
         self.assertIn("Leon.renderChartBlock", chat_js)
         self.assertIn("Leon.buildPyodideHtml", artifacts_js)
         self.assertIn("loadPyodide", artifacts_js)
+        self.assertIn("runArtifactSelfTest", artifacts_js)
+        self.assertIn("Vorschau-Selbsttest", artifacts_js)
         self.assertIn("downloadAllArtifactsZip", artifacts_js)
         self.assertIn("deleteArtifactVersion", artifacts_js)
+        self.assertIn("artifact-self-test", index_html)
         self.assertIn("artifact-frame", index_html)
 
 
