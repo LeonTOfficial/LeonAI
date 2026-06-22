@@ -13,13 +13,17 @@ This roadmap keeps public feedback focused without turning the README into a lon
 - Backup creation, verification, and restore safety flow.
 - English-first public documentation with screenshots and release notes.
 - Troubleshooting guide for setup, launchers, Ollama, preview issues, logs, request IDs, and CI failures.
+- Beginner setup and feedback guides for public testers.
+- Privacy-safe dashboard diagnostics for support reports.
 - GitHub Actions for Python tests, JavaScript syntax checks, release doctor, and browser QA.
+- Dependabot dependency checks for Python, JavaScript, and GitHub Actions.
 
 ## Next
 
 - Improve installer comfort on every platform based on real user feedback and recurring troubleshooting patterns.
 - Add more browser-level regression tests for artifact preview and rich chat rendering.
 - Continue polishing dashboard explanations for non-technical users.
+- Turn recurring feedback into smaller v1.0.x usability fixes.
 - Improve fallback behavior when optional browser libraries cannot be loaded.
 - Maintain the German documentation inside `docs/de/` and keep it aligned with the English public docs.
 

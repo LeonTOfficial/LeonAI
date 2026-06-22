@@ -14,6 +14,9 @@ Dies ist die deutsche Zusammenfassung der öffentlichen Änderungen. Die englisc
 - Öffentliche Roadmap im Hauptrepo.
 - Vorbereitung für den deutschen Doku-Bereich `docs/de/`.
 - Öffentliche Fehlerhilfe `TROUBLESHOOTING.md` plus deutsche Spiegeldatei für häufige Setup-, Vorschau-, Ollama-, Log-, Request-ID- und CI-Probleme.
+- Anfängerfreundliche `GETTING_STARTED.md` und feedbackorientierte `FEEDBACK.md`, jeweils mit deutscher Spiegeldatei.
+- Datensparsame Diagnose-API und Dashboard-Aktion zum Kopieren von Support-Informationen.
+- Dependabot-Konfiguration für Python-, JavaScript- und GitHub-Actions-Abhängigkeiten.
 
 ### Geändert
 
@@ -21,6 +24,7 @@ Dies ist die deutsche Zusammenfassung der öffentlichen Änderungen. Die englisc
 - Deutsche Dokumentation wird im Ordner `docs/de/` gepflegt.
 - README erklärt nun einen empfohlenen Startweg pro Plattform.
 - README verlinkt eine eigene Fehlerhilfe, statt häufige Lösungen im Installationsabschnitt zu verstecken.
+- Dashboard zeigt die aktuelle App-Version über die Diagnose-Zusammenfassung.
 - CI prüft zusätzlich Browser-QA.
 
 ## v1.0.0

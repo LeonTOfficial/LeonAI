@@ -151,10 +151,12 @@ Want to know how the security model works, how the SQLite schema is structured, 
 
 Read:
 
+- [`GETTING_STARTED.md`](GETTING_STARTED.md) for the shortest beginner-friendly setup path.
 - [`STRUKTUR.md`](STRUKTUR.md) for the architecture, modules, routes, services, and frontend structure.
 - [`SECURITY.md`](SECURITY.md) for the local security model, `.env` guidance, dependency notes, and vulnerability reporting.
 - [`TESTING.md`](TESTING.md) for the current unit-test and QA workflow.
 - [`TROUBLESHOOTING.md`](TROUBLESHOOTING.md) for common setup, launcher, preview, Ollama, and CI problems.
+- [`FEEDBACK.md`](FEEDBACK.md) for the kind of feedback that helps the project most.
 - [`CONTRIBUTING.md`](CONTRIBUTING.md) for contribution guidelines and how to report bugs or suggest features.
 - [`ROADMAP.md`](ROADMAP.md) for done, next, later, and feedback-wanted areas.
 - [`CHANGELOG.md`](CHANGELOG.md) for public release notes and version history.
@@ -172,6 +174,7 @@ LEON AI is not just a visual demo. The project includes a focused test suite and
 - **CI checks:** GitHub Actions in `.github/workflows/test.yml` run the test suite on Python 3.11 and 3.12 and check the main JavaScript modules.
 - **Browser QA:** Playwright checks login/setup, dashboard loading, chat shell, color tags, charts, Mermaid diagrams, and artifact preview with fixed browser fixtures.
 - **Release doctor:** `scripts/leon_doctor.py` checks public docs, required files, CI wiring, and accidental runtime-data tracking before publishing.
+- **Support diagnostics:** The dashboard can copy a privacy-safe diagnostic summary with app version, runtime, Ollama, and health status, without prompts, `.env`, full logs, or local paths.
 - **Security evidence:** CSRF protection lives in `utils/security.py`, request/security headers in `routes/middleware.py`, error shielding in `utils/errors.py`, and the `.gitignore` excludes local runtime data and secrets.
 - **Current QA command:** `./venv/bin/python -m unittest discover -s tests -q`
 
@@ -185,6 +188,8 @@ LeonAI/
 ├── Starten.ps1
 ├── start.sh
 ├── README.md
+├── GETTING_STARTED.md
+├── FEEDBACK.md
 ├── SECURITY.md
 ├── STRUKTUR.md
 ├── TESTING.md

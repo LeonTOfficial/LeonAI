@@ -14,6 +14,9 @@ This file is the public release history. A separate internal developer log may c
 - Public `ROADMAP.md` with done, next, later, and feedback-wanted areas.
 - German documentation inside `docs/de/`, linked from the English README.
 - Public `TROUBLESHOOTING.md` plus German mirror documentation for common setup, preview, Ollama, log, request-ID, and CI problems.
+- Beginner-friendly `GETTING_STARTED.md` and feedback-focused `FEEDBACK.md`, each with German mirror docs.
+- Privacy-safe diagnostics endpoint and dashboard copy action for support reports.
+- Dependabot configuration for Python, JavaScript, and GitHub Actions dependencies.
 - Backup inventory and restore flow for the dashboard.
 - Restore safety checks: checksum verification, filename confirmation, SQLite quick check, and automatic pre-restore backup.
 
@@ -21,6 +24,7 @@ This file is the public release history. A separate internal developer log may c
 - Main repository documentation is now English-first.
 - README installation instructions now point beginners to one recommended start path per platform.
 - README now links a dedicated troubleshooting guide instead of hiding common fixes inside long setup text.
+- Dashboard now exposes the current app version through the diagnostics summary.
 - Public release history moved to `CHANGELOG.md`.
 - Internal development notes remain separate from this public release history.
 - API and streaming errors now return safe user-facing messages with request IDs while internal details stay in local logs.

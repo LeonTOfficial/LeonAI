@@ -21,6 +21,7 @@ from services import chat_service
 from utils import privacy as privacy_module
 from utils import system_health as health_module
 from utils.debug_logs import parse_log_entries
+from utils.diagnostics import collect_diagnostics
 from utils.errors import register_error_handlers
 from utils.media import decode_image_base64
 from utils.privacy import PURGE_CONFIRMATION, privacy_summary, purge_private_data
@@ -499,6 +500,11 @@ class PublicLaunchFileTests(unittest.TestCase):
             ".github/ISSUE_TEMPLATE/general_feedback.yml",
             ".github/ISSUE_TEMPLATE/security_contact.yml",
             ".github/PULL_REQUEST_TEMPLATE.md",
+            ".github/dependabot.yml",
+            "GETTING_STARTED.md",
+            "FEEDBACK.md",
+            "docs/de/GETTING_STARTED.md",
+            "docs/de/FEEDBACK.md",
             "TROUBLESHOOTING.md",
             "docs/de/TROUBLESHOOTING.md",
             "ROADMAP.md",
@@ -515,6 +521,8 @@ class PublicLaunchFileTests(unittest.TestCase):
 
         self.assertIn("docs/de/README.md", readme)
         self.assertIn("STRUKTUR.md", german_readme)
+        self.assertIn("GETTING_STARTED.md", german_readme)
+        self.assertIn("FEEDBACK.md", german_readme)
         self.assertIn("SECURITY.md", german_readme)
         self.assertIn("TESTING.md", german_readme)
         self.assertIn("TROUBLESHOOTING.md", german_readme)
@@ -596,6 +604,8 @@ class PublicLaunchFileTests(unittest.TestCase):
         self.assertIn("## Download / Clone And Install", readme)
         self.assertIn("## Storage Needed", readme)
         self.assertIn("CHANGELOG.md", readme)
+        self.assertIn("GETTING_STARTED.md", readme)
+        self.assertIn("FEEDBACK.md", readme)
         self.assertIn("TROUBLESHOOTING.md", readme)
         self.assertNotIn("LeonAI-DE", readme)
         self.assertNotIn("Mobile Documents/com~apple~CloudDocs", readme)
@@ -645,6 +655,37 @@ class PublicLaunchFileTests(unittest.TestCase):
             "GitHub Actions",
         ):
             self.assertIn(needle, german)
+
+    def test_feedback_and_getting_started_docs_are_public_and_bilingual(self):
+        getting_started = self.read("GETTING_STARTED.md")
+        feedback = self.read("FEEDBACK.md")
+        german_getting_started = self.read("docs/de/GETTING_STARTED.md")
+        german_feedback = self.read("docs/de/FEEDBACK.md")
+
+        self.assertIn("ollama pull llama3", getting_started)
+        self.assertIn(".\\Starten.ps1", getting_started)
+        self.assertIn("Diagnose kopieren", getting_started)
+        self.assertIn("What Feedback Helps Most", feedback)
+        self.assertIn("Safe Diagnostics", feedback)
+        self.assertIn("Erste Schritte", german_getting_started)
+        self.assertIn("Diagnose kopieren", german_getting_started)
+        self.assertIn("Feedback-Leitfaden", german_feedback)
+        self.assertIn("Sichere Diagnose", german_feedback)
+
+    def test_dependabot_and_public_diagnostics_are_wired(self):
+        dependabot = self.read(".github/dependabot.yml")
+        dashboard = self.read("templates/dashboard.html")
+        api = self.read("routes/api.py")
+        config = self.read("config.py")
+
+        self.assertIn('package-ecosystem: "pip"', dependabot)
+        self.assertIn('package-ecosystem: "npm"', dependabot)
+        self.assertIn('package-ecosystem: "github-actions"', dependabot)
+        self.assertIn("APP_VERSION", config)
+        self.assertIn('url_prefix="/api"', api)
+        self.assertIn('@api_bp.route("/diagnostics"', api)
+        self.assertIn("copyDiagnostics", dashboard)
+        self.assertIn("app-version-pill", dashboard)
 
 
 class DebugAndMediaTests(unittest.TestCase):
@@ -859,6 +900,45 @@ class HealthAndPrivacyTests(IsolatedDatabaseTest):
         self.assertIn("checks", health.get_json())
         self.assertEqual(privacy.status_code, 200)
         self.assertIn("confirmation", privacy.get_json())
+
+    def test_diagnostics_api_is_login_protected_and_privacy_safe(self):
+        app = Flask(__name__)
+        app.secret_key = "test"
+        register_middleware(app)
+        register_error_handlers(app)
+        app.register_blueprint(auth_bp)
+        app.register_blueprint(api_bp)
+
+        with app.test_client() as client:
+            locked = client.get("/api/diagnostics")
+            with client.session_transaction() as sess:
+                sess["authenticated"] = True
+            with patch("utils.diagnostics.ollama_is_running", return_value=False):
+                res = client.get("/api/diagnostics")
+
+        body = res.get_json()
+        body_text = str(body)
+        self.assertEqual(locked.status_code, 302)
+        self.assertEqual(res.status_code, 200)
+        self.assertIn("version", body["app"])
+        self.assertEqual(body["ollama"]["running"], False)
+        self.assertIn("privacy_note", body)
+        self.assertNotIn("LEON_PASSWORD", body_text)
+        self.assertNotIn("SECRET_KEY", body_text)
+        self.assertNotIn("Mobile Documents", body_text)
+
+    def test_collect_diagnostics_excludes_private_payloads(self):
+        with patch("utils.diagnostics.ollama_is_running", return_value=False):
+            diagnostics = collect_diagnostics()
+
+        text = str(diagnostics)
+        self.assertIn("app", diagnostics)
+        self.assertIn("runtime", diagnostics)
+        self.assertIn("health", diagnostics)
+        self.assertIn("privacy_note", diagnostics)
+        self.assertNotIn("LEON_PASSWORD", text)
+        self.assertNotIn("SECRET_KEY", text)
+        self.assertNotIn("Mobile Documents", text)
 
 
 if __name__ == "__main__":

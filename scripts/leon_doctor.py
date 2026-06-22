@@ -26,6 +26,8 @@ REQUIRED_FILES = [
     "config.py",
     "requirements.txt",
     "README.md",
+    "GETTING_STARTED.md",
+    "FEEDBACK.md",
     "SECURITY.md",
     "TESTING.md",
     "STRUKTUR.md",
@@ -39,6 +41,7 @@ REQUIRED_FILES = [
     "start.sh",
     "package.json",
     "playwright.config.js",
+    ".github/dependabot.yml",
 ]
 
 REQUIRED_DIRS = [
@@ -57,6 +60,8 @@ REQUIRED_DIRS = [
 
 PUBLIC_DOCS = [
     "README.md",
+    "GETTING_STARTED.md",
+    "FEEDBACK.md",
     "SECURITY.md",
     "TESTING.md",
     "STRUKTUR.md",
@@ -64,6 +69,8 @@ PUBLIC_DOCS = [
     "CONTRIBUTING.md",
     "CHANGELOG.md",
     "docs/de/README.md",
+    "docs/de/GETTING_STARTED.md",
+    "docs/de/FEEDBACK.md",
     "docs/de/SECURITY.md",
     "docs/de/TESTING.md",
     "docs/de/STRUKTUR.md",

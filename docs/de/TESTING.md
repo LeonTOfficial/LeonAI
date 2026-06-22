@@ -1,6 +1,6 @@
 # Tests und Qualitätssicherung
 
-![Tests](https://img.shields.io/badge/Tests-55%20Python%20%2B%20Browser--QA-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/Tests-60%20Python%20%2B%20Browser--QA-17a673?style=for-the-badge)
 ![CI](https://img.shields.io/badge/GitHub%20Actions-aktiv-5357ff?style=for-the-badge)
 ![Browser](https://img.shields.io/badge/Playwright-Chromium-111827?style=for-the-badge)
 
@@ -42,6 +42,8 @@ npm run test:browser
 | Dashboard | Metriken, Tokens, Privacy Center, Health Center und Debug Center. |
 | Sicherheit | CSRF, Origin-Checks, sichere Fehlerantworten und private Runtime-Dateien. |
 | Fehlerhilfe | Häufige Setup-, Starter-, Vorschau-, Ollama-, Log-, Request-ID- und CI-Probleme. |
+| Onboarding und Feedback | Einsteiger-Setup und öffentliche Feedback-Wege bleiben auffindbar. |
+| Sichere Diagnose | Dashboard-Diagnose enthält keine Secrets, Prompts, vollständigen Logs oder lokalen Pfade. |
 | Browser-QA | Echte Oberfläche im Chromium-Browser mit festen Testdaten. |
 
 ## GitHub Actions

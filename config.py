@@ -9,6 +9,7 @@ except ImportError:
     pass
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+APP_VERSION = os.getenv("LEON_APP_VERSION", "1.0.1-dev")
 
 _TEMPLATE_FOLDER = os.getenv("TEMPLATE_FOLDER")
 if not _TEMPLATE_FOLDER:

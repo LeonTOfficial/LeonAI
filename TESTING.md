@@ -1,6 +1,6 @@
 # LEON AI Testing
 
-![Tests](https://img.shields.io/badge/tests-55%20Python%20%2B%20browser%20QA-17a673?style=for-the-badge)
+![Tests](https://img.shields.io/badge/tests-60%20Python%20%2B%20browser%20QA-17a673?style=for-the-badge)
 ![Backend](https://img.shields.io/badge/backend-Flask-111827?style=for-the-badge)
 ![Frontend](https://img.shields.io/badge/frontend-vanilla%20JS-5357ff?style=for-the-badge)
 ![QA](https://img.shields.io/badge/QA-release%20checklist-d99b18?style=for-the-badge)
@@ -79,7 +79,7 @@ The CI matrix intentionally uses **Python 3.11 and 3.12**. Python 3.9 is not inc
 
 ### 3. Current Automated Coverage
 
-The current Python suite covers **55 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, documentation contracts, and UI flow expectations. Playwright adds browser-level QA for the most important visible screens and rich-rendering flows.
+The current Python suite covers **60 tests** across backend behavior, frontend contracts, security controls, artifacts, privacy tooling, backups, diagnostics, documentation contracts, and UI flow expectations. Playwright adds browser-level QA for the most important visible screens and rich-rendering flows.
 
 | Test area | What is checked | Main evidence |
 | --- | --- | --- |
@@ -101,6 +101,8 @@ The current Python suite covers **55 tests** across backend behavior, frontend c
 | Privacy tools | Local data summary, protected purge flow, backup cleanup | `tests/test_core.py`, `utils/privacy.py` |
 | Release documentation | README/security/testing contracts and private-file rules | `tests/test_core.py`, `README.md`, `SECURITY.md`, `.gitignore` |
 | Troubleshooting documentation | Common launcher, preview, Ollama, log, request-ID, and CI failure paths | `TROUBLESHOOTING.md`, `docs/de/TROUBLESHOOTING.md`, `scripts/leon_doctor.py` |
+| Feedback and onboarding docs | Beginner setup and public feedback paths stay discoverable | `GETTING_STARTED.md`, `FEEDBACK.md`, `docs/de/`, `README.md` |
+| Safe diagnostics | Dashboard diagnostics exclude secrets, prompts, logs, and local paths | `utils/diagnostics.py`, `routes/api.py`, `templates/dashboard.html` |
 | Release readiness | Doctor script validates docs, CI, required files, and ignored runtime data | `tests/test_core.py`, `scripts/leon_doctor.py`, `.github/workflows/test.yml` |
 
 ### 4. Cross-Platform Test Matrix

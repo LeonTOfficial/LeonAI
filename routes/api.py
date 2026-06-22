@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 import requests
 from flask import Blueprint, jsonify, request
 
-from config import AUTH_ENABLED, DEFAULT_MODEL, FAST_MODELS, OLLAMA_BASE, VISION_MODELS
+from config import APP_VERSION, AUTH_ENABLED, DEFAULT_MODEL, FAST_MODELS, OLLAMA_BASE, VISION_MODELS
 from services.artifact_service import delete_artifact, list_artifacts, save_artifacts
 from services.backup_service import backup_db, list_backups, restore_backup
 from models.database import get_db
@@ -14,6 +14,7 @@ from services.export_service import export_room
 from services.memory_service import add_memory_fact
 from services.ollama_service import get_available_models, get_vision_model, ollama_is_running
 from utils.debug_logs import read_debug_logs
+from utils.diagnostics import collect_diagnostics
 from utils.errors import json_error
 from utils.logging import get_logger
 from utils.media import decode_image_base64
@@ -37,6 +38,7 @@ def api_status():
         "fast_models": FAST_MODELS,
         "vision_models": vision_available,
         "auth_enabled": AUTH_ENABLED,
+        "app_version": APP_VERSION,
     })
 
 
@@ -44,6 +46,12 @@ def api_status():
 @login_required
 def health_check():
     return jsonify(collect_health())
+
+
+@api_bp.route("/diagnostics", methods=["GET"])
+@login_required
+def diagnostics():
+    return jsonify(collect_diagnostics())
 
 
 @api_bp.route("/backups/run", methods=["POST"])
