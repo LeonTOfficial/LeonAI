@@ -240,7 +240,7 @@ LeonAI/
 
 ## Über den Entwickler
 
-Ich bin **Leon**, 16 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf eine Zukunft in der Wirtschaftsinformatik vor. LEON AI ist mein persönliches Lernprojekt, um moderne Full-Stack-Software wirklich zu verstehen: modulare Architektur, sichere Authentifizierung, lokale Daten, Tests und reale Veröffentlichung.
+Ich bin **Leon**, 17 Jahre alt, Jahrgang 2009, aus Deutschland und bereite mich auf eine Zukunft in der Wirtschaftsinformatik vor. LEON AI ist mein persönliches Lernprojekt, um moderne Full-Stack-Software wirklich zu verstehen: modulare Architektur, sichere Authentifizierung, lokale Daten, Tests und reale Veröffentlichung.
 
 Dieses Projekt ist mit **AI-Assisted Development** entstanden. Genau das ist ein wichtiger Punkt: Es zeigt, wie ein junger Entwickler KI als ernsthaften Engineering-Partner nutzen kann, um modulare, sichere und brauchbare Software schneller zu bauen. Codequalität, Tests und Dokumentation spiegeln diese Zusammenarbeit wider.
 
